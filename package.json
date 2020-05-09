@@ -1,0 +1,41 @@
+{
+  "name": "@handwritten/handwritten",
+  "version": "1.0.0",
+  "description": "Convert text to handwritten!",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alias-rahil/handwritten.git"
+  },
+  "author": "Rahil Kabani <rahil.kabani.4@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alias-rahil/handwritten/issues"
+  },
+  "homepage": "https://github.com/alias-rahil/handwritten#readme",
+  "dependencies": {
+    "merge-img": "^2.1.3"
+  },
+  "scripts": {
+    "releasepatch": "npm i && eslint src/bin.js src/index.js test/test.js --fix && mocha && git add . && git commit -m 'update' && npm version patch && git push && npm publish",
+    "releaseminor": "npm i && eslint src/bin.js src/index.js test/test.js --fix && mocha && git add . && git commit -m 'update' && npm version minor && git push && npm publish",
+    "releasemajor": "npm i && eslint src/bin.js src/index.js test/test.js --fix && mocha && git add . && git commit -m 'update' && npm version major && git push && npm publish"
+  },
+  "bin": {
+    "handwritten": "src/bin.js"
+  },
+  "keywords": [
+    "handwritten",
+    "text",
+    "handwriting",
+    "converter"
+  ],
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^7.0.0",
+    "mocha": "^7.1.2",
+    "shelljs": "^0.8.4",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
+}
