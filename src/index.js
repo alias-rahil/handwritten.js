@@ -1,15 +1,18 @@
 const mergeImg = require('merge-img');
 
 const symbols = '!?"()@&*[]<>{}.,:;-\'';
-const alphanum = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890';
+const alphanuml = 'qwertyuiopasdfghjklzxcvbnm1234567890';
+const alphanumu = 'QWERTYUIOPASDFGHJKLZXCVBNM';
 
 async function main(text) {
   if (text.length !== 0) {
     const all = [];
     let res = [];
     for (let i = 0; i < text.length; i += 1) {
-      if (alphanum.includes(text[i])) {
+      if (alphanuml.includes(text[i])) {
         res.push(`${__dirname}/dataset/${text[i]}${Math.floor(Math.random() * 6) + 1}.jpg`);
+      } else if (alphanumu.includes(text[i])) {
+        res.push(`${__dirname}/dataset/${Math.floor(Math.random() * 6) + 1}${text[i]}.jpg`);
       } else if (symbols.includes(text[i])) {
         res.push(`${__dirname}/dataset/symbol${symbols.indexOf(text[i])}${Math.floor(Math.random() * 6) + 1}.jpg`);
       } else if (text[i] === '\n') {
