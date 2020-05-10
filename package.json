@@ -1,6 +1,6 @@
 {
   "name": "handwritten.js",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "description": "Convert text to handwritten!",
   "main": "index.js",
   "repository": {
