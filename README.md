@@ -78,6 +78,10 @@ Give a ⭐️ if this project helped you!
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/alias-rahil/handwritten.js/issues).
 
+# Credits
+
+[GDGVIT/HandWriter](https://github.com/GDGVIT/HandWriter) - For the cleaned dataset.
+
 # Lyrics-Finder
 
 🏠 [Homepage](https://github.com/alias-rahil/handwritten.js#readme)
