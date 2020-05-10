@@ -2,7 +2,6 @@
   "name": "handwritten.js",
   "version": "13.0.0",
   "description": "Convert text to handwritten!",
-  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/alias-rahil/handwritten.git"
@@ -19,6 +18,7 @@
   "bin": {
     "handwritten.js": "src/bin.js"
   },
+  "main": "src/index.js",
   "keywords": [
     "handwritten",
     "text",
