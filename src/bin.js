@@ -14,11 +14,11 @@ async function main(e) {
       console.log("Success! Saved file as 'output.jpg'!");
     } else {
       console.log('ERROR!');
-      console.log(`File '${e} was empty!'`);
+      console.log(`File '${e}' was empty!`);
     }
   } catch (err) {
     console.log('ERROR!');
-    console.log(`File '${e} could not be found!'`);
+    console.log(`Is the file '${e}' present?'`);
   }
 }
 
