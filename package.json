@@ -23,7 +23,10 @@
     "handwritten",
     "text",
     "handwriting",
-    "converter"
+    "converter",
+    "handwriter",
+    "font",
+    "daniel"
   ],
   "scripts": {
     "releasepatch": "npm i && eslint src/bin.js src/index.js --fix && git add . && git commit -m 'update' && npm version patch && git push && npm publish",
