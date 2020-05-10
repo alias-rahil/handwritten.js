@@ -18,7 +18,7 @@
     "unidecode-plus": "^1.0.2"
   },
   "bin": {
-    "handwritten": "src/bin.js"
+    "handwritten.js": "src/bin.js"
   },
   "keywords": [
     "handwritten",
