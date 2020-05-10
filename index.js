@@ -1,12 +1,10 @@
 const mergeImg = require('merge-img');
-const shelljs = require('shelljs');
 
 const symbols = '!?"()@&*[]<>{}.,:;-\'';
 const alphanum = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890';
 
 async function main(text) {
   if (text.length !== 0) {
-    shelljs.exec('ls');
     const all = [];
     let res = [];
     for (let i = 0; i < text.length; i += 1) {
