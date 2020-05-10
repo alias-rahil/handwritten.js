@@ -60,7 +60,13 @@ handwritten.js "/absolute/path/to/file.txt"
 
 # API
 
-It takes two arguments, artist name and song name and returns the lyrics as a string if found, else it will return an empty string (if used in code). The CLI binary logs the lyrics on your console (stdout) if found, else it will log 'Not Found!'.
+## Command line
+
+It takes a single argument as the path to the text file (specifying absolute path is recommended), and, if everything goes smoothly, saves the output image as 'output.jpg'.
+
+## In code
+
+It takes a single argument as a string and returns a jimp object if the text is non-empty, else it returns a null value.
 
 # Author
 
@@ -72,12 +78,12 @@ Give a ⭐️ if this project helped you!
 
 # 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/alias-rahil/lyrics-finder/issues).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/alias-rahil/handwritten.js/issues).
 
 # Lyrics-Finder
 
-🏠 [Homepage](https://github.com/alias-rahil/lyrics-finder#readme)
+🏠 [Homepage](https://github.com/alias-rahil/handwritten.js#readme)
 
 # License
 
-[MIT](https://github.com/alias-rahil/lyrics-finder/blob/master/LICENSE)
+[MIT](https://github.com/alias-rahil/handwritten.js/blob/master/LICENSE)
