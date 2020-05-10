@@ -7,7 +7,7 @@ const [, , ...args] = process.argv;
 
 async function main(e) {
   try {
-    const txt = String(fs.readFileSync(e));
+    const txt = String(fs.readFileSync(e)).trim();
     const output = await handwritten(txt);
     if (output) {
       output.write('output.jpg');
