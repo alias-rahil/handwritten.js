@@ -1,12 +1,10 @@
 const mergeImg = require('merge-img');
-const unidecode = require('unidecode-plus');
 
 const symbols = '!?"()@&*[]<>{}.,:;-\'';
 const alphanum = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890';
 const fs = require('fs');
 
-async function main(txt) {
-  const text = unidecode(String(txt));
+async function main(text) {
   if (text.length !== 0) {
     const all = [];
     let res = [];
@@ -40,7 +38,7 @@ async function main(txt) {
     }
     const k = [];
     for (let i = 0; i < all.length; i += 1) {
-      let img = await mergeImg(all[i])
+      const img = await mergeImg(all[i]);
       img.write(`out${i}.jpg`);
       k.push(`out${i}.jpg`);
     }

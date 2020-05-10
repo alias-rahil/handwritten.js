@@ -1,22 +1,24 @@
 #!/usr/bin/env node
 
+const fs = require('fs');
 const handwritten = require('./index.js');
-const fs = require("fs");
 
 const [, , ...args] = process.argv;
 
 async function main(e) {
   try {
-    let txt = fs.readFileSync(e);
-    let output = await handwritten(txt);
+    const txt = String(fs.readFileSync(e));
+    const output = await handwritten(txt);
     if (output) {
-        output.write("output.jpg");
+      output.write('output.jpg');
+      console.log("Success! Saved file as 'output.jpg'!");
     } else {
-      fs.writeFileSync("output.jpg", "");
+      console.log('ERROR!');
+      console.log(`File '${e} was empty!'`);
     }
-    console.log("Saved as 'output.jpg'!");
   } catch (err) {
-    console.log(`File '${e}' does not exist!`);
+    console.log('ERROR!');
+    console.log(`File '${e} could not be found!'`);
   }
 }
 
