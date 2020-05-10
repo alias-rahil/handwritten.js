@@ -46,7 +46,9 @@ async function main(text) {
       });
       return img2;
     }
-  } else { return null; }
+  } else {
+    return null;
+  }
   return null;
 }
 module.exports = main;
