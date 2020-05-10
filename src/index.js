@@ -24,27 +24,29 @@ async function main(text) {
     if (res.length !== 0) {
       all.push(res);
     }
-    let m = all[0].length;
-    for (let i = 1; i < all.length; i += 1) {
-      if (all[i].length > m) {
-        m = all[i].length;
+    if (all.length !== 0) {
+      let m = all[0].length;
+      for (let i = 1; i < all.length; i += 1) {
+        if (all[i].length > m) {
+          m = all[i].length;
+        }
       }
-    }
-    for (let i = 0; i < all.length; i += 1) {
-      while (all[i].length !== m) {
-        all[i].push(`${__dirname}/dataset/unk${Math.floor(Math.random() * 6) + 1}.jpg`);
+      for (let i = 0; i < all.length; i += 1) {
+        while (all[i].length !== m) {
+          all[i].push(`${__dirname}/dataset/unk${Math.floor(Math.random() * 6) + 1}.jpg`);
+        }
       }
+      const k = [];
+      for (let i = 0; i < all.length; i += 1) {
+        const img = await mergeImg(all[i]);
+        k.push(img);
+      }
+      const img2 = await mergeImg(k, {
+        direction: true,
+      });
+      return img2;
     }
-    const k = [];
-    for (let i = 0; i < all.length; i += 1) {
-      const img = await mergeImg(all[i]);
-      k.push(img);
-    }
-    const img2 = await mergeImg(k, {
-      direction: true,
-    });
-    return img2;
-  }
+  } else { return null; }
   return null;
 }
 module.exports = main;
