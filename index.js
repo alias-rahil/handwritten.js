@@ -9,16 +9,16 @@ async function main(text) {
     let res = [];
     for (let i = 0; i < text.length; i += 1) {
       if (alphanum.includes(text[i])) {
-        res.push(`dataset/${text[i]}${Math.floor(Math.random() * 6) + 1}.jpg`);
+        res.push(`dataset/images/${text[i]}${Math.floor(Math.random() * 6) + 1}.jpg`);
       } else if (symbols.includes(text[i])) {
-        res.push(`dataset/symbol${symbols.indexOf(text[i])}${Math.floor(Math.random() * 6) + 1}.jpg`);
+        res.push(`dataset/images/symbol${symbols.indexOf(text[i])}${Math.floor(Math.random() * 6) + 1}.jpg`);
       } else if (text[i] === '\n') {
         if (res.length !== 0) {
           all.push(res);
           res = [];
         }
       } else {
-        res.push(`dataset/unk${Math.floor(Math.random() * 6) + 1}.jpg`);
+        res.push(`dataset/images/unk${Math.floor(Math.random() * 6) + 1}.jpg`);
       }
     }
     if (res.length !== 0) {
@@ -32,7 +32,7 @@ async function main(text) {
     }
     for (let i = 0; i < all.length; i += 1) {
       while (all[i].length !== m) {
-        all[i].push(`dataset/unk${Math.floor(Math.random() * 6) + 1}.jpg`);
+        all[i].push(`dataset/images/unk${Math.floor(Math.random() * 6) + 1}.jpg`);
       }
     }
     const k = [];
