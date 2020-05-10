@@ -2,7 +2,6 @@ const mergeImg = require('merge-img');
 
 const symbols = '!?"()@&*[]<>{}.,:;-\'';
 const alphanum = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890';
-const fs = require('fs');
 
 async function main(text) {
   if (text.length !== 0) {
@@ -39,15 +38,11 @@ async function main(text) {
     const k = [];
     for (let i = 0; i < all.length; i += 1) {
       const img = await mergeImg(all[i]);
-      img.write(`out${i}.jpg`);
-      k.push(`out${i}.jpg`);
+      k.push(img);
     }
     const img2 = await mergeImg(k, {
       direction: true,
     });
-    for (let i = 0; i < all.length; i += 1) {
-      fs.unlinkSync(k[i]);
-    }
     return img2;
   }
   return null;
