@@ -24,15 +24,13 @@ npm install --save handwritten.js
 const handwritten = require('handwritten.js');
 (async function(text) {
     let converted = await handwritten(text);
-    if (handwritten) {
+    if (converted) {
         converted.write("output.jpg");
     } else {
         console.log("The text was empty!");
     }
 })("Hello, world!");
 ```
-
-> Note: The function 'handwritten' returns a jimp object if the text is non-empty, else it returns a null value.
 
 # Command line usage:
 
@@ -66,7 +64,7 @@ It takes a single argument as the path to the text file (specifying absolute pat
 
 ## In code
 
-It takes a single argument as a string and returns a jimp object if the text is non-empty, else it returns a null value.
+It takes a single string argument and returns a jimp object if the string is non-empty, else it returns a null value.
 
 # Author
 
