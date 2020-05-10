@@ -64,7 +64,7 @@ It takes a single argument as the path to the text file (specifying absolute pat
 
 ## In code
 
-It takes a single string argument and returns a jimp object if the string is non-empty, else it returns a null value.
+It takes a single string argument and returns a promise that contains a [jimp](https://github.com/oliver-moran/jimp#readme) object if the string is non-empty, else it returns a null value.
 
 # Author
 
