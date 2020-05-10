@@ -39,15 +39,15 @@ const handwritten = require('handwritten.js');
 ## Using without installation
 
 ```bash
-npx lyrics-finder "dream theatre" "another day"
+npx handwritten.js "/absolute/path/to/file.txt"
 ```
 
-> Note: Use this method only if you plan to use lyrics-finder for one time, installing lyrics-finder globally (see-below) is recommended for multiple time usages.
+> Note: Use this method only if you plan to use handwritten.js for one time, installing handwritten.js globally (see-below) is recommended for multiple time usages.
 
 ## Installation
 
 ```bash
-npm install lyrics-finder -g
+npm install handwritten.js -g
 ```
 
 > Note: **DO NOT** use sudo to install global packages! The correct way to do it is to tell npm where to install it's global packages: `npm config set prefix ~/.local`. Make sure `~/.local/bin` is added to `PATH`.
@@ -55,7 +55,7 @@ npm install lyrics-finder -g
 ## Usage after installation
  
 ```bash
-lyrics-finder "dream theatre" "another day"
+handwritten.js "/absolute/path/to/file.txt"
 ```
 
 # API
