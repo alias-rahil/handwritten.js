@@ -10,7 +10,7 @@ async function main(e) {
     const txt = String(fs.readFileSync(e)).trim();
     const output = await handwritten(txt);
     if (output) {
-      output.resize(output.bitmap.width / 2, output.bitmap.height / 2).quality(50).write('output.jpg');
+      output.write('output.jpg');
       console.log("Success! Saved file as 'output.jpg'!");
     } else {
       console.log('ERROR!');
