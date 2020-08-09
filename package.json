@@ -4,7 +4,7 @@
   "description": "Convert text to handwritten!",
   "repository": {
     "type": "git",
-    "url": "git://github.com/alias-rahil/handwritten.git"
+    "url": "https://github.com/alias-rahil/handwritten.git/"
   },
   "author": "Rahil Kabani <rahil.kabani.4@gmail.com>",
   "license": "MIT",
