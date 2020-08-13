@@ -17,8 +17,8 @@ async function main(e) {
       console.log(`File '${e}' was empty!`);
     }
   } catch (err) {
-    console.log('Some error occurred!');
-    console.log(`Is the file '${e}' present?'`);
+    console.log('ERROR!');
+    console.log(err);
   }
 }
 
