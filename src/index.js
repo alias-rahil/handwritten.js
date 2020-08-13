@@ -1,11 +1,13 @@
 const mergeImg = require('merge-img');
+const unidecode = require('unidecode-plus');
 
 const symbols = '!?"()@&*[]<>{}.,:;-\'';
 const alphanuml = 'qwertyuiopasdfghjklzxcvbnm1234567890';
 const alphanumu = 'QWERTYUIOPASDFGHJKLZXCVBNM';
 
-async function main(text) {
-  if (text.length !== 0) {
+async function main(text2) {
+  if (text2.length !== 0) {
+    const text = unidecode(text2);
     const all = [];
     let res = [];
     for (let i = 0; i < text.length; i += 1) {
