@@ -15,13 +15,15 @@ async function main(text) {
         res.push(`${__dirname}/dataset/${Math.floor(Math.random() * 6) + 1}${text[i]}.jpg`);
       } else if (symbols.includes(text[i])) {
         res.push(`${__dirname}/dataset/symbol${symbols.indexOf(text[i])}${Math.floor(Math.random() * 6) + 1}.jpg`);
+      } else if (text[i] === ' ') {
+        res.push(`${__dirname}/dataset/space.jpg`);
       } else if (text[i] === '\n') {
         if (res.length !== 0) {
           all.push(res);
           res = [];
         }
       } else {
-        res.push(`${__dirname}/dataset/unk${Math.floor(Math.random() * 6) + 1}.jpg`);
+        res.push(`${__dirname}/dataset/unk.jpg`);
       }
     }
     if (res.length !== 0) {
@@ -36,7 +38,7 @@ async function main(text) {
       }
       for (let i = 0; i < all.length; i += 1) {
         while (all[i].length !== m) {
-          all[i].push(`${__dirname}/dataset/unk${Math.floor(Math.random() * 6) + 1}.jpg`);
+          all[i].push(`${__dirname}/dataset/space.jpg`);
         }
       }
       const k = [];
