@@ -48,7 +48,7 @@ npm install handwritten.js -g
 > Note: **DO NOT** use sudo to install global packages! The correct way to do it is to tell npm where to install it's global packages: `npm config set prefix ~/.local`. Make sure `~/.local/bin` is added to `PATH`.
 
 ## Usage after installation
- 
+
 ```bash
 handwritten.js "/absolute/path/to/file.txt"
 ```
@@ -66,7 +66,7 @@ It takes a single string argument and returns a promise that contains a [pdfkit]
 # Screenshot
 
 <p align="center">
-  <img align="center" src="./screenshots/lorem-ipsum.jpeg?raw=true" alt="lorem-ipsum.jpeg" width="250">
+  <img align="center" src="https://raw.githubusercontent.com/alias-rahil/lyrics-finder/master/screenshots/humpty-dumpty.jpeg" alt="lorem-ipsum.jpeg">
 </p>
 
 # Author
