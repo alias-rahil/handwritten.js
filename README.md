@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> Convert text to handwritten!
+> Convert text to handwritten pdf!
 
 # In your code:
 
