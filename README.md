@@ -66,7 +66,7 @@ It takes a single string argument and returns a promise that contains a [pdfkit]
 # Screenshot
 
 <p align="center">
-  <img align="center" src="https://raw.githubusercontent.com/alias-rahil/lyrics-finder/master/screenshots/humpty-dumpty.jpeg" alt="lorem-ipsum.jpeg">
+  <img align="center" src="https://raw.githubusercontent.com/alias-rahil/handwritten.js/master/screenshots/lorem-ipsum.jpeg" alt="lorem-ipsum.jpeg">
 </p>
 
 # Author
