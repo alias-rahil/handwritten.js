@@ -52,6 +52,9 @@ async function main(raw_text) {
                 m = all[i].length;
             }
         }
+        if (m < batch_size) {
+            m = batch_size;
+        }
         for (let i = 0; i < all.length; i += 1) {
             while (all[i].length !== m) {
                 all[i].push(`${__dirname}/dataset/space.jpg`);
