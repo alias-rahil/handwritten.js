@@ -9,8 +9,8 @@ async function main(e) {
   try {
     const txt = String(fs.readFileSync(e));
     const output = await handwritten(txt);
-    console.log("Success! Saved file as 'output.jpg'!");
-    console.log("need to fix");
+    console.log("Success! Saved file as 'output.pdf'!");
+    output.pipe(fs.createWriteStream('output.pdf'));
   } catch (err) {
     console.log(`Error!\n${err}`);
   }

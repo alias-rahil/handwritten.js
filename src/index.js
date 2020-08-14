@@ -1,12 +1,11 @@
 const unidecode = require('unidecode-plus');
 const mergeImg = require('merge-img');
 const jimp = require('jimp');
-
+const pdfkit = require('pdfkit');
 const symbols = '!?"()@&*[]<>{}.,:;-\'';
 const alphanuml = 'qwertyuiopasdfghjklzxcvbnm1234567890';
 const alphanumu = 'QWERTYUIOPASDFGHJKLZXCVBNM';
 let batch_size = 36;
-
 
 while ([true, false][Math.floor(Math.random() * 2)]) {
     batch_size += 1;
@@ -73,9 +72,17 @@ async function main(raw_text) {
             });
             img_arr.push(await getbuffersync(image));
         }
-        return img_arr;
+        const doc = new pdfkit();
+        for (let i = 0; i < img_arr.length; i += 1) {
+            doc.image(img_arr[i]);
+            doc.addPage();
+        }
+        doc.end();
+        return doc;
     } else {
-        return [];
+        const doc = new pdfkit();
+        doc.end();
+        return doc;
     }
 }
 module.exports = main;
