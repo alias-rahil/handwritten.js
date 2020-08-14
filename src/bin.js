@@ -7,14 +7,10 @@ const [, , ...args] = process.argv;
 
 async function main(e) {
   try {
-    const txt = String(fs.readFileSync(e)).trim();
+    const txt = String(fs.readFileSync(e));
     const output = await handwritten(txt);
-    if (output) {
-      output.write('output.jpg');
-      console.log("Success! Saved file as 'output.jpg'!");
-    } else {
-      console.log(`Error!\nFile '${e}' was empty!`);
-    }
+    console.log("Success! Saved file as 'output.jpg'!");
+    console.log("need to fix");
   } catch (err) {
     console.log(`Error!\n${err}`);
   }

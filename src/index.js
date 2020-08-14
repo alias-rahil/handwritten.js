@@ -1,13 +1,18 @@
-const mergeImg = require('merge-img');
 const unidecode = require('unidecode-plus');
+const mergeImg = require('merge-img');
+const jimp = require('jimp');
 
 const symbols = '!?"()@&*[]<>{}.,:;-\'';
 const alphanuml = 'qwertyuiopasdfghjklzxcvbnm1234567890';
 const alphanumu = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+let batch_size = 36;
+while ([true, false][Math.floor(Math.random() * 2)]) {
+    batch_size += 1;
+}
 
 async function main(raw_text) {
-    if (raw_text.length !== 0) {
-        const text = unidecode(raw_text);
+    const text = unidecode(raw_text).trim();
+    if (text.length !== 0) {
         const all = [];
         let res = [];
         for (let i = 0; i < text.length; i += 1) {
@@ -18,50 +23,51 @@ async function main(raw_text) {
             } else if (symbols.includes(text[i])) {
                 res.push(`${__dirname}/dataset/symbol${symbols.indexOf(text[i])}${Math.floor(Math.random() * 6) + 1}.jpg`);
             } else if (text[i] === ' ') {
-                if (res.length > 36 && [true, false][Math.floor(Math.random() * 2)]) {
+                if (res.length >= batch_size-1) {
                     all.push(res);
                     res = [];
                 } else {
                     res.push(`${__dirname}/dataset/space.jpg`);
                 }
             } else if (text[i] === '\n') {
-                if (res.length !== 0) {
-                    all.push(res);
-                    res = [];
-                }
+                all.push(res);
+                res = [];
             } else {
                 res.push(`${__dirname}/dataset/space.jpg`);
             }
         }
-        if (res.length !== 0) {
-            all.push(res);
+        all.push(res);
+        let m = all[0].length;
+        for (let i = 1; i < all.length; i += 1) {
+            if (all[i].length > m) {
+                m = all[i].length;
+            }
         }
-        if (all.length !== 0) {
-            let m = all[0].length;
-            for (let i = 1; i < all.length; i += 1) {
-                if (all[i].length > m) {
-                    m = all[i].length;
-                }
+        for (let i = 0; i < all.length; i += 1) {
+            while (all[i].length !== m) {
+                all[i].push(`${__dirname}/dataset/space.jpg`);
             }
-            for (let i = 0; i < all.length; i += 1) {
-                while (all[i].length !== m) {
-                    all[i].push(`${__dirname}/dataset/space.jpg`);
-                }
-            }
-            const k = [];
-            for (let i = 0; i < all.length; i += 1) {
-                const img = await mergeImg(all[i]);
-                k.push(img);
-            }
-            const img2 = await mergeImg(k, {
+        }
+        const k = [];
+        for (let i = 0; i < all.length; i += 1) {
+            const img = await mergeImg(all[i]);
+            k.push(img);
+        }
+        const result = new Array(Math.ceil(k.length / batch_size))
+          .fill()
+          .map(_ => k.splice(0, batch_size));
+        const img_arr = [];
+        for (let i = 0; i < result.length; i += 1) {
+            const image = await mergeImg(result[i], {
                 direction: true,
             });
-            return img2;
-        } else {
-            return null;
+            image.getBuffer(jimp.AUTO, (err, buf) => {
+                img_arr.push(buf);
+            });
         }
+        return img_arr;
     } else {
-        return null;
+        return [];
     }
 }
 module.exports = main;
