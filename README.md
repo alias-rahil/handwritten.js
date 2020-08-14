@@ -34,7 +34,7 @@ const fs = require('fs');
 ## Using without installation
 
 ```bash
-npx handwritten.js "/absolute/path/to/file.txt"
+npx handwritten.js "relative/path/to/file.txt"
 ```
 
 > Note: Use this method only if you plan to use handwritten.js for one time, installing handwritten.js globally (see-below) is recommended for multiple time usages.
