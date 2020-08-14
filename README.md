@@ -22,13 +22,10 @@ npm install --save handwritten.js
 
 ```javascript
 const handwritten = require('handwritten.js');
+const fs = require('fs');
 (async function(text) {
     let converted = await handwritten(text);
-    if (converted) {
-        converted.write("output.jpg");
-    } else {
-        console.log("The text was empty!");
-    }
+    converted.pipe(fs.createWriteStream('output.pdf'));
 })("Hello, world!");
 ```
 
@@ -60,11 +57,11 @@ handwritten.js "/absolute/path/to/file.txt"
 
 ## Command line
 
-It takes a single argument as the path to the text file (specifying absolute path is recommended), and, if everything goes smoothly, saves the output image as 'output.jpg'.
+It takes a single argument as the path to the text file (specifying absolute path is recommended), and, if everything goes smoothly, saves the output pdf as 'output.pdf'.
 
 ## In code
 
-It takes a single string argument and returns a promise that contains a [jimp](https://github.com/oliver-moran/jimp#readme) object if the string is non-empty, else it returns a null value.
+It takes a single string argument and returns a promise that contains a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance.
 
 # Author
 
