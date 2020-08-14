@@ -63,6 +63,12 @@ It takes a single argument as the path to the text file (specifying absolute pat
 
 It takes a single string argument and returns a promise that contains a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance.
 
+# Screenshot
+
+<p align="center">
+  <img align="center" src="./screenshots/lorem-ipsum.jpeg?raw=true" alt="lorem-ipsum.jpeg" width="250">
+</p>
+
 # Author
 
 👤 **Rahil Kabani <rahil.kabani.4@gmail.com>**
