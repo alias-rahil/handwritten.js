@@ -31,7 +31,7 @@ async function main(raw_text) {
                     res = [];
                 }
             } else {
-                res.push(`${__dirname}/dataset/unk.jpg`);
+                res.push(`${__dirname}/dataset/space.jpg`);
             }
         }
         if (res.length !== 0) {
