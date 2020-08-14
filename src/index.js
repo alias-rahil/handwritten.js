@@ -6,8 +6,18 @@ const symbols = '!?"()@&*[]<>{}.,:;-\'';
 const alphanuml = 'qwertyuiopasdfghjklzxcvbnm1234567890';
 const alphanumu = 'QWERTYUIOPASDFGHJKLZXCVBNM';
 let batch_size = 36;
+
+
 while ([true, false][Math.floor(Math.random() * 2)]) {
     batch_size += 1;
+}
+
+function getbuffersync(image) {
+    return new Promise((resolve, reject) => {
+        image.getBuffer(jimp.AUTO, (err, buf) => {
+            resolve(buf);
+        });
+    });
 }
 
 async function main(raw_text) {
@@ -23,7 +33,7 @@ async function main(raw_text) {
             } else if (symbols.includes(text[i])) {
                 res.push(`${__dirname}/dataset/symbol${symbols.indexOf(text[i])}${Math.floor(Math.random() * 6) + 1}.jpg`);
             } else if (text[i] === ' ') {
-                if (res.length >= batch_size-1) {
+                if (res.length >= batch_size - 1) {
                     all.push(res);
                     res = [];
                 } else {
@@ -54,16 +64,14 @@ async function main(raw_text) {
             k.push(img);
         }
         const result = new Array(Math.ceil(k.length / batch_size))
-          .fill()
-          .map(_ => k.splice(0, batch_size));
+            .fill()
+            .map(_ => k.splice(0, batch_size));
         const img_arr = [];
         for (let i = 0; i < result.length; i += 1) {
             const image = await mergeImg(result[i], {
                 direction: true,
             });
-            image.getBuffer(jimp.AUTO, (err, buf) => {
-                img_arr.push(buf);
-            });
+            img_arr.push(await getbuffersync(image));
         }
         return img_arr;
     } else {
