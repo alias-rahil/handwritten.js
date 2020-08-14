@@ -4,7 +4,6 @@ const unidecode = require('unidecode-plus');
 const symbols = '!?"()@&*[]<>{}.,:;-\'';
 const alphanuml = 'qwertyuiopasdfghjklzxcvbnm1234567890';
 const alphanumu = 'QWERTYUIOPASDFGHJKLZXCVBNM';
-const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
 
 async function main(raw_text) {
     if (raw_text.length !== 0) {
@@ -19,7 +18,7 @@ async function main(raw_text) {
             } else if (symbols.includes(text[i])) {
                 res.push(`${__dirname}/dataset/symbol${symbols.indexOf(text[i])}${Math.floor(Math.random() * 6) + 1}.jpg`);
             } else if (text[i] === ' ') {
-                if (countOccurrences(res, `${__dirname}/dataset/space.jpg`) > 5 && [true, false][Math.floor(Math.random() * 2)]) {
+                if (res.length > 36 && [true, false][Math.floor(Math.random() * 2)]) {
                     all.push(res);
                     res = [];
                 } else {
@@ -58,10 +57,11 @@ async function main(raw_text) {
                 direction: true,
             });
             return img2;
+        } else {
+            return null;
         }
     } else {
         return null;
     }
-    return null;
 }
 module.exports = main;
