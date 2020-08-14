@@ -32,7 +32,7 @@ async function main(raw_text) {
             } else if (symbols.includes(text[i])) {
                 res.push(`${__dirname}/dataset/symbol${symbols.indexOf(text[i])}${Math.floor(Math.random() * 6) + 1}.jpg`);
             } else if (text[i] === ' ') {
-                if (res.length >= batch_size - 1) {
+                if (res.length > batch_size - 1) {
                     all.push(res);
                     res = [];
                 } else {
@@ -75,16 +75,16 @@ async function main(raw_text) {
         const doc = new pdfkit({
             size: [2480, 3508],
             margins: {
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0
+                top: 50,
+                bottom: 50,
+                left: 50,
+                right: 50
             }
         });
         for (let i = 0; i < img_arr.length; i += 1) {
-            doc.image(img_arr[i], 0, 0, {
-                width: 2480,
-                height: 3508
+            doc.image(img_arr[i], 50, 50, {
+                width: 2380,
+                height: 3408
             });
             doc.addPage();
         }
