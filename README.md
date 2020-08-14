@@ -79,7 +79,7 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 
 [GDGVIT/HandWriter](https://github.com/GDGVIT/HandWriter) - For the cleaned dataset.
 
-# Lyrics-Finder
+# Handwritten.JS
 
 🏠 [Homepage](https://github.com/alias-rahil/handwritten.js#readme)
 
