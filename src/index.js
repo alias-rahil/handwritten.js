@@ -65,6 +65,14 @@ async function main(raw_text) {
             const img = await mergeImg(all[i]);
             k.push(img);
         }
+        const blnk_line = [];
+        while (blnk_line.length !== m) {
+            blnk_line.push(`${__dirname}/dataset/space.jpg`);
+        }
+        const bl = await mergeImg(blnk_line);
+        while (k.length % batch_size != 0) {
+            k.push(bl);
+        }
         const result = new Array(Math.ceil(k.length / batch_size))
             .fill()
             .map(_ => k.splice(0, batch_size));
