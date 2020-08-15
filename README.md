@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> Convert text to handwritten!
+> Convert typed text to realistic handwriting!
 
 # In your code:
 
