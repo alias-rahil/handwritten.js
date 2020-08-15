@@ -1,7 +1,7 @@
 {
   "name": "handwritten.js",
   "version": "16.2.1",
-  "description": "Convert text to handwritten!",
+  "description": "Convert typed text to realistic handwriting!",
   "repository": {
     "type": "git",
     "url": "https://github.com/alias-rahil/handwritten.git/"
