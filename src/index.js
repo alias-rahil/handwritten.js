@@ -14,7 +14,11 @@ while ([true, false][Math.floor(Math.random() * 2)]) {
 function getbuffersync(image) {
     return new Promise((resolve, reject) => {
         image.getBuffer(jimp.AUTO, (err, buf) => {
-            resolve(buf);
+            if (err) {
+                reject(err);
+            } else {
+                resolve(buf);
+            }
         });
     });
 }
@@ -36,13 +40,13 @@ async function main(raw_text) {
                     all.push(res);
                     res = [];
                 } else {
-                    res.push(`${__dirname}/dataset/space.jpg`);
+                    res.push(`${__dirname}/dataset/space${Math.floor(Math.random() * 6) + 1}.jpg`);
                 }
             } else if (text[i] === '\n') {
                 all.push(res);
                 res = [];
             } else {
-                res.push(`${__dirname}/dataset/space.jpg`);
+                res.push(`${__dirname}/dataset/space${Math.floor(Math.random() * 6) + 1}.jpg`);
             }
         }
         all.push(res);
@@ -57,7 +61,7 @@ async function main(raw_text) {
         }
         for (let i = 0; i < all.length; i += 1) {
             while (all[i].length !== m) {
-                all[i].push(`${__dirname}/dataset/space.jpg`);
+                all[i].push(`${__dirname}/dataset/space${Math.floor(Math.random() * 6) + 1}.jpg`);
             }
         }
         const k = [];
@@ -67,7 +71,7 @@ async function main(raw_text) {
         }
         const blnk_line = [];
         while (blnk_line.length !== m) {
-            blnk_line.push(`${__dirname}/dataset/space.jpg`);
+            blnk_line.push(`${__dirname}/dataset/space${Math.floor(Math.random() * 6) + 1}.jpg`);
         }
         const bl = await mergeImg(blnk_line);
         while (k.length % batch_size != 0) {
