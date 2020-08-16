@@ -57,7 +57,7 @@ handwritten.js "/absolute/path/to/file.txt"
 
 ## Command line
 
-It takes a single argument as the path to the text file (specifying absolute path is recommended), and, if everything goes smoothly, saves the output pdf as 'output.pdf'.
+It takes a single argument as the path to the text file, and, if everything goes smoothly, saves the output pdf as 'output.pdf'.
 
 ## In code
 
