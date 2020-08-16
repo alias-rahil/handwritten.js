@@ -36,9 +36,7 @@ function getwidth(paragraph) {
             width = paragraph[i].length;
         }
     }
-    if (width < batch_size) {
-        width = batch_size;
-    }
+    width = Math.max(batch_size, width);
     return width;
 }
 
@@ -63,8 +61,6 @@ function getparagraph(text) {
         } else if (text[i] === '\n') {
             paragraph.push(line);
             line = [];
-        } else {
-            line.push(`${path}space${randint()}.jpg`);
         }
     }
     paragraph.push(line);
@@ -85,7 +81,10 @@ function createbatches(k) {
 }
 
 function cleantext(raw_text) {
-    return unidecode(raw_text.replace('\t', '    ')).trim();
+    return unidecode(raw_text.replace('\t', '    '), {
+        german: true,
+        smartSpacing: true
+    }).trim();
 }
 
 function getbufferasync(image) {
@@ -138,12 +137,13 @@ async function main(raw_text) {
     const text = cleantext(raw_text);
     if (text.length === 0) {
         return generatepdf([]);
+    } else {
+        const paragraph = getparagraph(text);
+        const width = getwidth(paragraph);
+        const k = await fillemptyspace(paragraph, width);
+        const result = createbatches(k);
+        const img_arr = await getimages(result);
+        return generatepdf(img_arr);
     }
-    const paragraph = getparagraph(text);
-    const width = getwidth(paragraph);
-    const k = await fillemptyspace(paragraph, width);
-    const result = createbatches(k);
-    const img_arr = await getimages(result);
-    return generatepdf(img_arr);
 }
 module.exports = main;
