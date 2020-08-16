@@ -2,16 +2,93 @@ const unidecode = require('unidecode-plus');
 const mergeImg = require('merge-img');
 const jimp = require('jimp');
 const pdfkit = require('pdfkit');
-const symbols = '!?"()@&*[]<>{}.,:;-\'~`$#';
-const alphanuml = 'qwertyuiopasdfghjklzxcvbnm1234567890';
-const alphanumu = 'QWERTYUIOPASDFGHJKLZXCVBNM';
-let batch_size = 36;
+const path = `${__dirname}/dataset/`;
 
-while ([true, false][Math.floor(Math.random() * 2)]) {
-    batch_size += 1;
+function randint() {
+    return Math.floor(Math.random() * 6) + 1;
+}
+async function fillemptyspace(paragraph, width) {
+    for (let i = 0; i < paragraph.length; i += 1) {
+        while (paragraph[i].length !== width) {
+            paragraph[i].push(`${path}space${randint()}.jpg`);
+        }
+    }
+    const k = [];
+    for (let i = 0; i < paragraph.length; i += 1) {
+        const img = await mergeImg(paragraph[i]);
+        k.push(img);
+    }
+    const blank_line = [];
+    while (blank_line.length !== width) {
+        blank_line.push(`${path}space${randint()}.jpg`);
+    }
+    const bl = await mergeImg(blank_line);
+    while (k.length % batch_size != 0) {
+        k.push(bl);
+    }
+    return k;
 }
 
-function getbuffersync(image) {
+function getwidth(paragraph) {
+    let width = paragraph[0].length;
+    for (let i = 1; i < paragraph.length; i += 1) {
+        if (paragraph[i].length > width) {
+            width = paragraph[i].length;
+        }
+    }
+    if (width < batch_size) {
+        width = batch_size;
+    }
+    return width;
+}
+
+function getparagraph(text) {
+    const paragraph = [];
+    let line = [];
+    for (let i = 0; i < text.length; i += 1) {
+        if (alphanuml.includes(text[i])) {
+            line.push(`${path}${text[i]}${randint()}.jpg`);
+        } else if (alphanumu.includes(text[i])) {
+            line.push(`${path}${randint()}${text[i]}.jpg`);
+        } else if (symbols.includes(text[i])) {
+            line.push(
+                `${path}symbol${symbols.indexOf(text[i])}${randint()}.jpg`);
+        } else if (text[i] === ' ') {
+            if (line.length > batch_size - 1) {
+                paragraph.push(line);
+                line = [];
+            } else {
+                line.push(`${path}space${randint()}.jpg`);
+            }
+        } else if (text[i] === '\n') {
+            paragraph.push(line);
+            line = [];
+        } else {
+            line.push(`${path}space${randint()}.jpg`);
+        }
+    }
+    paragraph.push(line);
+    return paragraph;
+}
+
+function getbatchsize() {
+    let batch_size = 36;
+    while ([true, false][Math.floor(Math.random() * 2)]) {
+        batch_size += 1;
+    }
+    return batch_size;
+}
+
+function createbatches(k) {
+    return new Array(Math.ceil(k.length / batch_size)).fill().map((_) => k
+        .splice(0, batch_size));
+}
+
+function cleantext(raw_text) {
+    return unidecode(raw_text.replace('\t', '    ')).trim();
+}
+
+function getbufferasync(image) {
     return new Promise((resolve, reject) => {
         image.getBuffer(jimp.AUTO, (err, buf) => {
             if (err) {
@@ -22,93 +99,51 @@ function getbuffersync(image) {
         });
     });
 }
-
-async function main(raw_text) {
-    const text = unidecode(raw_text).trim();
-    if (text.length !== 0) {
-        const all = [];
-        let res = [];
-        for (let i = 0; i < text.length; i += 1) {
-            if (alphanuml.includes(text[i])) {
-                res.push(`${__dirname}/dataset/${text[i]}${Math.floor(Math.random() * 6) + 1}.jpg`);
-            } else if (alphanumu.includes(text[i])) {
-                res.push(`${__dirname}/dataset/${Math.floor(Math.random() * 6) + 1}${text[i]}.jpg`);
-            } else if (symbols.includes(text[i])) {
-                res.push(`${__dirname}/dataset/symbol${symbols.indexOf(text[i])}${Math.floor(Math.random() * 6) + 1}.jpg`);
-            } else if (text[i] === ' ') {
-                if (res.length > batch_size - 1) {
-                    all.push(res);
-                    res = [];
-                } else {
-                    res.push(`${__dirname}/dataset/space${Math.floor(Math.random() * 6) + 1}.jpg`);
-                }
-            } else if (text[i] === '\n') {
-                all.push(res);
-                res = [];
-            } else {
-                res.push(`${__dirname}/dataset/space${Math.floor(Math.random() * 6) + 1}.jpg`);
-            }
-        }
-        all.push(res);
-        let m = all[0].length;
-        for (let i = 1; i < all.length; i += 1) {
-            if (all[i].length > m) {
-                m = all[i].length;
-            }
-        }
-        if (m < batch_size) {
-            m = batch_size;
-        }
-        for (let i = 0; i < all.length; i += 1) {
-            while (all[i].length !== m) {
-                all[i].push(`${__dirname}/dataset/space${Math.floor(Math.random() * 6) + 1}.jpg`);
-            }
-        }
-        const k = [];
-        for (let i = 0; i < all.length; i += 1) {
-            const img = await mergeImg(all[i]);
-            k.push(img);
-        }
-        const blnk_line = [];
-        while (blnk_line.length !== m) {
-            blnk_line.push(`${__dirname}/dataset/space${Math.floor(Math.random() * 6) + 1}.jpg`);
-        }
-        const bl = await mergeImg(blnk_line);
-        while (k.length % batch_size != 0) {
-            k.push(bl);
-        }
-        const result = new Array(Math.ceil(k.length / batch_size))
-            .fill()
-            .map(_ => k.splice(0, batch_size));
-        const img_arr = [];
-        for (let i = 0; i < result.length; i += 1) {
-            const image = await mergeImg(result[i], {
-                direction: true,
-            });
-            img_arr.push(await getbuffersync(image));
-        }
-        const doc = new pdfkit({
-            size: [2480, 3508],
-            margins: {
-                top: 50,
-                bottom: 50,
-                left: 50,
-                right: 50
-            }
+async function getimages(result) {
+    const img_arr = [];
+    for (let i = 0; i < result.length; i += 1) {
+        const image = await mergeImg(result[i], {
+            direction: true,
         });
-        for (let i = 0; i < img_arr.length; i += 1) {
-            doc.image(img_arr[i], 50, 50, {
-                width: 2380,
-                height: 3408
-            });
-            doc.addPage();
-        }
-        doc.end();
-        return doc;
-    } else {
-        const doc = new pdfkit();
-        doc.end();
-        return doc;
+        img_arr.push(await getbufferasync(image));
     }
+    return img_arr;
+}
+
+function generatepdf(img_arr) {
+    const doc = new pdfkit({
+        size: [2480, 3508],
+        margins: {
+            top: 50,
+            bottom: 50,
+            left: 50,
+            right: 50,
+        },
+    });
+    for (let i = 0; i < img_arr.length; i += 1) {
+        doc.image(img_arr[i], 50, 50, {
+            width: 2380,
+            height: 3408,
+        });
+        doc.addPage();
+    }
+    doc.end();
+    return doc;
+}
+const batch_size = getbatchsize();
+const symbols = '!?"()@&*[]<>{}.,:;-\'~`$#';
+const alphanuml = 'qwertyuiopasdfghjklzxcvbnm1234567890';
+const alphanumu = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+async function main(raw_text) {
+    const text = cleantext(raw_text);
+    if (text.length === 0) {
+        return generatepdf([]);
+    }
+    const paragraph = getparagraph(text);
+    const width = getwidth(paragraph);
+    const k = await fillemptyspace(paragraph, width);
+    const result = createbatches(k);
+    const img_arr = await getimages(result);
+    return generatepdf(img_arr);
 }
 module.exports = main;

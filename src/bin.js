@@ -12,7 +12,7 @@ async function main(e) {
     console.log("Success! Saved file as 'output.pdf'!");
     output.pipe(fs.createWriteStream('output.pdf'));
   } catch (err) {
-    console.log(`Error!\n${err}`);
+    console.log(err);
   }
 }
 
