@@ -131,7 +131,7 @@ function generatepdf(img_arr) {
     return doc;
 }
 const batch_size = getbatchsize();
-const symbols = '!?"()@&*[]<>{}.,:;-\'~`$#';
+const symbols = '!?"()@&*[]<>{}.,:;-\'~`$#%+\\/|_^=';
 const alphanuml = 'qwertyuiopasdfghjklzxcvbnm1234567890';
 const alphanumu = 'QWERTYUIOPASDFGHJKLZXCVBNM';
 async function main(raw_text) {
