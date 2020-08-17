@@ -30,13 +30,12 @@ async function fillemptyspace(paragraph, width) {
 }
 
 function getwidth(paragraph) {
-    let width = paragraph[0].length;
-    for (let i = 1; i < paragraph.length; i += 1) {
+    let width = batch_size;
+    for (let i = 0; i < paragraph.length; i += 1) {
         if (paragraph[i].length > width) {
             width = paragraph[i].length;
         }
     }
-    width = Math.max(batch_size, width);
     return width;
 }
 
@@ -51,16 +50,13 @@ function getparagraph(text) {
         } else if (symbols.includes(text[i])) {
             line.push(
                 `${path}symbol${symbols.indexOf(text[i])}${randint()}.jpg`);
-        } else if (text[i] === ' ') {
-            if (line.length > batch_size - 1) {
+        } else if (text[i] === ' ' || text[i] === '\n') {
+            if (line.length > batch_size - 1 || text[i] === '\n') {
                 paragraph.push(line);
                 line = [];
             } else {
                 line.push(`${path}space${randint()}.jpg`);
             }
-        } else if (text[i] === '\n') {
-            paragraph.push(line);
-            line = [];
         }
     }
     paragraph.push(line);
@@ -68,7 +64,7 @@ function getparagraph(text) {
 }
 
 function getbatchsize() {
-    let batch_size = 36;
+    let batch_size = 54;
     while ([true, false][Math.floor(Math.random() * 2)]) {
         batch_size += 1;
     }
