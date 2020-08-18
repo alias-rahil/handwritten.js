@@ -1,6 +1,5 @@
 const unidecode = require('unidecode-plus');
 const mergeImg = require('merge-img');
-const jimp = require('jimp');
 const pdfkit = require('pdfkit');
 const path = `${__dirname}/dataset/`;
 
@@ -50,13 +49,16 @@ function getparagraph(text) {
         } else if (symbols.includes(text[i])) {
             line.push(
                 `${path}symbol${symbols.indexOf(text[i])}${randint()}.jpg`);
-        } else if (text[i] === ' ' || text[i] === '\n') {
-            if (line.length > batch_size - 1 || text[i] === '\n') {
+        } else if (text[i] === ' ') {
+            if (line.length > batch_size - 1) {
                 paragraph.push(line);
                 line = [];
             } else {
                 line.push(`${path}space${randint()}.jpg`);
             }
+        } else if (text[i] === '\n') {
+            paragraph.push(line);
+            line = [];
         }
     }
     paragraph.push(line);
@@ -85,7 +87,7 @@ function cleantext(raw_text) {
 
 function getbufferasync(image) {
     return new Promise((resolve, reject) => {
-        image.getBuffer(jimp.AUTO, (err, buf) => {
+        image.getBuffer("image/jpeg", (err, buf) => {
             if (err) {
                 reject(err);
             } else {
@@ -115,12 +117,16 @@ function generatepdf(img_arr) {
             right: 50,
         },
     });
-    for (let i = 0; i < img_arr.length; i += 1) {
+    doc.image(img_arr[0], 50, 50, {
+        width: 2380,
+        height: 3408,
+    });
+    for (let i = 1; i < img_arr.length; i += 1) {
+        doc.addPage();
         doc.image(img_arr[i], 50, 50, {
             width: 2380,
             height: 3408,
         });
-        doc.addPage();
     }
     doc.end();
     return doc;
