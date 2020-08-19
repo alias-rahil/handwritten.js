@@ -34,8 +34,8 @@
     "extended-mnist"
   ],
   "scripts": {
-    "releasepatch": "git add . && git commit -m 'update' && npm version patch && git push && npm publish",
-    "releaseminor": "git add . && git commit -m 'update' && npm version minor && git push && npm publish",
-    "releasemajor": "git add . && git commit -m 'update' && npm version major && git push && npm publish"
+    "releasepatch": "git add . && git commit -m 'update' --allow-empty && npm version patch && git push && npm publish",
+    "releaseminor": "git add . && git commit -m 'update' --allow-empty && npm version minor && git push && npm publish",
+    "releasemajor": "git add . && git commit -m 'update' --allow-empty && npm version major && git push && npm publish"
   }
 }
