@@ -99,9 +99,9 @@ function getbufferasync(image) {
 async function getimages(result) {
     const img_arr = [];
     for (let i = 0; i < result.length; i += 1) {
-        const image = await mergeImg(result[i], {
+        const image = (await mergeImg(result[i], {
             direction: true,
-        });
+        })).resize(2380, 3408);
         img_arr.push(await getbufferasync(image));
     }
     return img_arr;
@@ -117,16 +117,10 @@ function generatepdf(img_arr) {
             right: 50,
         },
     });
-    doc.image(img_arr[0], 50, 50, {
-        width: 2380,
-        height: 3408,
-    });
+    doc.image(img_arr[0], 50, 50);
     for (let i = 1; i < img_arr.length; i += 1) {
         doc.addPage();
-        doc.image(img_arr[i], 50, 50, {
-            width: 2380,
-            height: 3408,
-        });
+        doc.image(img_arr[i], 50, 50);
     }
     doc.end();
     return doc;
