@@ -66,7 +66,7 @@ function getparagraph(text) {
 }
 
 function getbatchsize() {
-    let batch_size = 54;
+    let batch_size = 32;
     while ([true, false][Math.floor(Math.random() * 2)]) {
         batch_size += 1;
     }
