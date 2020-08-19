@@ -45,7 +45,7 @@ npx handwritten.js "relative/path/to/file.txt"
 npm install handwritten.js -g
 ```
 
-> Note: **DO NOT** use sudo to install global packages! The correct way to do it is to tell npm where to install it's global packages: `npm config set prefix ~/.local`. Make sure `~/.local/bin` is added to `PATH`.
+> Note: **DO NOT** use sudo to install global packages! The correct way is to tell npm where to install its global packages: `npm config set prefix ~/.local`. Make sure `~/.local/bin` is added to `PATH`.
 
 ## Usage after installation
 
