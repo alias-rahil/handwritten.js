@@ -23,10 +23,9 @@ npm install --save handwritten.js
 ```javascript
 const handwritten = require('handwritten.js')
 const fs = require('fs')
-(async function(text) {
-    const converted = await handwritten(text)
+handwritten("Hello, world!").then((converted) => {
     converted.pipe(fs.createWriteStream('output.pdf'))
-})("Hello, world!")
+})
 ```
 
 # Command line usage:
