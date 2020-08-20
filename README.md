@@ -21,12 +21,12 @@ npm install --save handwritten.js
 ## Usage
 
 ```javascript
-const handwritten = require('handwritten.js');
-const fs = require('fs');
+const handwritten = require('handwritten.js')
+const fs = require('fs')
 (async function(text) {
-    let converted = await handwritten(text);
-    converted.pipe(fs.createWriteStream('output.pdf'));
-})("Hello, world!");
+    let converted = await handwritten(text)
+    converted.pipe(fs.createWriteStream('output.pdf'))
+})("Hello, world!")
 ```
 
 # Command line usage:
@@ -57,11 +57,19 @@ handwritten.js "/absolute/path/to/file.txt"
 
 ## Command line
 
-It takes a single argument as the path to the text file, and, if everything goes smoothly, saves the output pdf as 'output.pdf'.
+```bash
+handwritten.js path/to/input.txt path/to/output.pdf
+```
+
+The second argument is optional. If not specified, the output pdf will be saved as `output.pdf` in the current directory.
 
 ## In code
 
-It takes a single string argument and returns a promise that contains a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance.
+```javascript
+await handwritten(inputText, outputType)
+```
+
+The second argument is optional. If not specified, it will default to "pdf". Supported output types are: "pdf", "jpeg/buf", "jpeg/b64", "png/buf" and "png/b64". If the output type is set to "pdf", it returns a promise that will resolve in a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance. Else it will return a promise will resolve in an array containing the buffer or base64 value of the images.
 
 # Screenshot
 
