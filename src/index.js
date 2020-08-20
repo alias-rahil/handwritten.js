@@ -1,15 +1,15 @@
 const unidecode = require('unidecode-plus')
 const mergeImg = require('merge-img')
 const Pdfkit = require('pdfkit')
-const path = `${__dirname}/dataset/`
+const dataset = require('./dataset.json')
 
 function randint() {
-    return Math.floor(Math.random() * 6) + 1
+    return Math.floor(Math.random() * 6)
 }
 async function fillemptyspace(paragraph, width) {
     for (let i = 0; i < paragraph.length; i += 1) {
         while (paragraph[i].length !== width) {
-            paragraph[i].push(`${path}space${randint()}.jpg`)
+            paragraph[i].push(Buffer.from(dataset['space'][randint()]))
         }
     }
     const k = []
@@ -19,7 +19,7 @@ async function fillemptyspace(paragraph, width) {
     }
     const blankLine = []
     while (blankLine.length !== width) {
-        blankLine.push(`${path}space${randint()}.jpg`)
+        blankLine.push(Buffer.from(dataset['space'][randint()]))
     }
     const bl = await mergeImg(blankLine)
     while (k.length % batchSize !== 0) {
@@ -40,20 +40,18 @@ function getparagraph(text) {
     const paragraph = []
     let line = []
     for (let i = 0; i < text.length; i += 1) {
-        if (alphanuml.includes(text[i])) {
-            line.push(`${path}${text[i]}${randint()}.jpg`)
-        } else if (alphanumu.includes(text[i])) {
-            line.push(`${path}${randint()}${text[i]}.jpg`)
+        if (alphanum.includes(text[i])) {
+            line.push(Buffer.from(dataset[text[i]][randint()]))
         } else if (symbols.includes(text[i])) {
             line.push(
-                `${path}symbol${symbols.indexOf(text[i])}${randint()}.jpg`
+                Buffer.from(dataset[`symbol${symbols.indexOf(text[i])}`][randint()])
             )
         } else if (text[i] === ' ') {
             if (line.length > batchSize - 1) {
                 paragraph.push(line)
                 line = []
             } else {
-                line.push(`${path}space${randint()}.jpg`)
+                line.push(Buffer.from(dataset['space'][randint()]))
             }
         } else if (text[i] === '\n') {
             paragraph.push(line)
@@ -186,8 +184,7 @@ function isargvalid(outputType) {
 }
 const batchSize = getbatchsize()
 const symbols = '!?"()@&*[]<>{}.,:;-\'~`$#%+\\/|_^='
-const alphanuml = 'qwertyuiopasdfghjklzxcvbnm1234567890'
-const alphanumu = 'QWERTYUIOPASDFGHJKLZXCVBNM'
+const alphanum = 'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM'
 const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64',
     'png/b64'
 ]
