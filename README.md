@@ -88,6 +88,8 @@ Give a ⭐️ if this project helped you!
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/alias-rahil/handwritten.js/issues).
 
+> handwritten.js only supports English letters. I am not planning to add support for other languages for now. Please do not make issues about this. However, I will merge pull requests if any.
+
 # Credits
 
 [GDGVIT/HandWriter](https://github.com/GDGVIT/HandWriter) - For the cleaned dataset.
