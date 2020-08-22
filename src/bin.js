@@ -2,9 +2,7 @@
 
 const fs = require('fs')
 const handwritten = require('./index.js')
-
 const [, , ...args] = process.argv
-
 async function main(e, f) {
     try {
         let filename
@@ -21,7 +19,6 @@ async function main(e, f) {
         console.log(err)
     }
 }
-
 if (args.length > 2) {
     console.log(`Excess arguments were provided!\nNeeds either 1 or 2 arguments but was provided with ${args.length}!`)
 } else if (args.length < 1) {

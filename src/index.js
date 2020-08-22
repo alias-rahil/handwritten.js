@@ -159,15 +159,6 @@ const getret = async function(text, outputtype) {
         }
     }
 }
-const dataset = require('./dataset.json')
-const unidecode = require('unidecode-plus')
-const mergeimg = require('merge-img')
-const pdfkit = require('pdfkit')
-const symbols = '!?"()@&*[]<>{}.,:;-\'~`$#%+\\/|_^='
-const alphanum =
-    'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM'
-const supportedoutputtypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64']
-const batchsize = getbatchsize()
 const main = async function(rawtext, outputtype) {
     if (!checkargtype(rawtext, outputtype)) {
         throw {
@@ -195,4 +186,13 @@ const main = async function(rawtext, outputtype) {
         }
     }
 }
+const batchsize = getbatchsize()
+const dataset = require('./dataset.json')
+const unidecode = require('unidecode-plus')
+const mergeimg = require('merge-img')
+const symbols = '!?"()@&*[]<>{}.,:;-\'~`$#%+\\/|_^='
+const alphanum =
+    'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM'
+const supportedoutputtypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64']
+const pdfkit = require('pdfkit')
 module.exports = main
