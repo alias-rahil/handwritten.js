@@ -64,8 +64,6 @@ handwritten.js path/to/inputfile.txt ruled=true
 handwritten.js path/to/inputfile.txt outputfile=path/to/outputfile.pdf ruled=false
 ```
 
-handwritten.js path/to/inputfile.txt [ruled=true|false] [outputfile=path/to/outputfile.pdf]
-
 Default: ruled=false and outputfile=output.pdf
 
 ## In code
@@ -77,7 +75,7 @@ handwritten(rawtext, { outputtype: "jpeg/buf" })
 handwritten(rawtext, { ruled: true, outputtype: "jpeg/b64" })
 ```
 
-Default outputtype="pdf". Supported output types are: "pdf", "jpeg/buf", "jpeg/b64", "png/buf" and "png/b64". If the output type is set to "pdf", it returns a promise that will resolve in a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance. Else it will return a promise that will resolve in an array containing the buffer or base64 value of the images according to the output type you provided.
+Default outputtype="pdf". Supported output types are: "pdf", "jpeg/buf", "jpeg/b64", "png/buf" and "png/b64". If the output type is set to "pdf", it returns a promise that will resolve in a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance. Else it will return a promise that will resolve in an array containing the buffer or base64 value of the images according to the output type provided.
 
 # Screenshot
 
