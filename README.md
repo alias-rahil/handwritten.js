@@ -64,7 +64,7 @@ handwritten.js path/to/inputfile.txt ruled=true
 handwritten.js path/to/inputfile.txt outputfile=path/to/outputfile.pdf ruled=false
 ```
 
-Default: ruled=false and outputfile=output.pdf
+Default outputfile=output.pdf and ruled=false.
 
 ## In code
 
@@ -95,7 +95,7 @@ Give a ⭐️ if this project helped you!
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/alias-rahil/handwritten.js/issues).
 
-> handwritten.js only supports English letters. I am not planning to add support for other languages for now. Please do not make issues about this. However, I will merge pull requests if any.
+> handwritten.js only supports English letters. I am not planning to add support for other languages for now. Please do not make issues about this. However, I will merge pull requests if any. See the issue [#18](https://github.com/alias-rahil/handwritten.js/issues/18) for more details.
 
 # Credits
 
