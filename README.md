@@ -23,7 +23,8 @@ npm install --save handwritten.js
 ```javascript
 const handwritten = require('handwritten.js')
 const fs = require('fs')
-handwritten("Hello, world!").then((converted) => {
+const rawtext = "Hello, world!"
+handwritten(rawtext).then((converted) => {
     converted.pipe(fs.createWriteStream('output.pdf'))
 })
 ```
@@ -33,7 +34,7 @@ handwritten("Hello, world!").then((converted) => {
 ## Using without installation
 
 ```bash
-npx handwritten.js "relative/path/to/file.txt"
+npx handwritten.js "path/to/inputfile.txt"
 ```
 
 > Note: Use this method only if you plan to use handwritten.js for one time, installing handwritten.js globally (see-below) is recommended for multiple time usages.
@@ -49,7 +50,7 @@ npm install handwritten.js -g
 ## Usage after installation
 
 ```bash
-handwritten.js "/absolute/path/to/file.txt"
+handwritten.js "path/to/inputfile.txt"
 ```
 
 # API
@@ -57,18 +58,26 @@ handwritten.js "/absolute/path/to/file.txt"
 ## Command line
 
 ```bash
-handwritten.js path/to/input.txt path/to/output.pdf
+handwritten.js path/to/inputfile.txt
+handwritten.js path/to/inputfile.txt outputfile=path/to/outputfile.pdf
+handwritten.js path/to/inputfile.txt ruled=true
+handwritten.js path/to/inputfile.txt outputfile=path/to/outputfile.pdf ruled=false
 ```
 
-The second argument is optional. If not specified, the output pdf will be saved as `output.pdf` in the current directory.
+handwritten.js path/to/inputfile.txt [ruled=true|false] [outputfile=path/to/outputfile.pdf]
+
+Default: ruled=false and outputfile=output.pdf
 
 ## In code
 
 ```javascript
-await handwritten(inputText, outputType)
+handwritten(rawtext)
+handwritten(rawtext, { ruled: true })
+handwritten(rawtext, { outputtype: "jpeg/buf" })
+handwritten(rawtext, { ruled: true, outputtype: "jpeg/b64" })
 ```
 
-The second argument is optional. If not specified, it will default to "pdf". Supported output types are: "pdf", "jpeg/buf", "jpeg/b64", "png/buf" and "png/b64". If the output type is set to "pdf", it returns a promise that will resolve in a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance. Else it will return a promise that will resolve in an array containing the buffer or base64 value of the images according to the output type you provided.
+Default outputtype="pdf". Supported output types are: "pdf", "jpeg/buf", "jpeg/b64", "png/buf" and "png/b64". If the output type is set to "pdf", it returns a promise that will resolve in a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance. Else it will return a promise that will resolve in an array containing the buffer or base64 value of the images according to the output type you provided.
 
 # Screenshot
 
