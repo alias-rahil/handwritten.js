@@ -87,7 +87,6 @@ function createbatches(k, batchsize) {
     0, batchsize,
   ));
 }
-
 async function getimages(result, outputtype, type) {
   const imgarr = [];
   for (let i = 0; i < result.length; i += 1) {
@@ -165,7 +164,6 @@ function wraptext(text, batchsize) {
   paragraph.push(line);
   return paragraph;
 }
-
 async function texttohandwriting(paragraph, width, ruled, batchsize) {
   for (let i = 0; i < paragraph.length; i += 1) {
     const n = width - paragraph[i].length;
@@ -203,7 +201,6 @@ async function texttohandwriting(paragraph, width, ruled, batchsize) {
   }
   return Promise.all(k);
 }
-
 async function getret(text, outputtype, ruled) {
   const batchsize = getbatchsize();
   const paragraph = wraptext(text, batchsize);
@@ -227,7 +224,6 @@ async function getret(text, outputtype, ruled) {
   }
   return getimages(result, outputtype.slice(0, -4), getbas64async);
 }
-
 async function main(rawtext = '', optionalargs = {}) {
   if (!checkargtype(rawtext, optionalargs)) {
     throw Object.assign(new Error('Invalid arguments!'), {});

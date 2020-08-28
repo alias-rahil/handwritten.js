@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 /* eslint no-console: "off" */
-
 const {
   program,
 } = require('commander');
@@ -9,22 +8,16 @@ const fs = require('fs');
 const handwritten = require('./index.js');
 const packagedetails = require('../package.json');
 
-program.version(packagedetails.version).description(
-  packagedetails.description,
-).requiredOption(
-  '-f, --file <file-name>', 'input file name',
-).requiredOption(
-  '-o, --output <name>', 'specify output file/folder name',
-)
-  .option(
-    '-r, --ruled', 'use ruled paper as the background image',
-  )
+program.version(packagedetails.version).description(packagedetails
+  .description).requiredOption('-f, --file <file-name>',
+  'input file name').requiredOption('-o, --output <name>',
+  'specify output file/folder name')
+  .option('-r, --ruled',
+    'use ruled paper as the background image')
   .option(
     '-i, --images <png|jpeg>', 'get output as images instead of pdf',
   )
-  .parse(
-    process.argv,
-  );
+  .parse(process.argv);
 
 function removeDir(path) {
   if (fs.existsSync(path)) {
@@ -60,7 +53,6 @@ if (program.images) {
 if (program.ruled) {
   optionalargs.ruled = true;
 }
-
 async function main(file, optional, output) {
   try {
     const rawtext = fs.readFileSync(file).toString();
