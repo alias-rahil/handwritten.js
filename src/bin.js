@@ -10,7 +10,7 @@ const handwritten = require('./index.js');
 const packagedetails = require('../package.json');
 
 program.version(packagedetails.version).description(
-  'Convert typed text to realistic handwriting!',
+  packagedetails.description,
 ).requiredOption(
   '-f, --file <file-name>', 'input file name',
 ).requiredOption(
