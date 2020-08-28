@@ -13,6 +13,7 @@
   },
   "homepage": "https://github.com/alias-rahil/handwritten#readme",
   "dependencies": {
+    "commander": "^6.0.0",
     "merge-img": "^2.1.3",
     "pdfkit": "^0.11.0",
     "unidecode-plus": "^1.0.2"
@@ -34,8 +35,13 @@
     "extended-mnist"
   ],
   "scripts": {
-    "releasepatch": "git add . && git commit -m 'update' --allow-empty && npm version patch && git push && npm publish",
-    "releaseminor": "git add . && git commit -m 'update' --allow-empty && npm version minor && git push && npm publish",
-    "releasemajor": "git add . && git commit -m 'update' --allow-empty && npm version major && git push && npm publish"
+    "releasepatch": "eslint src/bin.js src/index.js --fix && git add . && git commit -m 'update' --allow-empty && npm version patch && git push && npm publish",
+    "releaseminor": "eslint src/bin.js src/index.js --fix && git add . && git commit -m 'update' --allow-empty && npm version minor && git push && npm publish",
+    "releasemajor": "eslint src/bin.js src/index.js --fix && git add . && git commit -m 'update' --allow-empty && npm version major && git push && npm publish"
+  },
+  "devDependencies": {
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0"
   }
 }
