@@ -35,9 +35,9 @@
     "extended-mnist"
   ],
   "scripts": {
-    "releasepatch": "eslint src/bin.js src/index.js --fix && git add . && git commit -m 'update' --allow-empty && npm version patch && git push && npm publish",
-    "releaseminor": "eslint src/bin.js src/index.js --fix && git add . && git commit -m 'update' --allow-empty && npm version minor && git push && npm publish",
-    "releasemajor": "eslint src/bin.js src/index.js --fix && git add . && git commit -m 'update' --allow-empty && npm version major && git push && npm publish"
+    "releasepatch": "eslint . --fix && git add . && git commit -m 'update' --allow-empty && npm version patch && git push && npm publish",
+    "releaseminor": "eslint . --fix && git add . && git commit -m 'update' --allow-empty && npm version minor && git push && npm publish",
+    "releasemajor": "eslint . --fix && git add . && git commit -m 'update' --allow-empty && npm version major && git push && npm publish"
   },
   "devDependencies": {
     "eslint": "^7.7.0",

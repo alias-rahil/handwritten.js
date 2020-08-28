@@ -1,58 +1,101 @@
 #!/usr/bin/env node
 
+/* eslint no-console: "off" */
+
+const {
+  program,
+} = require('commander');
 const fs = require('fs');
 const handwritten = require('./index.js');
+const packagedetails = require('../package.json');
 
-const [arg1, arg2, ...args] = process.argv;
-async function main(inputfile, optionalargs = {}) {
-  try {
-    const ruled = optionalargs.ruled || false;
-    const filename = optionalargs.outputfile || 'output.pdf';
-    const txt = String(fs.readFileSync(inputfile));
-    const output = await handwritten(txt, {
-      ruled,
-    });
-    console.log({
-      success: `Saved file as "${filename}"!`,
-    });
-    output.pipe(fs.createWriteStream(filename));
-  } catch (err) {
-    console.log(err);
+program.version(packagedetails.version).description(
+  'Convert typed text to realistic handwriting!',
+).requiredOption(
+  '-f, --file <file-name>', 'input file name',
+).requiredOption(
+  '-o, --output <name>', 'specify output file/folder name',
+)
+  .option(
+    '-r, --ruled', 'use ruled paper as the background image',
+  )
+  .option(
+    '-i, --images <png|jpeg>', 'get output as images instead of pdf',
+  )
+  .parse(
+    process.argv,
+  );
+
+function removeDir(path) {
+  if (fs.existsSync(path)) {
+    if (fs.statSync(path).isDirectory()) {
+      const files = fs.readdirSync(path);
+      if (files.length > 0) {
+        files.forEach((filename) => {
+          removeDir(`${path}/${filename}`);
+        });
+        fs.rmdirSync(path);
+      } else {
+        fs.rmdirSync(path);
+      }
+    } else {
+      fs.unlinkSync(path);
+    }
   }
 }
-if (args.length === 1 || (args.length === 2 && args[1] === 'ruled=false')) {
-  main(args[0]);
-} else if (args.length === 2 && args[1] === 'ruled=true') {
-  main(args[0], {
-    ruled: true,
-  });
-} else if ((args.length === 2 && args[1].slice(0, 11) === 'outputfile=') || (args
-  .length === 3 && args[1].slice(0, 11) === 'outputfile=' && args[2]
-        === 'ruled=false')) {
-  main(args[0], {
-    outputfile: args[1].slice(11, args[1].length),
-  });
-} else if (args.length === 3 && args[1].slice(0, 11) === 'outputfile=' && args[
-  2] === 'ruled=true') {
-  main(args[0], {
-    outputfile: args[1].slice(11, args[1].length),
-    ruled: true,
-  });
-} else if (args.length === 3 && args[2].slice(0, 11) === 'outputfile=' && args[
-  1] === 'ruled=true') {
-  main(args[0], {
-    outputfile: args[2].slice(11, args[1].length),
-    ruled: true,
-  });
-} else if (args.length === 3 && args[2].slice(0, 11) === 'outputfile=' && args[
-  1] === 'ruled=false') {
-  main(args[0], {
-    outputfile: args[2].slice(11, args[1].length),
-  });
-} else {
-  console.log({
-    error: 'invalid command-line arguments!',
-    usage: `${arg1} ${arg2} path/to/inputfile.txt [outputfile=path/to/outputfile.pdf] [ruled=true|false]`,
-    default: 'outputfile=output.pdf and ruled=false',
-  });
+const optionalargs = {};
+let error;
+if (program.images) {
+  if (program.images !== 'png' && program.images !== 'jpeg') {
+    error = true;
+    console.error({
+      error: 'Invalid image mime type. Supported types are png and jpeg!',
+    });
+  } else if ([true, false][Math.floor(Math.random() * 2)]) {
+    optionalargs.outputtype = `${program.images}/buf`;
+  } else {
+    optionalargs.outputtype = `${program.images}/b64`;
+  }
+}
+if (program.ruled) {
+  optionalargs.ruled = true;
+}
+
+async function main(file, optional, output) {
+  try {
+    const rawtext = fs.readFileSync(file).toString();
+    const out = await handwritten(rawtext, optional);
+    if (!optional.outputtype) {
+      out.pipe(fs.createWriteStream(output));
+      console.log({
+        success: `Saved pdf as "${output}"!`,
+      });
+    } else {
+      removeDir(output);
+      fs.mkdirSync(output);
+      let cb;
+      if (optional.outputtype.slice(-4, optional.outputtype
+        .length) === '/buf') {
+        cb = fs.writeFileSync;
+      } else {
+        cb = (name, img) => {
+          const data = img.replace(/^data:image\/\w+;base64,/,
+            '');
+          fs.writeFileSync(name, Buffer.from(data, 'base64'));
+        };
+      }
+      for (let i = 0; i < out.length; i += 1) {
+        cb(`${output}/${i}.${optional.outputtype.slice(0, -4)}`,
+          out[i]);
+      }
+      console.log({
+        success: `Saved the images in "${output}"!`,
+      });
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+if (!error) {
+  main(program.file, optionalargs, program.output);
 }

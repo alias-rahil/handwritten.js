@@ -7,10 +7,11 @@ const symbols = '!?"()@&*[]<>{}.,:;-\'~`$#%+\\/|_^=';
 const alphanum = 'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM';
 const supportedoutputtypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64'];
 
-const randint = function (n) {
+function randint(n) {
   return Math.floor(Math.random() * n);
-};
-const getbatchsize = function () {
+}
+
+function getbatchsize() {
   let batchsize = 10;
   for (let i = 0; i < 177; i += 1) {
     if (randint(8) === 2) {
@@ -18,14 +19,16 @@ const getbatchsize = function () {
     }
   }
   return batchsize;
-};
-const cleantext = function (rawtext) {
+}
+
+function cleantext(rawtext) {
   return unidecode(rawtext.replace('\t', '    '), {
     german: true,
     smartSpacing: true,
   }).trim();
-};
-const getbufferasync = function (image, outputtype) {
+}
+
+function getbufferasync(image, outputtype) {
   return new Promise((resolve, reject) => {
     image.getBuffer(`image/${outputtype}`, (err, buf) => {
       if (err) {
@@ -35,8 +38,9 @@ const getbufferasync = function (image, outputtype) {
       }
     });
   });
-};
-const getbas64async = function (image, outputtype) {
+}
+
+function getbas64async(image, outputtype) {
   return new Promise((resolve, reject) => {
     image.getBase64(`image/${outputtype}`, (err, buf) => {
       if (err) {
@@ -46,8 +50,9 @@ const getbas64async = function (image, outputtype) {
       }
     });
   });
-};
-const getwidth = function (paragraph, batchsize) {
+}
+
+function getwidth(paragraph, batchsize) {
   let width = batchsize;
   for (let i = 0; i < paragraph.length; i += 1) {
     if (width < paragraph[i].length) {
@@ -55,8 +60,9 @@ const getwidth = function (paragraph, batchsize) {
     }
   }
   return width;
-};
-const generatepdf = function (imgarr) {
+}
+
+function generatepdf(imgarr) {
   const doc = new Pdfkit({
     size: [2480, 3508],
     margins: {
@@ -74,67 +80,80 @@ const generatepdf = function (imgarr) {
   }
   doc.end();
   return doc;
-};
-const createbatches = function (k, batchsize) {
-  return new Array(Math.ceil(k.length / batchsize)).fill().map(() => k
-    .splice(0, batchsize));
-};
-const getimages = async function (result, outputtype, type) {
+}
+
+function createbatches(k, batchsize) {
+  return new Array(Math.ceil(k.length / batchsize)).fill().map(() => k.splice(
+    0, batchsize,
+  ));
+}
+
+async function getimages(result, outputtype, type) {
   const imgarr = [];
   for (let i = 0; i < result.length; i += 1) {
-    const image = (await mergeimg(result[i], {
+    imgarr.push(mergeimg(result[i], {
       direction: true,
-    })).resize(2380, 3408);
-    imgarr.push(await type(image, outputtype));
+    }));
   }
-  return imgarr;
-};
-const checkargtype = function (rawtext, optionalargs) {
+  const image = await Promise.all(imgarr);
+  for (let i = 0; i < result.length; i += 1) {
+    imgarr[i] = type(image[i].resize(2380, 3408), outputtype);
+  }
+  return Promise.all(imgarr);
+}
+
+function checkargtype(rawtext, optionalargs) {
   if (typeof (optionalargs) !== 'object') {
     return false;
-  } if (typeof (rawtext) !== 'string') {
+  }
+  if (typeof (rawtext) !== 'string') {
     return false;
-  } if (typeof (optionalargs.outputtype) !== 'string' && typeof (
-    optionalargs.outputtype) !== 'undefined') {
+  }
+  if (typeof (optionalargs.outputtype) !== 'string' && typeof (optionalargs
+    .outputtype) !== 'undefined') {
     return false;
-  } if (typeof (optionalargs.ruled) !== 'boolean' && typeof (
-    optionalargs.ruled) !== 'undefined') {
+  }
+  if (typeof (optionalargs.ruled) !== 'boolean' && typeof (optionalargs
+    .ruled) !== 'undefined') {
     return false;
-  } if (typeof (optionalargs.ruled) === 'boolean' && typeof (
-    optionalargs.outputtype) === 'string' && Object.keys(
-    optionalargs,
-  ).length !== 2) {
+  }
+  if (typeof (optionalargs.ruled) === 'boolean' && typeof (optionalargs
+    .outputtype) === 'string' && Object.keys(optionalargs).length
+        !== 2) {
     return false;
-  } if (typeof (optionalargs.ruled) === 'boolean' && typeof (
-    optionalargs.outputtype) === 'undefined' && Object.keys(
-    optionalargs,
-  ).length !== 1) {
+  }
+  if (typeof (optionalargs.ruled) === 'boolean' && typeof (optionalargs
+    .outputtype) === 'undefined' && Object.keys(optionalargs).length
+        !== 1) {
     return false;
-  } if (typeof (optionalargs.ruled) === 'undefined' && typeof (
-    optionalargs.outputtype) === 'string' && Object.keys(
-    optionalargs,
-  ).length !== 1) {
+  }
+  if (typeof (optionalargs.ruled) === 'undefined' && typeof (optionalargs
+    .outputtype) === 'string' && Object.keys(optionalargs).length
+        !== 1) {
     return false;
-  } if (typeof (optionalargs.ruled) === 'undefined' && typeof (
-    optionalargs.outputtype) === 'undefined' && Object.keys(
-    optionalargs,
-  ).length !== 0) {
+  }
+  if (typeof (optionalargs.ruled) === 'undefined' && typeof (optionalargs
+    .outputtype) === 'undefined' && Object.keys(optionalargs).length
+        !== 0) {
     return false;
   }
   return true;
-};
-const isargvalid = function (outputtype) {
+}
+
+function isargvalid(outputtype) {
   return supportedoutputtypes.concat(['pdf']).includes(outputtype);
-};
-const wraptext = function (text, batchsize) {
+}
+
+function wraptext(text, batchsize) {
   const paragraph = [];
   let line = [];
   for (let i = 0; i < text.length; i += 1) {
     if (alphanum.includes(text[i])) {
       line.push(Buffer.from(dataset[text[i]][randint(6)]));
     } else if (symbols.includes(text[i])) {
-      line.push(Buffer.from(dataset[
-        `symbol${symbols.indexOf(text[i])}`][randint(6)]));
+      line.push(Buffer.from(dataset[`symbol${symbols.indexOf(text[i])}`][
+        randint(6)
+      ]));
     } else if ((text[i] === ' ' && line.length > batchsize - 2) || text[
       i] === '\n') {
       paragraph.push(line);
@@ -145,19 +164,20 @@ const wraptext = function (text, batchsize) {
   }
   paragraph.push(line);
   return paragraph;
-};
-const texttohandwriting = async function (paragraph, width, ruled, batchsize) {
+}
+
+async function texttohandwriting(paragraph, width, ruled, batchsize) {
   for (let i = 0; i < paragraph.length; i += 1) {
     const n = width - paragraph[i].length;
     for (let j = 0; j < n; j += 1) {
       paragraph[i].push(Buffer.from(dataset.space[randint(6)]));
     }
   }
-  const k = [];
+  const img = [];
   for (let i = 0; i < paragraph.length; i += 1) {
-    const img = await mergeimg(paragraph[i]);
-    k.push(img);
+    img.push(mergeimg(paragraph[i]));
   }
+  const k = await Promise.all(img);
   const blankline = [];
   for (let i = 0; i < width; i += 1) {
     blankline.push(Buffer.from(dataset.space[randint(6)]));
@@ -175,15 +195,16 @@ const texttohandwriting = async function (paragraph, width, ruled, batchsize) {
     const line = await mergeimg(margin);
     const linebuf = await getbufferasync(line, 'png');
     for (let i = 0; i < k.length; i += 1) {
-      k[i] = await mergeimg([k[i], {
+      k[i] = mergeimg([k[i], {
         src: linebuf,
         offsetX: -18 * width,
       }]);
     }
   }
-  return k;
-};
-const getret = async function (text, outputtype, ruled) {
+  return Promise.all(k);
+}
+
+async function getret(text, outputtype, ruled) {
   const batchsize = getbatchsize();
   const paragraph = wraptext(text, batchsize);
   const width = getwidth(paragraph, batchsize);
@@ -193,38 +214,35 @@ const getret = async function (text, outputtype, ruled) {
     const type = supportedoutputtypes[Math.floor(Math.random()
             * supportedoutputtypes.length)];
     let cb;
-    if (type.slice(-4, 0) === '/b64') {
+    if (type.slice(-4, type.length) === '/b64') {
       cb = getbas64async;
     } else {
       cb = getbufferasync;
     }
-    const imgarr = await getimages(result, type.slice(0, -4),
-      cb);
+    const imgarr = await getimages(result, type.slice(0, -4), cb);
     return generatepdf(imgarr);
   }
-  if (outputtype.slice(-4, 0) === '/buf') {
-    return getimages(result, outputtype.slice(0, -4),
-      getbufferasync);
+  if (outputtype.slice(-4, outputtype.length) === '/buf') {
+    return getimages(result, outputtype.slice(0, -4), getbufferasync);
   }
-  return getimages(result, outputtype.slice(0, -4),
-    getbas64async);
-};
-const main = async function (rawtext = '', optionalargs = {}) {
+  return getimages(result, outputtype.slice(0, -4), getbas64async);
+}
+
+async function main(rawtext = '', optionalargs = {}) {
   if (!checkargtype(rawtext, optionalargs)) {
-    throw {
-      error: 'Invalid arguments!',
-    };
+    throw Object.assign(new Error('Invalid arguments!'), {});
   } else {
     const outputtype = optionalargs.outputtype || 'pdf';
     const ruled = optionalargs.ruled || false;
     if (!isargvalid(outputtype)) {
-      throw {
-        error: `Invalid output type "${outputtype}"!`,
-        supportedoutputtypes: supportedoutputtypes.concat(
-          ['pdf'],
-        ),
+      throw Object.assign(new Error(
+        `Invalid output type "${outputtype}"!`,
+      ), {
+        supportedoutputtypes: supportedoutputtypes.concat([
+          'pdf',
+        ]),
         default: 'pdf',
-      };
+      });
     } else {
       const text = cleantext(rawtext);
       if (text.length === 0) {
@@ -236,5 +254,5 @@ const main = async function (rawtext = '', optionalargs = {}) {
       return getret(text, outputtype, ruled);
     }
   }
-};
+}
 module.exports = main;

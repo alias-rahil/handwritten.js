@@ -34,7 +34,7 @@ handwritten(rawtext).then((converted) => {
 ## Using without installation
 
 ```bash
-npx handwritten.js "path/to/inputfile.txt"
+npx handwritten.js -f "path/to/inputfile.txt" -o "path/to/outputfile.pdf"
 ```
 
 > Note: Use this method only if you plan to use handwritten.js for one time, installing handwritten.js globally (see-below) is recommended for multiple time usages.
@@ -50,7 +50,7 @@ npm install handwritten.js -g
 ## Usage after installation
 
 ```bash
-handwritten.js "path/to/inputfile.txt"
+handwritten.js -f "path/to/inputfile.txt" -o "path/to/outputfile.pdf"
 ```
 
 # API
@@ -58,13 +58,12 @@ handwritten.js "path/to/inputfile.txt"
 ## Command line
 
 ```bash
-handwritten.js path/to/inputfile.txt
-handwritten.js path/to/inputfile.txt outputfile=path/to/outputfile.pdf
-handwritten.js path/to/inputfile.txt ruled=true
-handwritten.js path/to/inputfile.txt outputfile=path/to/outputfile.pdf ruled=false
+handwritten.js -f path/to/inputfile.txt -o path/to/outputfile.pdf
+handwritten.js -f path/to/inputfile.txt -o path/to/outputfile.pdf --ruled
+handwritten.js -f path/to/inputfile.txt -o path/to/outputfolder --images png
 ```
 
-Default outputfile=output.pdf and ruled=false.
+Check `--help` or `--version` option for more details.
 
 ## In code
 
@@ -75,7 +74,7 @@ handwritten(rawtext, { outputtype: "jpeg/buf" })
 handwritten(rawtext, { ruled: true, outputtype: "jpeg/b64" })
 ```
 
-Default outputtype="pdf". Supported output types are: "pdf", "jpeg/buf", "jpeg/b64", "png/buf" and "png/b64". If the output type is set to "pdf", it returns a promise that will resolve in a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance. Else it will return a promise that will resolve in an array containing the buffer or base64 value of the images according to the output type provided.
+Default outputtype="pdf". Supported output types are: `pdf`, `jpeg/buf`, `jpeg/b64`, `png/buf` and `png/b64`. If the output type is set to `pdf`, it returns a promise that will resolve in a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance. Else it will return a promise that will resolve in an array containing the buffer or base64 value of the images according to the output type provided. 
 
 # Screenshot
 
