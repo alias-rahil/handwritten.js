@@ -11,9 +11,9 @@ const packagedetails = require('../package.json');
 program.version(packagedetails.version).description(packagedetails
   .description).requiredOption('-f, --file <file-name>',
   'input file name').requiredOption('-o, --output <name>',
-  'specify output file/folder name')
+  'output file/folder name')
   .option('-r, --ruled',
-    'use ruled paper as the background image')
+    'use ruled paper as the background image instead of plain white image')
   .option(
     '-i, --images <png|jpeg>', 'get output as images instead of pdf',
   )
