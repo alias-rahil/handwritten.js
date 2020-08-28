@@ -212,7 +212,7 @@ const getret = async function (text, outputtype, ruled) {
 const main = async function (rawtext = '', optionalargs = {}) {
   if (!checkargtype(rawtext, optionalargs)) {
     throw {
-      error: 'Invalid arguments type!',
+      error: 'Invalid arguments!',
     };
   } else {
     const outputtype = optionalargs.outputtype || 'pdf';
