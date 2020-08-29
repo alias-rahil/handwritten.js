@@ -8,15 +8,13 @@ const fs = require('fs');
 const handwritten = require('./index.js');
 const packagedetails = require('../package.json');
 
-program.version(packagedetails.version).description(packagedetails
-  .description).requiredOption('-f, --file <file-name>',
-  'input file name').requiredOption('-o, --output <name>',
-  'output file/folder name')
+program.version(packagedetails.version).description(packagedetails.description)
+  .requiredOption('-f, --file <file-name>', 'input file name').requiredOption(
+    '-o, --output <name>', 'output file/folder name',
+  )
   .option('-r, --ruled',
     'use ruled paper as the background image instead of plain white image')
-  .option(
-    '-i, --images <png|jpeg>', 'get output as images instead of pdf',
-  )
+  .option('-i, --images <png|jpeg>', 'get output as images instead of pdf')
   .parse(process.argv);
 
 function removeDir(path) {
@@ -27,10 +25,8 @@ function removeDir(path) {
         files.forEach((filename) => {
           removeDir(`${path}/${filename}`);
         });
-        fs.rmdirSync(path);
-      } else {
-        fs.rmdirSync(path);
       }
+      fs.rmdirSync(path);
     } else {
       fs.unlinkSync(path);
     }
@@ -39,11 +35,8 @@ function removeDir(path) {
 const optionalargs = {};
 let error;
 if (program.images) {
-  if (program.images !== 'png' && program.images !== 'jpeg') {
+  if ((program.images !== 'png' && program.images !== 'jpeg')) {
     error = true;
-    console.error({
-      error: 'Invalid image mime type. Supported types are png and jpeg!',
-    });
   } else if ([true, false][Math.floor(Math.random() * 2)]) {
     optionalargs.outputtype = `${program.images}/buf`;
   } else {
@@ -88,6 +81,10 @@ async function main(file, optional, output) {
     console.error(e);
   }
 }
-if (!error) {
+if (!error && program.args.length === 0) {
   main(program.file, optionalargs, program.output);
+} else {
+  console.error({
+    error: 'Invalid arguments!',
+  });
 }
