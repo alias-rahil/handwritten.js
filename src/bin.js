@@ -6,9 +6,12 @@ const {
 } = require('commander');
 const fs = require('fs');
 const handwritten = require('./index.js');
-const packagedetails = require('../package.json');
+const {
+  version,
+  description,
+} = require('../package.json');
 
-program.version(packagedetails.version).description(packagedetails.description)
+program.version(version).description(description)
   .requiredOption('-f, --file <file-name>', 'input file name').requiredOption(
     '-o, --output <name>', 'output file/folder name',
   )
@@ -37,10 +40,8 @@ let error;
 if (program.images) {
   if ((program.images !== 'png' && program.images !== 'jpeg')) {
     error = true;
-  } else if ([true, false][Math.floor(Math.random() * 2)]) {
-    optionalargs.outputtype = `${program.images}/buf`;
   } else {
-    optionalargs.outputtype = `${program.images}/b64`;
+    optionalargs.outputtype = `${program.images}/buf`;
   }
 }
 if (program.ruled) {
@@ -58,19 +59,8 @@ async function main(file, optional, output) {
     } else {
       removeDir(output);
       fs.mkdirSync(output);
-      let cb;
-      if (optional.outputtype.slice(-4, optional.outputtype
-        .length) === '/buf') {
-        cb = fs.writeFileSync;
-      } else {
-        cb = (name, img) => {
-          const data = img.replace(/^data:image\/\w+;base64,/,
-            '');
-          fs.writeFileSync(name, Buffer.from(data, 'base64'));
-        };
-      }
       for (let i = 0; i < out.length; i += 1) {
-        cb(`${output}/${i}.${optional.outputtype.slice(0, -4)}`,
+        fs.writeFileSync(`${output}/${i}.${optional.outputtype.slice(0, -4)}`,
           out[i]);
       }
       console.log({
