@@ -1,1 +1,1 @@
-function debounce(h,a=1000,b){var c;return function(){var d=this,e=arguments,f=b&&!c;clearTimeout(c),c=setTimeout(function(){c=null,b||h.apply(d,e)},a),f&&h.apply(d,e)}}
+function debounce(f,g=1e3,h){var a;return function(){var b=this,c=arguments,d=h&&!a;clearTimeout(a),a=setTimeout(function(){a=null,h||f.apply(b,c)},g),d&&f.apply(b,c)}}/*! edited to make 1000 as the default wait time */
