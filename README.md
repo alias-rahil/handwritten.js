@@ -19,7 +19,7 @@
 
 # In your code:
 
-To use in browser, include `<script src="https://raw.githubusercontent.com/alias-rahil/handwritten.js/master/docs/handwritten.js"></script>` in your html file for the latest version. This exposes a global variable called `handwritten` which you can start using right away. See [docs/index.html](https://github.com/alias-rahil/handwritten.js/blob/master/docs/index.html) and [docs/main.js](https://github.com/alias-rahil/handwritten.js/blob/master/docs/main.js) for a simple example. For other versions, install the required version with npm and use [browserify](https://www.npmjs.com/package/browserify) to compile it. Optionally, use [babel-minify](https://www.npmjs.com/package/babel-minify) to compress the bundled javascript file.
+To use in browser, include `<script src="https://raw.githubusercontent.com/alias-rahil/handwritten.js/master/docs/handwritten.js"></script>` in one of your html files to get the latest version of `handwritten.js`. This will expose a global variable called `handwritten` which you can start using right away. Check the contents of [docs/](https://github.com/alias-rahil/handwritten.js/blob/master/docs/) folder for a simple implementation. For other versions, install the required version with npm and use [browserify](https://www.npmjs.com/package/browserify) to compile it. Optionally, use [babel-minify](https://www.npmjs.com/package/babel-minify) to compress the bundled javascript file.
 
 ## Installation
 
