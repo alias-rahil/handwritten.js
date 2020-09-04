@@ -1,4 +1,11 @@
 <h1 align="center">Welcome to handwritten.js 👋</h1>
+<p align="center">
+  <a href="https://alias-rahil.github.io/handwritten.js/">
+    demo
+  </a>
+  <br>
+  Warning: ugly website ahead! HTML and CSS went AWOL :P. This is a temporary website made for desperate times while we wait on a proper demo-site, see <a href="https://github.com/alias-rahil/handwritten.js/issues/8">#8</a>.
+</p>
 <p>
   <a href="https://www.npmjs.com/package/handwritten.js" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/handwritten.js.svg">
@@ -11,6 +18,8 @@
 > Convert typed text to realistic handwriting!
 
 # In your code:
+
+To use in browser, include `<script src="https://raw.githubusercontent.com/alias-rahil/handwritten.js/master/docs/handwritten.js"></script>` in your html file for the latest version. This exposes a global variable called `handwritten` which you can start using right away. See [docs/index.html](https://github.com/alias-rahil/handwritten.js/blob/master/docs/index.html) and [docs/main.js](https://github.com/alias-rahil/handwritten.js/blob/master/docs/main.js) for a simple example. For other versions, install the required version with npm and use [browserify](https://www.npmjs.com/package/browserify) to compile it. Optionally, use [babel-minify](https://www.npmjs.com/package/babel-minify) to compress the bundled javascript file.
 
 ## Installation
 
@@ -92,7 +101,7 @@ Give a ⭐️ if this project helped you!
 
 # 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/alias-rahil/handwritten.js/issues).
+Contributions, issues and feature requests are welcome! Feel free to check [issues page](https://github.com/alias-rahil/handwritten.js/issues).
 
 > handwritten.js only supports English letters. I am not planning to add support for other languages for now. Please do not make issues about this. However, I will merge pull requests if any. See the issue [#18](https://github.com/alias-rahil/handwritten.js/issues/18) for more details.
 
