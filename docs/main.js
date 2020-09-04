@@ -9,7 +9,7 @@ const makepdf = async function() {
     const stream = doc.pipe(blobStream());
     stream.on('finish', function() {
         pdf.src = stream.toBlobURL('application/pdf');
-        download.download = pdf.src + ".pdf";
+        download.download = pdf.src.slice(4) + ".pdf";
         download.href = pdf.src;
     });
 };
