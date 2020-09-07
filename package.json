@@ -1,0 +1,44 @@
+{
+   "name": "handwritten.js",
+   "version": "18.1.14",
+   "description": "Convert typed text to realistic handwriting!",
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/alias-rahil/handwritten.git/"
+   },
+   "author": "Rahil Kabani <rahil.kabani.4@gmail.com>",
+   "license": "MIT",
+   "bugs": {
+      "url": "https://github.com/alias-rahil/handwritten/issues"
+   },
+   "homepage": "https://github.com/alias-rahil/handwritten#readme",
+   "dependencies": {
+      "commander": "^6.0.0",
+      "merge-img": "^2.1.3",
+      "pdfkit": "^0.11.0",
+      "unidecode-plus": "^1.0.2"
+   },
+   "bin": {
+      "handwritten.js": "src/bin.js"
+   },
+   "main": "src/index.js",
+   "keywords": [
+      "handwritten",
+      "text",
+      "handwriting",
+      "converter",
+      "handwriter",
+      "emnist-dataset",
+      "daniel-font",
+      "pen",
+      "pencil",
+      "extended-mnist"
+   ],
+   "devDependencies": {
+      "babel-minify": "^0.5.1",
+      "browserify": "^16.5.2",
+      "eslint": "^7.7.0",
+      "eslint-config-airbnb-base": "^14.2.0",
+      "eslint-plugin-import": "^2.22.0"
+   }
+}

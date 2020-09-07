@@ -1,0 +1,10 @@
+#pdf {
+	height: 37.5vh;
+	width: 80vw;
+}
+
+#text {
+	height: 37.5vh;
+	width: 80vw;
+	resize: none;
+}
