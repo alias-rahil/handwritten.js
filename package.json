@@ -21,6 +21,13 @@
    "bin": {
       "handwritten.js": "src/bin.js"
    },
+   "scripts": {
+      "build": "npm i && eslint . --fix && browserify -e src/index.js -s handwritten -o docs/handwritten.js && minify docs/handwritten.js -o docs/handwritten.js && git add . && (git commit -m 'fix lint errors + bump docs/handwritten.js' || :)",
+      "patch": "npm run build && npm version patch && npm run release",
+      "minor": "npm run build && npm version minor && npm run release",
+      "major": "npm run build && npm version major && npm run release",
+      "release": "git push && npm publish"
+   },
    "main": "src/index.js",
    "keywords": [
       "handwritten",
