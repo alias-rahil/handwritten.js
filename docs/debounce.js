@@ -1,1 +1,1 @@
-function debounce(f,g=1e3,h){var a;return function(){var b=this,c=arguments,d=h&&!a;clearTimeout(a),a=setTimeout(function(){a=null,h||f.apply(b,c)},g),d&&f.apply(b,c)}}/*! edited to make 1000 milliseconds as the default time */
+function debounce(d,e=500,f){var g;return function(){var h=this,a=arguments,b=f&&!g;clearTimeout(g),g=setTimeout(function(){g=null,f||d.apply(h,a)},e),b&&d.apply(h,a)}}/*! edited to make 500 milliseconds as the default time */

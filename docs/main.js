@@ -3,18 +3,22 @@ const text = document.getElementById('text');
 const download = document.getElementById('download');
 const pdf = document.getElementById('pdf');
 const ruled = document.getElementById('ruled');
-async function makepdf() {
-  const doc = await handwritten(text.value, {
-    ruled: ruled.checked,
-  });
-  const stream = doc.pipe(blobStream());
-  stream.on('finish', () => {
-    pdf.src = stream.toBlobURL('application/pdf');
-    download.download = `${pdf.src.slice(4)}.pdf`;
-    download.href = pdf.src;
-  });
+const w = new Worker('worker.js');
+const w2 = new Worker('workerruled.js');
+function makepdf() {
+  if (ruled.checked) {
+    w2.postMessage(text.value);
+  } else {
+    w.postMessage(text.value);
+  }
 }
-const handWrite = debounce(makepdf);
-text.addEventListener('input', handWrite);
+function displaypdf(e) {
+  pdf.src = e.data;
+  download.download = `${pdf.src.slice(4)}.pdf`;
+  download.href = pdf.src;
+}
+text.addEventListener('input', debounce(makepdf));
 ruled.addEventListener('click', makepdf);
+w.addEventListener('message', displaypdf);
+w2.addEventListener('message', displaypdf);
 makepdf();
