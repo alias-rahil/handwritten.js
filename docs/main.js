@@ -9,7 +9,7 @@ const w = new Worker('worker.js');
 function makepdf() {
   w.postMessage(new Array(text.value, ruled.checked));
 }
-text.addEventListener('input', debounce(makepdf, 800));
+text.addEventListener('input', debounce(makepdf, 500));
 ruled.addEventListener('click', makepdf);
 w.addEventListener('message', (e) => {
   if (e.data[1][0] === text.value) {
