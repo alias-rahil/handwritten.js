@@ -3,7 +3,6 @@
    <head>
       <link rel="icon" href="favicon.ico">
       <title>handwritten.js - Convert typed text to realistic handwriting!</title>
-      <script src="debounce.js"></script>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, height=device-height">
       <meta name="description" content="handwritten.js - Convert typed text to realistic handwriting!">
@@ -12,19 +11,18 @@
       <meta name="application-name" content="handwritten.js - Convert typed text to realistic handwriting!">
    </head>
    <body>
-      <h1 style="text-align:center">handwritten.js - Convert typed text to realistic handwriting!</h1>
+      <h1 style="text-align:center;">handwritten.js - Convert typed text to realistic handwriting!</h1>
       <br>
       <p align="center"><textarea id="text"></textarea></p>
       <br>
       <p align="center"><label>ruled<input type="checkbox" id="ruled"></label></p>
       <br>
-      <p align="center"><iframe id="pdf" src=""></iframe></p>
+      <div style="text-align:center; resize: both; overflow: auto;"><iframe style="width: 100%; height: 100%;" id="pdf"></iframe></div>
       <br>
-      <p align="center"><a id="download" download="" href="">Download</a></p>
+      <p align="center"><a id="download">Download</a></p>
       <br>
       <p align="center"><a href="https://github.com/alias-rahil/handwritten.js.git/">Github</a></p>
       <br>
       <script src="main.js"></script>
-      <link rel="stylesheet" href="styles.css">
    </body>
 </html>
