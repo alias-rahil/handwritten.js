@@ -26,3 +26,7 @@
     color: aliceblue;
 
   }
+iframe {
+    resize: both;
+    overflow: auto;
+  }
