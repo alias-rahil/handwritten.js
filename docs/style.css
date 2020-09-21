@@ -1,0 +1,28 @@
+.bg{
+    padding:5%;
+    background: black;
+    font-family: tahoma;
+    color: grey;
+    align-content:center;
+  }
+  textarea{
+    width: 100%;
+    border: 0;
+    float: center;
+    font-size: 40px;
+  }
+  h4{
+      text-align:center;
+      font-style: italic;
+      font-family: cursive;
+      color: aliceblue;
+  }
+  .bg1{
+      background-color:#63264a;
+  }
+  h1{text-align:center;
+    font-style: italic;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: aliceblue;
+
+  }
