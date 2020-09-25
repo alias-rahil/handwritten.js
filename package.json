@@ -1,6 +1,6 @@
 {
    "name": "handwritten.js",
-   "version": "18.1.10",
+   "version": "18.1.15",
    "description": "Convert typed text to realistic handwriting!",
    "repository": {
       "type": "git",
@@ -21,6 +21,13 @@
    "bin": {
       "handwritten.js": "src/bin.js"
    },
+   "scripts": {
+      "build": "npm i && eslint . --fix && browserify -e src/index.js -s handwritten -o docs/handwritten.js && minify docs/handwritten.js -o docs/handwritten.js && git add . && (git commit -m 'fix lint errors + bump docs/handwritten.js' || :)",
+      "patch": "npm run build && npm version patch && npm run release",
+      "minor": "npm run build && npm version minor && npm run release",
+      "major": "npm run build && npm version major && npm run release",
+      "release": "git push && npm publish"
+   },
    "main": "src/index.js",
    "keywords": [
       "handwritten",
@@ -34,11 +41,6 @@
       "pencil",
       "extended-mnist"
    ],
-   "scripts": {
-      "releasepatch": "eslint . --fix && browserify -e src/index.js -s handwritten -o docs/handwritten.js && minify docs/handwritten.js -o docs/handwritten.js && git add . && git commit -m 'update' --allow-empty && npm version patch && git push && npm publish",
-      "releaseminor": "eslint . --fix && browserify -e src/index.js -s handwritten -o docs/handwritten.js && minify docs/handwritten.js -o docs/handwritten.js && git add . && git commit -m 'update' --allow-empty && npm version minor && git push && npm publish",
-      "releasemajor": "eslint . --fix && browserify -e src/index.js -s handwritten -o docs/handwritten.js && minify docs/handwritten.js -o docs/handwritten.js && git add . && git commit -m 'update' --allow-empty && npm version major && git push && npm publish"
-   },
    "devDependencies": {
       "babel-minify": "^0.5.1",
       "browserify": "^16.5.2",

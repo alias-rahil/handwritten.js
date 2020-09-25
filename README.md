@@ -4,7 +4,7 @@
     demo
   </a>
   <br>
-  Warning: ugly website ahead! HTML and CSS went AWOL :P. This is a temporary website made for desperate times while we wait on a proper demo-site, see <a href="https://github.com/alias-rahil/handwritten.js/issues/8">#8</a>.
+  Warning: ugly website ahead! HTML and CSS went AWOL :P. This is a temporary website made for desperate times while we wait for a proper demo-site, see <a href="https://github.com/alias-rahil/handwritten.js/issues/8">#8</a>.
 </p>
 <p>
   <a href="https://www.npmjs.com/package/handwritten.js" target="_blank">
