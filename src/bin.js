@@ -51,13 +51,13 @@ async function main(file, optional, output) {
   try {
     const rawtext = fs.readFileSync(file).toString();
     const out = await handwritten(rawtext, optional);
+    removeDir(output);
     if (!optional.outputtype) {
       out.pipe(fs.createWriteStream(output));
       console.log({
         success: `Saved pdf as "${output}"!`,
       });
     } else {
-      removeDir(output);
       fs.mkdirSync(output);
       for (let i = 0; i < out.length; i += 1) {
         fs.writeFileSync(`${output}/${i}.${optional.outputtype.slice(0, -4)}`,
