@@ -7,6 +7,16 @@ const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64'];
 const symbols = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
   .split('').concat(['margin']);
 
+const jimpObjectPromises = [];
+
+for (let i = 0; i < symbols.length; i += 1) {
+  for (let j = 0; j < 6; j += 1) {
+    jimpObjectPromises.push(Jimp.read(Buffer.from(dataset[i][j])));
+  }
+}
+
+let jimpObjects;
+
 function wrapText(str, width) {
   if (str.length > width) {
     let p = width;
@@ -165,36 +175,21 @@ function isArgValid(outputType) {
   return supportedOutputTypes.concat(['pdf']).includes(outputType);
 }
 
-async function generateImageArray(str, ruled, width) {
-  const composition = [];
-  str.forEach((page) => {
-    page.forEach((line) => {
-      line.split('').forEach((character) => {
-        composition.push(
-          Jimp.read(Buffer.from(dataset[symbols.indexOf(character)][randInt(6)])),
-        );
-        if (ruled) {
-          composition.push(
-            Jimp.read(Buffer.from(dataset[symbols.indexOf('margin')][randInt(6)])),
-          );
-        }
-      });
-    });
-  });
-  const jimpObjects = await Promise.all(composition);
+function generateImageArray(str, ruled, width) {
   const imgArray = [];
-  let z = 0;
   str.forEach((page) => {
     const baseImage = new Jimp(18 * width, 50 * width);
     let y = 0;
     page.forEach((line) => {
       let x = 0;
-      line.split('').forEach(() => {
-        baseImage.composite(jimpObjects[z], x, y);
-        z += 1;
+      line.split('').forEach((character) => {
+        if (symbols.includes(character)) {
+          baseImage.composite(jimpObjects[symbols.indexOf(character)][randInt(6)], x, y);
+        } else {
+          baseImage.composite(jimpObjects[symbols.indexOf(' ')][randInt(6)], x, y);
+        }
         if (ruled) {
-          baseImage.composite(jimpObjects[z], x, y);
-          z += 1;
+          baseImage.composite(jimpObjects[symbols.indexOf('margin')][randInt(6)], x, y);
         }
         x += 18;
       });
@@ -233,8 +228,20 @@ async function main(rawText = '', optionalArgs = {}) {
         default: 'pdf',
       });
     } else {
+      if (typeof (jimpObjects) === 'undefined') {
+        const resolvedPromises = await Promise.all(jimpObjectPromises);
+        jimpObjects = {};
+        let z = 0;
+        for (let i = 0; i < symbols.length; i += 1) {
+          jimpObjects[i] = [];
+          for (let j = 0; j < 6; j += 1) {
+            jimpObjects[i].push(resolvedPromises[z]);
+            z += 1;
+          }
+        }
+      }
       const [str, width] = processText(rawText);
-      const imageArray = await generateImageArray(str, ruled, width);
+      const imageArray = generateImageArray(str, ruled, width);
       if (outputType === 'pdf') {
         return generatePdf(imageArray);
       }

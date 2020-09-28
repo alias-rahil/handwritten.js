@@ -7,6 +7,6 @@ self.addEventListener('message', async (e) => {
   });
   const stream = doc.pipe(blobStream());
   stream.on('finish', () => {
-    self.postMessage([stream.toBlobURL('application/pdf'), e.data]);
+    self.postMessage(stream.toBlobURL('application/pdf'));
   });
 });

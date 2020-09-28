@@ -10,7 +10,7 @@ function makepdf() {
   w = new Worker('worker.js');
   w.postMessage([text.value, ruled.checked]);
   w.addEventListener('message', (e) => {
-    [pdf.src] = e.data;
+    pdf.src = e.data;
     download.download = `${pdf.src.slice(4, pdf.src.length)}.pdf`;
     download.href = pdf.src;
   });
