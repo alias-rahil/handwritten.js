@@ -6,15 +6,13 @@ const dataset = require('./dataset.json');
 const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64'];
 const symbols = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
   .split('').concat(['margin']);
-
 const jimpObjectPromises = [];
-
 for (let i = 0; i < symbols.length; i += 1) {
   for (let j = 0; j < 6; j += 1) {
-    jimpObjectPromises.push(Jimp.read(Buffer.from(dataset[i][j])));
+    dataset[i][j] = Buffer.from(dataset[i][j]);
+    jimpObjectPromises.push(Jimp.read(dataset[i][j]));
   }
 }
-
 let jimpObjects;
 
 function wrapText(str, width) {
@@ -44,12 +42,15 @@ function findMaxLen(lines) {
 
 function padText(str, batchSize) {
   const lines = str.split('\n');
-  const padding = Array.from({ length: batchSize + 1 }).join(' ');
+  const padding = Array.from({
+    length: batchSize + 1,
+  }).join(' ');
   let paddedLines = [];
   const paddedParagraphs = [];
   lines.forEach((element) => {
     if (element) {
-      paddedLines.push((element + padding).substring(0, batchSize));
+      paddedLines.push((element + padding).substring(0,
+        batchSize));
     } else {
       paddedLines.push(padding);
     }
@@ -90,11 +91,8 @@ function getBatchSize() {
 
 function processText(rawText) {
   const batchSize = getBatchSize();
-  const str = cleanText(rawText
-    .replace('\t', '     ')
-    .replace('\r', '\n')
-    .replace('\f', '\n')
-    .replace('\v', '\n'));
+  const str = cleanText(rawText.replace('\t', '     ').replace('\r', '\n')
+    .replace('\f', '\n').replace('\v', '\n'));
   const maxLen = findMaxLen(str.replace('\n', ' ').split(' '));
   const width = maxLen > batchSize ? maxLen : batchSize;
   const wrappedText = [];
@@ -102,35 +100,6 @@ function processText(rawText) {
     wrappedText.push(wrapText(element, width));
   });
   return [padText(wrappedText.join('\n'), width), width];
-}
-
-async function generatePdf(imageArray) {
-  const promisesToKeep = [];
-  imageArray.forEach((image) => {
-    if (randInt(2) === 1) {
-      promisesToKeep.push(image.getBufferAsync(Jimp.AUTO));
-    } else {
-      promisesToKeep.push(image.getBase64Async(Jimp.AUTO));
-    }
-  });
-  const imgArray = await Promise.all(promisesToKeep);
-  const doc = new Pdfkit({
-    size: [2480, 3508],
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 50,
-      right: 50,
-    },
-  });
-  for (let i = 0; i < imgArray.length; i += 1) {
-    doc.image(imgArray[i], 50, 50);
-    if (i !== imgArray.length - 1) {
-      doc.addPage();
-    }
-  }
-  doc.end();
-  return doc;
 }
 
 function checkArgType(rawText, optionalArgs) {
@@ -178,24 +147,38 @@ function isArgValid(outputType) {
 function generateImageArray(str, ruled, width) {
   const imgArray = [];
   str.forEach((page) => {
-    const baseImage = new Jimp(18 * width, 50 * width);
-    let y = 0;
+    const baseImage = new Jimp(18 * width + 100, 50 * width + 100,
+      '#ffffff');
+    let y = 50;
     page.forEach((line) => {
-      let x = 0;
+      let x = 50;
       line.split('').forEach((character) => {
         if (symbols.includes(character)) {
-          baseImage.composite(jimpObjects[symbols.indexOf(character)][randInt(6)], x, y);
+          baseImage.composite(jimpObjects[
+            symbols.indexOf(
+              character,
+            )][randInt(
+            6,
+          )], x, y);
         } else {
-          baseImage.composite(jimpObjects[symbols.indexOf(' ')][randInt(6)], x, y);
+          baseImage.composite(jimpObjects[
+            symbols.indexOf(' ')][
+            randInt(6)
+          ], x, y);
         }
         if (ruled) {
-          baseImage.composite(jimpObjects[symbols.indexOf('margin')][randInt(6)], x, y);
+          baseImage.composite(jimpObjects[
+            symbols.indexOf(
+              'margin',
+            )][randInt(
+            6,
+          )], x, y);
         }
         x += 18;
       });
       y += 50;
     });
-    imgArray.push(baseImage.resize(2380, 3408));
+    imgArray.push(baseImage.resize(2480, 3508));
   });
   return imgArray;
 }
@@ -204,14 +187,65 @@ function generateImages(imageArray, outputType) {
   const promisesToKeep = [];
   imageArray.forEach((image) => {
     if (outputType.slice(-4, outputType.length) === '/buf') {
-      promisesToKeep.push(image.getBufferAsync(`image/${outputType.slice(0, -4)}`));
+      promisesToKeep.push(image.getBufferAsync(
+        `image/${outputType.slice(0, -4)}`,
+      ));
     } else {
-      promisesToKeep.push(image.getBase64Async(`image/${outputType.slice(0, -4)}`));
+      promisesToKeep.push(image.getBase64Async(
+        `image/${outputType.slice(0, -4)}`,
+      ));
     }
   });
   return Promise.all(promisesToKeep);
 }
 
+function generatePdf(str, ruled, width) {
+  let doc;
+  str.forEach((page) => {
+    if (typeof (doc) === 'undefined') {
+      doc = new Pdfkit({
+        size: [2480, 3508],
+      });
+    } else {
+      doc.addPage();
+    }
+    let y = 50;
+    page.forEach((line) => {
+      let x = 50;
+      line.split('').forEach((character) => {
+        if (symbols.includes(character)) {
+          doc.image(dataset[symbols.indexOf(
+            character,
+          )][randInt(6)],
+          x, y, {
+            width: 2380 / width,
+            height: 3408 / width,
+          });
+        } else {
+          doc.image(dataset[symbols.indexOf(
+            ' ',
+          )][randInt(6)], x, y, {
+            width: 2380 / width,
+            height: 3408 / width,
+          });
+        }
+        if (ruled) {
+          doc.image(dataset[symbols.indexOf(
+            'margin',
+          )][randInt(6)],
+          x, y, {
+            width: 2380 / width,
+            height: 3408 / width,
+          });
+        }
+        x += 2380 / width;
+      });
+      y += 3408 / width;
+    });
+  });
+  doc.end();
+  return doc;
+}
 async function main(rawText = '', optionalArgs = {}) {
   if (!checkArgType(rawText, optionalArgs)) {
     throw Object.assign(new Error('Invalid arguments!'), {});
@@ -229,7 +263,9 @@ async function main(rawText = '', optionalArgs = {}) {
       });
     } else {
       if (typeof (jimpObjects) === 'undefined') {
-        const resolvedPromises = await Promise.all(jimpObjectPromises);
+        const resolvedPromises = await Promise.all(
+          jimpObjectPromises,
+        );
         jimpObjects = {};
         for (let i = 0; i < symbols.length; i += 1) {
           jimpObjects[i] = [];
@@ -239,13 +275,12 @@ async function main(rawText = '', optionalArgs = {}) {
         }
       }
       const [str, width] = processText(rawText);
-      const imageArray = generateImageArray(str, ruled, width);
       if (outputType === 'pdf') {
-        return generatePdf(imageArray);
+        return generatePdf(str, ruled, width);
       }
+      const imageArray = generateImageArray(str, ruled, width);
       return generateImages(imageArray, outputType);
     }
   }
 }
-
 module.exports = main;
