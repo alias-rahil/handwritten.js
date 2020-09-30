@@ -5,6 +5,7 @@ const {
   program,
 } = require('commander');
 const fs = require('fs');
+const del = require('del');
 const handwritten = require('./index.js');
 const {
   version,
@@ -20,21 +21,6 @@ program.version(version).description(description)
   .option('-i, --images <png|jpeg>', 'get output as images instead of pdf')
   .parse(process.argv);
 
-function removeDir(path) {
-  if (fs.existsSync(path)) {
-    if (fs.statSync(path).isDirectory()) {
-      const files = fs.readdirSync(path);
-      if (files.length > 0) {
-        files.forEach((filename) => {
-          removeDir(`${path}/${filename}`);
-        });
-      }
-      fs.rmdirSync(path);
-    } else {
-      fs.unlinkSync(path);
-    }
-  }
-}
 const optionalargs = {};
 let error;
 if (program.images) {
@@ -50,8 +36,7 @@ if (program.ruled) {
 async function main(file, optional, output) {
   try {
     const rawtext = fs.readFileSync(file).toString();
-    const out = await handwritten(rawtext, optional);
-    removeDir(output);
+    const [out] = await Promise.all([handwritten(rawtext, optional), del(output, { force: true })]);
     if (!optional.outputtype) {
       out.pipe(fs.createWriteStream(output));
       console.log({

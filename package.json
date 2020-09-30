@@ -14,6 +14,7 @@
    "homepage": "https://github.com/alias-rahil/handwritten#readme",
    "dependencies": {
       "commander": "^6.0.0",
+      "del": "^6.0.0",
       "jimp": "^0.16.1",
       "pdfkit": "^0.11.0",
       "unidecode-plus": "^1.0.2"
