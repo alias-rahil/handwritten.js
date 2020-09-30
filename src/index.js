@@ -80,7 +80,7 @@ function randInt(n) {
 
 function getBatchSize() {
   let batchSize = 10;
-  for (let i = 0; i < 170; i += 1) {
+  for (let i = 0; i < 176; i += 1) {
     if (randInt(8) === 1) {
       batchSize += 1;
     }
@@ -231,12 +231,10 @@ async function main(rawText = '', optionalArgs = {}) {
       if (typeof (jimpObjects) === 'undefined') {
         const resolvedPromises = await Promise.all(jimpObjectPromises);
         jimpObjects = {};
-        let z = 0;
         for (let i = 0; i < symbols.length; i += 1) {
           jimpObjects[i] = [];
           for (let j = 0; j < 6; j += 1) {
-            jimpObjects[i].push(resolvedPromises[z]);
-            z += 1;
+            jimpObjects[i].push(resolvedPromises[6 * i + j]);
           }
         }
       }
