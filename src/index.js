@@ -262,6 +262,10 @@ async function main (rawText = '', optionalArgs = {}) {
         default: 'pdf'
       })
     } else {
+      const [str, width] = processText(rawText)
+      if (outputType === 'pdf') {
+        return generatePdf(str, ruled, width)
+      }
       if (typeof (jimpObjects) === 'undefined') {
         const resolvedPromises = await Promise.all(
           jimpObjectPromises
@@ -273,10 +277,6 @@ async function main (rawText = '', optionalArgs = {}) {
             jimpObjects[i].push(resolvedPromises[6 * i + j])
           }
         }
-      }
-      const [str, width] = processText(rawText)
-      if (outputType === 'pdf') {
-        return generatePdf(str, ruled, width)
       }
       const imageArray = generateImageArray(str, ruled, width)
       return generateImages(imageArray, outputType)
