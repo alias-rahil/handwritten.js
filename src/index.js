@@ -1,286 +1,286 @@
-const Pdfkit = require('pdfkit');
-const unidecode = require('unidecode-plus');
-const Jimp = require('jimp');
-const dataset = require('./dataset.json');
+const Pdfkit = require('pdfkit')
+const unidecode = require('unidecode-plus')
+const Jimp = require('jimp')
+const dataset = require('./dataset.json')
 
-const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64'];
+const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64']
 const symbols = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
-  .split('').concat(['margin']);
-const jimpObjectPromises = [];
+  .split('').concat(['margin'])
+const jimpObjectPromises = []
 for (let i = 0; i < symbols.length; i += 1) {
   for (let j = 0; j < 6; j += 1) {
-    dataset[i][j] = Buffer.from(dataset[i][j]);
-    jimpObjectPromises.push(Jimp.read(dataset[i][j]));
+    dataset[i][j] = Buffer.from(dataset[i][j])
+    jimpObjectPromises.push(Jimp.read(dataset[i][j]))
   }
 }
-let jimpObjects;
+let jimpObjects
 
-function wrapText(str, width) {
+function wrapText (str, width) {
   if (str.length > width) {
-    let p = width;
+    let p = width
     while (p > 0 && str[p] !== ' ') {
-      p -= 1;
+      p -= 1
     }
     if (p > 0) {
-      const left = str.substring(0, p);
-      const right = str.substring(p + 1);
-      return `${left}\n${wrapText(right, width)}`;
+      const left = str.substring(0, p)
+      const right = str.substring(p + 1)
+      return `${left}\n${wrapText(right, width)}`
     }
   }
-  return str;
+  return str
 }
 
-function findMaxLen(lines) {
-  let width = lines[0] ? lines[0].length : 0;
+function findMaxLen (lines) {
+  let width = lines[0] ? lines[0].length : 0
   for (let i = 1; i < lines.length; i += 1) {
     if (lines[i] && lines[i].length > width) {
-      width = lines[i].length;
+      width = lines[i].length
     }
   }
-  return width;
+  return width
 }
 
-function padText(str, batchSize) {
-  const lines = str.split('\n');
+function padText (str, batchSize) {
+  const lines = str.split('\n')
   const padding = Array.from({
-    length: batchSize + 1,
-  }).join(' ');
-  let paddedLines = [];
-  const paddedParagraphs = [];
+    length: batchSize + 1
+  }).join(' ')
+  let paddedLines = []
+  const paddedParagraphs = []
   lines.forEach((element) => {
     if (element) {
       paddedLines.push((element + padding).substring(0,
-        batchSize));
+        batchSize))
     } else {
-      paddedLines.push(padding);
+      paddedLines.push(padding)
     }
     if (paddedLines.length === batchSize) {
-      paddedParagraphs.push(paddedLines);
-      paddedLines = [];
+      paddedParagraphs.push(paddedLines)
+      paddedLines = []
     }
-  });
+  })
   if (paddedLines.length !== 0) {
     while (paddedLines.length !== batchSize) {
-      paddedLines.push(padding);
+      paddedLines.push(padding)
     }
-    paddedParagraphs.push(paddedLines);
+    paddedParagraphs.push(paddedLines)
   }
-  return paddedParagraphs;
+  return paddedParagraphs
 }
 
-function cleanText(rawText) {
+function cleanText (rawText) {
   return unidecode(rawText, {
     german: true,
-    smartSpacing: true,
-  }).trim();
+    smartSpacing: true
+  }).trim()
 }
 
-function randInt(n) {
-  return Math.floor(Math.random() * n);
+function randInt (n) {
+  return Math.floor(Math.random() * n)
 }
 
-function getBatchSize() {
-  let batchSize = 10;
+function getBatchSize () {
+  let batchSize = 10
   for (let i = 0; i < 176; i += 1) {
     if (randInt(8) === 1) {
-      batchSize += 1;
+      batchSize += 1
     }
   }
-  return batchSize;
+  return batchSize
 }
 
-function processText(rawText) {
-  const batchSize = getBatchSize();
+function processText (rawText) {
+  const batchSize = getBatchSize()
   const str = cleanText(rawText.replace('\t', '     ').replace('\r', '\n')
-    .replace('\f', '\n').replace('\v', '\n'));
-  const maxLen = findMaxLen(str.replace('\n', ' ').split(' '));
-  const width = maxLen > batchSize ? maxLen : batchSize;
-  const wrappedText = [];
+    .replace('\f', '\n').replace('\v', '\n'))
+  const maxLen = findMaxLen(str.replace('\n', ' ').split(' '))
+  const width = maxLen > batchSize ? maxLen : batchSize
+  const wrappedText = []
   str.split('\n').forEach((element) => {
-    wrappedText.push(wrapText(element, width));
-  });
-  return [padText(wrappedText.join('\n'), width), width];
+    wrappedText.push(wrapText(element, width))
+  })
+  return [padText(wrappedText.join('\n'), width), width]
 }
 
-function checkArgType(rawText, optionalArgs) {
+function checkArgType (rawText, optionalArgs) {
   if (typeof (optionalArgs) !== 'object') {
-    return false;
+    return false
   }
   if (typeof (rawText) !== 'string') {
-    return false;
+    return false
   }
   if (typeof (optionalArgs.outputtype) !== 'string' && typeof (optionalArgs
     .outputtype) !== 'undefined') {
-    return false;
+    return false
   }
   if (typeof (optionalArgs.ruled) !== 'boolean' && typeof (optionalArgs
     .ruled) !== 'undefined') {
-    return false;
+    return false
   }
   if (typeof (optionalArgs.ruled) === 'boolean' && typeof (optionalArgs
-    .outputtype) === 'string' && Object.keys(optionalArgs).length
-        !== 2) {
-    return false;
+    .outputtype) === 'string' && Object.keys(optionalArgs).length !==
+        2) {
+    return false
   }
   if (typeof (optionalArgs.ruled) === 'boolean' && typeof (optionalArgs
-    .outputtype) === 'undefined' && Object.keys(optionalArgs).length
-        !== 1) {
-    return false;
+    .outputtype) === 'undefined' && Object.keys(optionalArgs).length !==
+        1) {
+    return false
   }
   if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
-    .outputtype) === 'string' && Object.keys(optionalArgs).length
-        !== 1) {
-    return false;
+    .outputtype) === 'string' && Object.keys(optionalArgs).length !==
+        1) {
+    return false
   }
   if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
-    .outputtype) === 'undefined' && Object.keys(optionalArgs).length
-        !== 0) {
-    return false;
+    .outputtype) === 'undefined' && Object.keys(optionalArgs).length !==
+        0) {
+    return false
   }
-  return true;
+  return true
 }
 
-function isArgValid(outputType) {
-  return supportedOutputTypes.concat(['pdf']).includes(outputType);
+function isArgValid (outputType) {
+  return supportedOutputTypes.concat(['pdf']).includes(outputType)
 }
 
-function generateImageArray(str, ruled, width) {
-  const imgArray = [];
+function generateImageArray (str, ruled, width) {
+  const imgArray = []
   str.forEach((page) => {
     const baseImage = new Jimp(18 * width + 100, 50 * width + 100,
-      '#ffffff');
-    let y = 50;
+      '#ffffff')
+    let y = 50
     page.forEach((line) => {
-      let x = 50;
+      let x = 50
       line.split('').forEach((character) => {
         if (symbols.includes(character)) {
           baseImage.composite(jimpObjects[
             symbols.indexOf(
-              character,
+              character
             )][randInt(
-            6,
-          )], x, y);
+            6
+          )], x, y)
         } else {
           baseImage.composite(jimpObjects[
             symbols.indexOf(' ')][
             randInt(6)
-          ], x, y);
+          ], x, y)
         }
         if (ruled) {
           baseImage.composite(jimpObjects[
             symbols.indexOf(
-              'margin',
+              'margin'
             )][randInt(
-            6,
-          )], x, y);
+            6
+          )], x, y)
         }
-        x += 18;
-      });
-      y += 50;
-    });
-    imgArray.push(baseImage.resize(2480, 3508));
-  });
-  return imgArray;
+        x += 18
+      })
+      y += 50
+    })
+    imgArray.push(baseImage.resize(2480, 3508))
+  })
+  return imgArray
 }
 
-function generateImages(imageArray, outputType) {
-  const promisesToKeep = [];
+function generateImages (imageArray, outputType) {
+  const promisesToKeep = []
   imageArray.forEach((image) => {
     if (outputType.slice(-4, outputType.length) === '/buf') {
       promisesToKeep.push(image.getBufferAsync(
-        `image/${outputType.slice(0, -4)}`,
-      ));
+          `image/${outputType.slice(0, -4)}`
+      ))
     } else {
       promisesToKeep.push(image.getBase64Async(
-        `image/${outputType.slice(0, -4)}`,
-      ));
+          `image/${outputType.slice(0, -4)}`
+      ))
     }
-  });
-  return Promise.all(promisesToKeep);
+  })
+  return Promise.all(promisesToKeep)
 }
 
-function generatePdf(str, ruled, width) {
-  let doc;
+function generatePdf (str, ruled, width) {
+  let doc
   str.forEach((page) => {
     if (typeof (doc) === 'undefined') {
       doc = new Pdfkit({
-        size: [2480, 3508],
-      });
+        size: [2480, 3508]
+      })
     } else {
-      doc.addPage();
+      doc.addPage()
     }
-    let y = 50;
+    let y = 50
     page.forEach((line) => {
-      let x = 50;
+      let x = 50
       line.split('').forEach((character) => {
         if (symbols.includes(character)) {
           doc.image(dataset[symbols.indexOf(
-            character,
+            character
           )][randInt(6)],
           x, y, {
             width: 2380 / width,
-            height: 3408 / width,
-          });
+            height: 3408 / width
+          })
         } else {
           doc.image(dataset[symbols.indexOf(
-            ' ',
+            ' '
           )][randInt(6)], x, y, {
             width: 2380 / width,
-            height: 3408 / width,
-          });
+            height: 3408 / width
+          })
         }
         if (ruled) {
           doc.image(dataset[symbols.indexOf(
-            'margin',
+            'margin'
           )][randInt(6)],
           x, y, {
             width: 2380 / width,
-            height: 3408 / width,
-          });
+            height: 3408 / width
+          })
         }
-        x += 2380 / width;
-      });
-      y += 3408 / width;
-    });
-  });
-  doc.end();
-  return doc;
+        x += 2380 / width
+      })
+      y += 3408 / width
+    })
+  })
+  doc.end()
+  return doc
 }
-async function main(rawText = '', optionalArgs = {}) {
+async function main (rawText = '', optionalArgs = {}) {
   if (!checkArgType(rawText, optionalArgs)) {
-    throw Object.assign(new Error('Invalid arguments!'), {});
+    throw Object.assign(new Error('Invalid arguments!'), {})
   } else {
-    const outputType = optionalArgs.outputtype || 'pdf';
-    const ruled = optionalArgs.ruled || false;
+    const outputType = optionalArgs.outputtype || 'pdf'
+    const ruled = optionalArgs.ruled || false
     if (!isArgValid(outputType)) {
       throw Object.assign(new Error(
-        `Invalid output type "${outputType}"!`,
+          `Invalid output type "${outputType}"!`
       ), {
         supportedOutputTypes: supportedOutputTypes.concat([
-          'pdf',
+          'pdf'
         ]),
-        default: 'pdf',
-      });
+        default: 'pdf'
+      })
     } else {
       if (typeof (jimpObjects) === 'undefined') {
         const resolvedPromises = await Promise.all(
-          jimpObjectPromises,
-        );
-        jimpObjects = {};
+          jimpObjectPromises
+        )
+        jimpObjects = {}
         for (let i = 0; i < symbols.length; i += 1) {
-          jimpObjects[i] = [];
+          jimpObjects[i] = []
           for (let j = 0; j < 6; j += 1) {
-            jimpObjects[i].push(resolvedPromises[6 * i + j]);
+            jimpObjects[i].push(resolvedPromises[6 * i + j])
           }
         }
       }
-      const [str, width] = processText(rawText);
+      const [str, width] = processText(rawText)
       if (outputType === 'pdf') {
-        return generatePdf(str, ruled, width);
+        return generatePdf(str, ruled, width)
       }
-      const imageArray = generateImageArray(str, ruled, width);
-      return generateImages(imageArray, outputType);
+      const imageArray = generateImageArray(str, ruled, width)
+      return generateImages(imageArray, outputType)
     }
   }
 }
-module.exports = main;
+module.exports = main
