@@ -1,4 +1,5 @@
 <h1 align="center">Welcome to handwritten.js 👋</h1>
+<h3 align="center">Convert typed text to realistic handwriting!</h3>
 <p>
   <a href="https://www.npmjs.com/package/handwritten.js" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/handwritten.js.svg">
@@ -7,8 +8,6 @@
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
 </p>
-
-> Convert typed text to realistic handwriting!
 
 <p align="center">
   <a href="https://alias-rahil.github.io/handwritten.js/">
