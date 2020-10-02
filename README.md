@@ -1,11 +1,4 @@
 <h1 align="center">Welcome to handwritten.js 👋</h1>
-<p align="center">
-  <a href="https://alias-rahil.github.io/handwritten.js/">
-    demo
-  </a>
-  <br>
-  Warning: ugly website ahead! HTML and CSS went AWOL :P. This is a temporary website made for desperate times while we wait for a proper demo-site, see <a href="https://github.com/alias-rahil/handwritten.js/issues/8">#8</a>.
-</p>
 <p>
   <a href="https://www.npmjs.com/package/handwritten.js" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/handwritten.js.svg">
@@ -16,6 +9,14 @@
 </p>
 
 > Convert typed text to realistic handwriting!
+
+<p align="center">
+  <a href="https://alias-rahil.github.io/handwritten.js/">
+    demo
+  </a>
+  <br>
+  Warning: ugly website ahead! HTML and CSS went AWOL :P. This is a temporary website made for desperate times while we wait for a proper demo-site, see <a href="https://github.com/alias-rahil/handwritten.js/issues/8">#8</a>.
+</p>
 
 # In your code:
 
