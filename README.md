@@ -105,7 +105,7 @@ Give a ⭐️ if this project helped you!
 
 Contributions, issues and feature requests are welcome! Feel free to check [issues page](https://github.com/alias-rahil/handwritten.js/issues).
 
-> handwritten.js only supports English letters. I am not planning to add support for other languages for now. Please do not make issues about this. However, I will merge pull requests if any. See the issue [#18](https://github.com/alias-rahil/handwritten.js/issues/18) for more details.
+> handwritten.js only supports English letters. I am not planning to add support for other languages for now. Please do not any more make issues about this. However, I will merge pull requests if any. See the issue [#18](https://github.com/alias-rahil/handwritten.js/issues/18) for more details.
 
 # Credits
 
