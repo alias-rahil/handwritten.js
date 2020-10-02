@@ -7,6 +7,15 @@
       "url": "https://github.com/alias-rahil/handwritten.git/"
    },
    "author": "Rahil Kabani <rahil.kabani.4@gmail.com>",
+   "contributors": [ {
+      "email": "rahil.kabani.4@gmail.com",
+      "name": "Rahil Kabani",
+      "url": "https://alias-rahil.github.io/"
+    }, {
+      "email": "newyork.anthonyng@gmail.com",
+      "name": "Anthony Ng",
+      "url": "https://anthonyng.me/"
+    } ],
    "license": "MIT",
    "bugs": {
       "url": "https://github.com/alias-rahil/handwritten/issues"
