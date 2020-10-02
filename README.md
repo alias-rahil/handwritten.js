@@ -5,14 +5,11 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-<p>
-  <a href="https://www.npmjs.com/package/handwritten.js" target="_blank">
-    <img alt="Version" src="https://img.shields.io/npm/v/handwritten.js.svg">
-  </a>
-  <a href="https://github.com/alias-rahil/handwritten.js/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-  </a>
-</p>
+[![Version](https://img.shields.io/npm/v/handwritten.js.svg)](https://www.npmjs.com/package/handwritten.js)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/alias-rahil/handwritten.js/blob/master/LICENSE)
+
+<br>
 
 <p align="center">
   <a href="https://alias-rahil.github.io/handwritten.js/">
