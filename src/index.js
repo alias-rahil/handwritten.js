@@ -248,19 +248,19 @@ function generatePdf (str, ruled, width) {
 }
 async function main (rawText = '', optionalArgs = {}) {
   if (!checkArgType(rawText, optionalArgs)) {
-    throw Object.assign(new Error('Invalid arguments!'), {})
+    return Promise.reject(Object.assign(new Error('Invalid arguments!'), {}))
   } else {
     const outputType = optionalArgs.outputtype || 'pdf'
     const ruled = optionalArgs.ruled || false
     if (!isArgValid(outputType)) {
-      throw Object.assign(new Error(
+      return Promise.reject(Object.assign(new Error(
           `Invalid output type "${outputType}"!`
       ), {
         supportedOutputTypes: supportedOutputTypes.concat([
           'pdf'
         ]),
         default: 'pdf'
-      })
+      }))
     } else {
       const [str, width] = processText(rawText)
       if (outputType === 'pdf') {
