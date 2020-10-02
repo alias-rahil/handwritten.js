@@ -119,7 +119,7 @@ Contributions, issues and feature requests are welcome! Feel free to check [issu
 
 [MIT](https://github.com/alias-rahil/handwritten.js/blob/master/LICENSE)
 
-## Contributors ✨
+# Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
