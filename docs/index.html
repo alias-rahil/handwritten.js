@@ -2,27 +2,75 @@
 <html lang="en">
    <head>
       <link rel="icon" href="favicon.ico">
-      <title>handwritten.js - Convert typed text to realistic handwriting!</title>
+      <title>✍️ handwritten.js</title>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, height=device-height">
       <meta name="description" content="handwritten.js - Convert typed text to realistic handwriting!">
       <meta name="keywords" content="handwritten, handwriting, text, converter, handwriter, emnist-dataset, daniel-font, pen, pencil, extended-mnist">
       <meta name="author" content="Rahil Kabani - rahil.kabani.4@gmail.com">
       <meta name="application-name" content="handwritten.js - Convert typed text to realistic handwriting!">
+      <link type="text/css" rel="stylesheet" href="reset.css" />
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Sansita+Swashed:wght@300&family=Source+Code+Pro&display=swap" rel="stylesheet">
+      <link type="text/css" rel="stylesheet" href="style.css" />
    </head>
    <body>
-      <h1 style="text-align: center;">handwritten.js - Convert typed text to realistic handwriting!</h1>
-      <br>
-      <p align="center"><textarea id="text"></textarea></p>
-      <br>
-      <p align="center"><label>ruled<input type="checkbox" id="ruled"></label></p>
-      <br>
-      <div style="margin: auto; resize: both; overflow: auto;"><iframe style="width: 100%; height: 100%;" id="pdf"></iframe></div>
-      <br>
-      <p align="center"><a id="download">Download</a></p>
-      <br>
-      <p align="center"><a href="https://github.com/alias-rahil/handwritten.js">GitHub</a></p>
-      <br>
-      <script src="main.js"></script>
+      <div class="body-wrapper">
+         <h1 class="title text-serif text-center">
+            ✍️ handwritten.js
+         </h1>
+         <h2 class="title-sub text-center">
+          Convert typed text to realistic handwriting
+         </h2>
+         <div class="text-center">
+            <a href="https://github.com/alias-rahil/handwritten.js" target="_blank" rel="noopener noreferrer">
+               <img src="gh-logo.svg" class="gh-logo" />
+               <span>GitHub</span>
+            </a>
+         </div>
+         <div class="split-container demo-section">
+            <textarea id="text" class="input-field">Edit this text to generate handwriting</textarea>
+            <iframe id="pdf" class="preview-window"></iframe>
+         </div>
+         <div class="split-container">
+            <div class="ruled-field text-center">
+               <label for="ruled">Add Ruled Lines?</label>
+               <input type="checkbox" id="ruled" />
+            </div>
+            <div class="download-field text-center">
+               <a id="download">
+                  Download this as a PDF
+               </a>
+            </div>
+         </div>
+         <div class="instruction-section">
+            <div class="instruction-section-block">
+               <h3 class="text-center headline">Install with <span class="text-code">npm</span> or <span class="text-code">yarn</span></h3>
+               <pre><code>
+                  npm install -g handwritten.js
+
+                  # or use yarn
+                  yarn add handwritten.js --global
+               </code></pre>
+            </div>
+            <div class="instruction-section-block">
+               <h3 class="text-center headline">Usage with <span class="text-code">npx</span></h3>
+               <pre><code>
+                  npx handwritten.js -f "path/to/inputfile.txt" -o "path/to/outputfile.pdf"
+               </code></pre>
+            </div>
+            <div class="instruction-section-block">
+               <h3 class="text-center headline">Usage within node.js</h3>
+               <pre><code>
+                  const handwritten = require('handwritten.js')
+                  const fs = require('fs')
+                  const rawtext = "Hello, world!"
+                  handwritten(rawtext).then((converted) => {
+                     converted.pipe(fs.createWriteStream('output.pdf'))
+                  })
+               </code></pre>
+            </div>
+         </div>
+      </div>
    </body>
+   <script src="main.js"></script>
 </html>
