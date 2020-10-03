@@ -1,0 +1,104 @@
+:root {
+  --demo-height: 200px;
+}
+body {
+  font-size: 62.5%;
+  height: 100%;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  color: white;
+  background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 20%, rgba(0,212,255,1) 100%);
+}
+
+pre {
+  background-color: black;
+
+}
+code, .text-code {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 1rem;
+  font-weight: 300;
+  background-color: black;
+}
+
+.body-wrapper {
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.text-serif {
+  font-family: 'Sansita Swashed', cursive;
+  font-weight: 300;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.title {
+  font-size: 2.4rem;
+  padding-top: 2rem;
+}
+
+.title-sub {
+  padding: 1rem 0;
+}
+
+.headline {
+  font-size: 1.6rem;
+  padding-bottom: 2rem;
+}
+
+.gh-logo {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+a, a:visited {
+  text-decoration: none;
+  color: white;
+}
+
+.split-container {
+  display: flex;
+  width: 100%;
+}
+
+.demo-section {
+  padding-top: 3rem;
+}
+
+.input-field {
+  font-size: 1.4rem;
+  flex: 1;
+  height: var(--demo-height);
+}
+
+.preview-window {
+  flex: 1;
+  height: var(--demo-height);
+}
+
+.ruled-field, .download-field {
+  flex: 1;
+  padding-top: .5rem;
+}
+
+.download-field {
+  transition: all .3s ease-in-out;
+  color: white;
+}
+.download-field a:hover {
+  color: rebeccapurple;
+}
+
+.instruction-section {
+  padding-top: 4rem;
+}
+
+.instruction-section-block {
+  padding-bottom: 2rem;
+}
