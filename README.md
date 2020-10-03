@@ -2,7 +2,7 @@
 <h3 align="center">Convert typed text to realistic handwriting!</h3>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/npm/v/handwritten.js.svg)](https://www.npmjs.com/package/handwritten.js)
@@ -130,6 +130,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://alias-rahil.github.io/"><img src="https://avatars2.githubusercontent.com/u/59060219?v=4" width="100px;" alt=""/><br /><sub><b>Rahil Kabani</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=alias-rahil" title="Code">💻</a> <a href="https://github.com/alias-rahil/handwritten.js/commits?author=alias-rahil" title="Documentation">📖</a></td>
     <td align="center"><a href="http://anthonyng.me"><img src="https://avatars1.githubusercontent.com/u/14035529?v=4" width="100px;" alt=""/><br /><sub><b>Anthony Ng</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=newyork-anthonyng" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://modernjsbyexample.net"><img src="https://avatars0.githubusercontent.com/u/7918387?v=4" width="100px;" alt=""/><br /><sub><b>Ben Junya</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=MrBenJ" title="Code">💻</a> <a href="https://github.com/alias-rahil/handwritten.js/commits?author=MrBenJ" title="Documentation">📖</a></td>
   </tr>
 </table>
 
