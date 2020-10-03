@@ -26,7 +26,13 @@ To use in browser, include `<script src="https://raw.githubusercontent.com/alias
 ## Installation
 
 ```bash
-npm install --save handwritten.js
+npm install handwritten.js
+```
+
+or
+
+```bash
+yarn add handwritten.js
 ```
 
 ## Usage
@@ -54,6 +60,12 @@ npx handwritten.js -f "path/to/inputfile.txt" -o "path/to/outputfile.pdf"
 
 ```bash
 npm install handwritten.js -g
+```
+
+or
+
+```bash
+yarn global add handwritten.js
 ```
 
 > Note: **DO NOT** use sudo to install global packages! The correct way is to tell npm where to install its global packages: `npm config set prefix ~/.local`. Make sure `~/.local/bin` is added to `PATH`.
