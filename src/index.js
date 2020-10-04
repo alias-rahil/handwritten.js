@@ -2,6 +2,8 @@ const Pdfkit = require('pdfkit')
 const unidecode = require('unidecode-plus')
 const Jimp = require('jimp')
 const dataset = require('./dataset.json')
+const svg = require('./svgdata.json')
+const parser = require('svg-parser')
 
 const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64']
 const symbols = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
@@ -133,8 +135,7 @@ function checkArgType (rawText, optionalArgs) {
     return false
   }
   if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
-    .outputtype) === 'undefined' && Object.keys(optionalArgs).length !==
-        0) {
+    .outputtype) === 'undefined' && Object.keys(optionalArgs).length > 1) {
     return false
   }
   return true
@@ -199,6 +200,62 @@ function generateImages (imageArray, outputType) {
   return Promise.all(promisesToKeep)
 }
 
+function find_g_tag(svg_data) {
+    // return the element with tagName 'g'
+    if (svg_data.tagName == "g") {
+        return svg_data
+    }
+    for (i in svg_data.children) {
+        const search_results = find_g_tag(svg_data.children[i])
+        if (search_results) {
+            return search_results
+        }
+    }
+    return null
+}
+
+
+function vectorPdf(str, ruled, width) {
+  let doc
+  str.forEach((page) => {
+    if (typeof (doc) === 'undefined') {
+      doc = new Pdfkit({
+        size: [2480, 3508]
+      })
+      doc.translate(0.000000,50.000000)
+      doc.scale(0.100000,-0.100000)
+    } else {
+      doc.addPage()
+    }
+    let y = 50
+    page.forEach((line) => {
+      let x = 50
+      line.split('').forEach((character) => {
+        if (symbols.includes(character)) {
+          // add here the svg in docs
+          if (character != ' ') {
+            const symb = parser.parse(svg[symbols.indexOf(character)][randInt(6)])
+            const g_tag_element = find_g_tag(symb)
+              g_tag_element.children.forEach((element) => {
+                  console.log(element)
+                  if (element.tagName == 'path') {
+                      console.log(element.properties.d.replace(/\n/g, ' '))
+                      doc.path(element.properties.d.replace(/\n/g, ' ')).fill(g_tag_element.properties.fill)
+                      doc.translate(100, 0)
+                  }
+              })
+          }
+        } 
+        x += 2380 / width
+      })
+      y += 3408 / width
+      doc.translate(-3000, -300)
+    })
+  })
+  doc.end()
+  return doc
+}
+
 function generatePdf (str, ruled, width) {
   let doc
   str.forEach((page) => {
@@ -252,6 +309,7 @@ async function main (rawText = '', optionalArgs = {}) {
   } else {
     const outputType = optionalArgs.outputtype || 'pdf'
     const ruled = optionalArgs.ruled || false
+    const vector = optionalArgs.vector || false
     if (!isArgValid(outputType)) {
       throw Object.assign(new Error(
           `Invalid output type "${outputType}"!`
@@ -263,6 +321,9 @@ async function main (rawText = '', optionalArgs = {}) {
       })
     } else {
       const [str, width] = processText(rawText)
+      if (vector) {
+        return vectorPdf(str, ruled, width)    
+      }
       if (outputType === 'pdf') {
         return generatePdf(str, ruled, width)
       }
