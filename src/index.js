@@ -3,7 +3,6 @@ const unidecode = require('unidecode-plus')
 const Jimp = require('jimp')
 const dataset = require('./dataset.json')
 const svg = require('./svgdata.json')
-const parser = require('svg-parser')
 
 const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64']
 const symbols = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
@@ -200,56 +199,36 @@ function generateImages (imageArray, outputType) {
   return Promise.all(promisesToKeep)
 }
 
-function find_g_tag(svg_data) {
-    // return the element with tagName 'g'
-    if (svg_data.tagName == "g") {
-        return svg_data
-    }
-    for (i in svg_data.children) {
-        const search_results = find_g_tag(svg_data.children[i])
-        if (search_results) {
-            return search_results
-        }
-    }
-    return null
-}
-
-
 function vectorPdf(str, ruled, width) {
   let doc
+  const adjust_scale_x = 2380 / width / 18
+  const adjust_scale_y = 3408 / width / 50
   str.forEach((page) => {
     if (typeof (doc) === 'undefined') {
       doc = new Pdfkit({
         size: [2480, 3508]
       })
-      doc.translate(0.000000,50.000000)
-      doc.scale(0.100000,-0.100000)
+      doc.translate(50.000000,50.0 + 50.000000 * adjust_scale_y)
+      doc.scale(0.100000 * adjust_scale_x, -0.100000 * adjust_scale_y)
     } else {
       doc.addPage()
+      doc.translate(50.000000,50.0 + 50.000000 * adjust_scale_y)
+      doc.scale(0.100000 * adjust_scale_x, -0.100000 * adjust_scale_y)
     }
-    let y = 50
     page.forEach((line) => {
-      let x = 50
       line.split('').forEach((character) => {
-        if (symbols.includes(character)) {
-          // add here the svg in docs
-          if (character != ' ') {
-            const symb = parser.parse(svg[symbols.indexOf(character)][randInt(6)])
-            const g_tag_element = find_g_tag(symb)
-              g_tag_element.children.forEach((element) => {
-                  console.log(element)
-                  if (element.tagName == 'path') {
-                      console.log(element.properties.d.replace(/\n/g, ' '))
-                      doc.path(element.properties.d.replace(/\n/g, ' ')).fill(g_tag_element.properties.fill)
-                      doc.translate(100, 0)
-                  }
-              })
-          }
+        if (symbols.includes(character) && character != ' ') {
+          const symb = svg[symbols.indexOf(character)][randInt(6)]
+          symb.children.forEach((element) => {
+              if (element.tagName == 'path') {
+                  let path = element.properties.d.replace(/\n/g, ' ') 
+                  doc.path(path).fill(symb.properties.fill)
+              }
+          })
         } 
-        x += 2380 / width
+        doc.translate(180, 0)
       })
-      y += 3408 / width
-      doc.translate(-3000, -300)
+      doc.translate(-180 * width, - 500)
     })
   })
   doc.end()
