@@ -12,64 +12,65 @@
       <link type="text/css" rel="stylesheet" href="reset.css" />
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Sansita+Swashed:wght@300&family=Source+Code+Pro&display=swap" rel="stylesheet">
       <link type="text/css" rel="stylesheet" href="style.css" />
+      <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
    </head>
    <body>
       <div class="body-wrapper">
-         <h1 class="title text-serif text-center">
-            ✍️ handwritten.js
-         </h1>
-         <h2 class="title-sub text-center">
-          Convert typed text to realistic handwriting
-         </h2>
+         <div class="text-center">
+            <img src="hand.png" style="display: inline; width: 9%;height: auto; padding-top: 1%; margin: 0px;">
+         </div>
+         <p class="title text-center">
+            HANDWRITTEN.<span style="color:#8C50FF;">js</span>
+         </p>
+
+         <div style="height: 1.8rem;"></div>
+         <h2 class="title-sub text-center" style="color: rgb(58, 58, 58);">
+            Convert typed text to realistic handwriting
+           </h2>
+
+           <div class="text-center">
+               <img src="illust.png" class="gh-logo" style="height: 20rem; width: 20rem;" />
+               <br>
+         </div>
+         <div style="height: 5rem;"></div>
+         <div class="split-container demo-section">
+            <textarea id="text" class="input-field text-center" style="width: auto;" >Type in your text here....</textarea>
+            <br>
+         </div>
+         <div style="height: 5rem;"></div>
+
+         <h2 class="text-center" style="color: rgb(58, 58, 58); font-weight: 600;">
+            Your generated handwritten text below
+           </h2>
+         <div class="ruled-field text-center">
+            <label for="ruled" style="font-weight: 800; color: rgb(65, 105, 236); font-size: 1rem;">Add Ruled Lines?</label>
+            <input type="checkbox" id="ruled" />
+         </div>
+         <div class="split-container demo-section">
+         <iframe id="pdf" class="preview-window"></iframe>
+         </div>
+         <div class="split-container">
+
+            <div style="padding-top:2rem;" class="download-field text-center">
+               <a id="download">
+                     <img src="download.png" style="max-width: 3rem;"/>
+                     <br>
+                     <span style="font-size: 1rem;font-weight: 800; color: #8C50FF;">Download this as a PDF
+                     </span>
+                  </a>
+            </div>
+         </div>
+         <div style="height: 4rem;"></div>
+         <p class="text-center" style="color: rgb(43, 43, 43);">-------------------------------------------------------------------------------------------------------------------</p>
+
          <div class="text-center">
             <a href="https://github.com/alias-rahil/handwritten.js" target="_blank" rel="noopener noreferrer">
                <img src="gh-logo.svg" class="gh-logo" />
-               <span>GitHub</span>
+               <br>
+               <span style="font-size: 1rem;font-weight: 600; color: #8C50FF;">Check out the GitHub Repo here</span>
             </a>
          </div>
-         <div class="split-container demo-section">
-            <textarea id="text" class="input-field">Edit this text to generate handwriting</textarea>
-            <iframe id="pdf" class="preview-window"></iframe>
-         </div>
-         <div class="split-container">
-            <div class="ruled-field text-center">
-               <label for="ruled">Add Ruled Lines?</label>
-               <input type="checkbox" id="ruled" />
-            </div>
-            <div class="download-field text-center">
-               <a id="download">
-                  Download this as a PDF
-               </a>
-            </div>
-         </div>
-         <div class="instruction-section">
-            <div class="instruction-section-block">
-               <h3 class="text-center headline">Install with <span class="text-code">npm</span> or <span class="text-code">yarn</span></h3>
-               <pre><code>
-                  npm install -g handwritten.js
-
-                  # or use yarn
-                  yarn add handwritten.js --global
-               </code></pre>
-            </div>
-            <div class="instruction-section-block">
-               <h3 class="text-center headline">Usage with <span class="text-code">npx</span></h3>
-               <pre><code>
-                  npx handwritten.js -f "path/to/inputfile.txt" -o "path/to/outputfile.pdf"
-               </code></pre>
-            </div>
-            <div class="instruction-section-block">
-               <h3 class="text-center headline">Usage within node.js</h3>
-               <pre><code>
-                  const handwritten = require('handwritten.js')
-                  const fs = require('fs')
-                  const rawtext = "Hello, world!"
-                  handwritten(rawtext).then((converted) => {
-                     converted.pipe(fs.createWriteStream('output.pdf'))
-                  })
-               </code></pre>
-            </div>
-         </div>
+         <div style="height: 5rem;"></div>
       </div>
    </body>
    <script src="main.js"></script>
