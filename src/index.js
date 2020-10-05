@@ -201,26 +201,26 @@ function generateImages (imageArray, outputType) {
 
 function vectorPdf (str, ruled, width) {
   let doc
-  const adjust_scale_x = 2380 / width / 18
-  const adjust_scale_y = 3408 / width / 50
+  const adjustScaleX = 2380 / width / 18
+  const adjustScaleY = 3408 / width / 50
   str.forEach((page) => {
     if (typeof (doc) === 'undefined') {
       doc = new Pdfkit({
         size: [2480, 3508]
       })
-      doc.translate(50.000000, 50.0 + 50.000000 * adjust_scale_y)
-      doc.scale(0.100000 * adjust_scale_x, -0.100000 * adjust_scale_y)
+      doc.translate(50.000000, 50.0 + 50.000000 * adjustScaleY)
+      doc.scale(0.100000 * adjustScaleX, -0.100000 * adjustScaleY)
     } else {
       doc.addPage()
-      doc.translate(50.000000, 50.0 + 50.000000 * adjust_scale_y)
-      doc.scale(0.100000 * adjust_scale_x, -0.100000 * adjust_scale_y)
+      doc.translate(50.000000, 50.0 + 50.000000 * adjustScaleY)
+      doc.scale(0.100000 * adjustScaleX, -0.100000 * adjustScaleY)
     }
     page.forEach((line) => {
       line.split('').forEach((character) => {
-        if (symbols.includes(character) && character != ' ') {
+        if (symbols.includes(character) && character !== ' ') {
           const symb = svg[symbols.indexOf(character)][randInt(6)]
           symb.children.forEach((element) => {
-            if (element.tagName == 'path') {
+            if (element.tagName === 'path') {
               const path = element.properties.d.replace(/\n/g, ' ')
               doc.path(path).fill(symb.properties.fill)
             }

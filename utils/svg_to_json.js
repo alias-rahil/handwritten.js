@@ -5,15 +5,15 @@ const symbols = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\
 
 const datas = []
 
-function find_g_tag (svg_data) {
+function findGTag (svgData) {
   // return the element with tagName 'g'
-  if (svg_data.tagName == 'g') {
-    return svg_data
+  if (svgData.tagName === 'g') {
+    return svgData
   }
-  for (const i in svg_data.children) {
-    const search_results = find_g_tag(svg_data.children[i])
-    if (search_results) {
-      return search_results
+  for (const i in svgData.children) {
+    const searchResults = findGTag(svgData.children[i])
+    if (searchResults) {
+      return searchResults
     }
   }
   return null
@@ -24,7 +24,7 @@ for (const i in symbols) {
   for (let j = 0; j < 6; j++) {
     const data = fs.readFileSync(`images/${i}_${j}.svg`, 'utf8')
     console.log(i, j)
-    symb.push(find_g_tag(parser.parse(data)))
+    symb.push(findGTag(parser.parse(data)))
   }
   datas.push(symb)
 }
