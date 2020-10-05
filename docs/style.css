@@ -45,7 +45,7 @@ code, .text-code {
 
 .title-sub {
   padding: 1rem 0;
-  font-weight: 800;
+  font-weight: 900;
   font-size: 2.5vh;
 }
 
@@ -80,7 +80,7 @@ a, a:visited {
 }
 
 .input-field {
-  font-size: 3vh;
+  font-size: 1.5vw;
   flex: 1;
   background: #595959;
   color: white;
@@ -95,7 +95,6 @@ height: 10vh;
 .preview-window {
   font-size: 1.6rem;
   flex: 1;
-  padding: 1rem;
   background: #fafafa;
   color: white;
 
