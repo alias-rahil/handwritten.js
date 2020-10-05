@@ -2,6 +2,7 @@ const Pdfkit = require('pdfkit')
 const unidecode = require('unidecode-plus')
 const Jimp = require('jimp')
 const dataset = require('./dataset.json')
+const svg = require('./svgdata.json')
 
 const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64']
 const symbols = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
@@ -133,8 +134,7 @@ function checkArgType (rawText, optionalArgs) {
     return false
   }
   if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
-    .outputtype) === 'undefined' && Object.keys(optionalArgs).length !==
-        0) {
+    .outputtype) === 'undefined' && Object.keys(optionalArgs).length > 1) {
     return false
   }
   return true
@@ -199,6 +199,42 @@ function generateImages (imageArray, outputType) {
   return Promise.all(promisesToKeep)
 }
 
+function vectorPdf (str, ruled, width) {
+  let doc
+  const adjustScaleX = 2380 / width / 18
+  const adjustScaleY = 3408 / width / 50
+  str.forEach((page) => {
+    if (typeof (doc) === 'undefined') {
+      doc = new Pdfkit({
+        size: [2480, 3508]
+      })
+      doc.translate(50.000000, 50.0 + 50.000000 * adjustScaleY)
+      doc.scale(0.100000 * adjustScaleX, -0.100000 * adjustScaleY)
+    } else {
+      doc.addPage()
+      doc.translate(50.000000, 50.0 + 50.000000 * adjustScaleY)
+      doc.scale(0.100000 * adjustScaleX, -0.100000 * adjustScaleY)
+    }
+    page.forEach((line) => {
+      line.split('').forEach((character) => {
+        if (symbols.includes(character) && character !== ' ') {
+          const symb = svg[symbols.indexOf(character)][randInt(6)]
+          symb.children.forEach((element) => {
+            if (element.tagName === 'path') {
+              const path = element.properties.d.replace(/\n/g, ' ')
+              doc.path(path).fill(symb.properties.fill)
+            }
+          })
+        }
+        doc.translate(180, 0)
+      })
+      doc.translate(-180 * width, -500)
+    })
+  })
+  doc.end()
+  return doc
+}
+
 function generatePdf (str, ruled, width) {
   let doc
   str.forEach((page) => {
@@ -252,6 +288,7 @@ async function main (rawText = '', optionalArgs = {}) {
   } else {
     const outputType = optionalArgs.outputtype || 'pdf'
     const ruled = optionalArgs.ruled || false
+    const vector = optionalArgs.vector || false
     if (!isArgValid(outputType)) {
       return Promise.reject(Object.assign(new Error(
           `Invalid output type "${outputType}"!`
@@ -263,6 +300,9 @@ async function main (rawText = '', optionalArgs = {}) {
       }))
     } else {
       const [str, width] = processText(rawText)
+      if (vector) {
+        return vectorPdf(str, ruled, width)
+      }
       if (outputType === 'pdf') {
         return generatePdf(str, ruled, width)
       }

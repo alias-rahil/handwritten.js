@@ -65,6 +65,7 @@
       "extended-mnist"
    ],
    "devDependencies": {
+      "svg-parser": "^2.0.4",
       "babel-minify": "^0.5.1",
       "browserify": "^16.5.2",
       "eslint": "^7.10.0",
