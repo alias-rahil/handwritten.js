@@ -13,7 +13,6 @@
    },
    "homepage": "https://github.com/alias-rahil/handwritten#readme",
    "dependencies": {
-      "svg-parser": "^2.0.4",
       "commander": "^6.0.0",
       "del": "^6.0.0",
       "jimp": "^0.16.1",
