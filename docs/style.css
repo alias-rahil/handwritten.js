@@ -98,9 +98,7 @@ height: 10vh;
   padding: 1rem;
   background: #fafafa;
   color: white;
-box-shadow: 4px 9px 35px rgba(89, 89, 89, 0.69);
-border-radius: 31px;
-border: solid 0.5rem  #595959;
+
 --demo-height : 15m;
   height: var(--demo-height);
 }
