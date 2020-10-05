@@ -199,7 +199,7 @@ function generateImages (imageArray, outputType) {
   return Promise.all(promisesToKeep)
 }
 
-function vectorPdf(str, ruled, width) {
+function vectorPdf (str, ruled, width) {
   let doc
   const adjust_scale_x = 2380 / width / 18
   const adjust_scale_y = 3408 / width / 50
@@ -208,11 +208,11 @@ function vectorPdf(str, ruled, width) {
       doc = new Pdfkit({
         size: [2480, 3508]
       })
-      doc.translate(50.000000,50.0 + 50.000000 * adjust_scale_y)
+      doc.translate(50.000000, 50.0 + 50.000000 * adjust_scale_y)
       doc.scale(0.100000 * adjust_scale_x, -0.100000 * adjust_scale_y)
     } else {
       doc.addPage()
-      doc.translate(50.000000,50.0 + 50.000000 * adjust_scale_y)
+      doc.translate(50.000000, 50.0 + 50.000000 * adjust_scale_y)
       doc.scale(0.100000 * adjust_scale_x, -0.100000 * adjust_scale_y)
     }
     page.forEach((line) => {
@@ -220,15 +220,15 @@ function vectorPdf(str, ruled, width) {
         if (symbols.includes(character) && character != ' ') {
           const symb = svg[symbols.indexOf(character)][randInt(6)]
           symb.children.forEach((element) => {
-              if (element.tagName == 'path') {
-                  let path = element.properties.d.replace(/\n/g, ' ') 
-                  doc.path(path).fill(symb.properties.fill)
-              }
+            if (element.tagName == 'path') {
+              const path = element.properties.d.replace(/\n/g, ' ')
+              doc.path(path).fill(symb.properties.fill)
+            }
           })
-        } 
+        }
         doc.translate(180, 0)
       })
-      doc.translate(-180 * width, - 500)
+      doc.translate(-180 * width, -500)
     })
   })
   doc.end()
@@ -301,7 +301,7 @@ async function main (rawText = '', optionalArgs = {}) {
     } else {
       const [str, width] = processText(rawText)
       if (vector) {
-        return vectorPdf(str, ruled, width)    
+        return vectorPdf(str, ruled, width)
       }
       if (outputType === 'pdf') {
         return generatePdf(str, ruled, width)
