@@ -37,16 +37,16 @@ code, .text-code {
 
 .title {
   font-weight: 900;
-  font-size: 6.5vh;
+  font-size: 8.9vh;
   padding-top: 2rem;
   color: #3F3F3F;
 
 }
 
 .title-sub {
-  padding: 1rem 0;
+  padding: 0.8vh 0;
   font-weight: 800;
-  font-size: 2.5vh;
+  font-size: 3.0vh;
 }
 
 .headline {
