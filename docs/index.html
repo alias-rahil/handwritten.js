@@ -19,35 +19,35 @@
    <body>
       <div class="body-wrapper">
          <div class="text-center">
-            <img src="favicon.ico" style="display: inline; padding-top: 1%; margin: 0px;">
+            <img src="favicon.ico" style="width:10%;height: auto; display: inline; padding-top: 1%; margin: 0px;">
          </div>
          <h1 class="title text-center">
             HANDWRITTEN.<span style="color:#8C50FF;">js</span>
          </h1>
-         <div style="height: 1.8rem;"></div>
+         <div style="height: 2vw;"></div>
          <h2 class="title-sub text-center" style="color: rgb(58, 58, 58);">
             Convert typed text to realistic handwriting
          </h2>
-         <div style="height: 5rem;"></div>
+         <div style="height: 3vw;"></div>
          <div class="split-container demo-section">
-            <textarea id="text" class="input-field text-center" style="width: auto;" >Type in your text here....</textarea>
+            <textarea onfocus="clearContents(this);" id="text" class="input-field text-center" style="width: auto;" >Type in your text here....</textarea>
          </div>
          <div style="height: 5rem;"></div>
          <div class="ruled-field text-center">
             <label for="ruled" style="font-weight: 800; color: rgb(65, 105, 236); font-size: 1rem;">Add Ruled Lines?</label>
             <input type="checkbox" id="ruled" />
          </div>
-         <div style="height: 5rem;"></div>
-         <div style="margin: auto; resize: both; overflow: auto;" class="split-container demo-section">
+         <div style="height: 1rem;"></div>
+         <div style="background-color: transparent;padding: 0%;border-radius: 31px;margin: auto; resize: both; overflow: auto;" class="split-container demo-section" >
             <iframe style="width: 100%; height: 100%;" id="pdf" class="preview-window"></iframe>
          </div>
-         <div style="height: 5rem;"></div>
+         <div style="height: 1vw;"></div>
          <div class="split-container">
             <div style="padding-top:2rem;" class="download-field text-center">
                <a id="download">
-               <img src="download.png" style="max-width: 3rem;"/>
+               <img src="download.png" style="padding-bottom:1rem;max-width: 3rem;"/>
                <br>
-               <span style="font-size: 1rem;font-weight: 800; color: #8C50FF;">Download this as a PDF
+               <span style="font-size: 1.5vw;line-height:20%;font-weight: 800; color: #8C50FF;">Download this as a PDF
                </span>
                </a>
             </div>

@@ -37,7 +37,7 @@ code, .text-code {
 
 .title {
   font-weight: 900;
-  font-size: 4rem;
+  font-size: 4.5vw;
   padding-top: 2rem;
   color: #3F3F3F;
 
@@ -46,6 +46,7 @@ code, .text-code {
 .title-sub {
   padding: 1rem 0;
   font-weight: 800;
+  font-size: 1.8vw;
 }
 
 .headline {
@@ -93,12 +94,13 @@ height: 5rem;
 .preview-window {
   font-size: 1.6rem;
   flex: 1;
+  padding: 1rem;
   background: #fafafa;
   color: white;
 box-shadow: 4px 9px 35px rgba(89, 89, 89, 0.69);
 border-radius: 31px;
 border: solid 0.5rem  #595959;
---demo-height : 15rem;
+--demo-height : 15m;
   height: var(--demo-height);
 }
 

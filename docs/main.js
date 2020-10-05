@@ -15,6 +15,10 @@ function makepdf () {
   })
 }
 
+function clearContents(element) {
+  element.value = '';
+}
+
 text.addEventListener('input', makepdf)
 ruled.addEventListener('click', makepdf)
 makepdf()
