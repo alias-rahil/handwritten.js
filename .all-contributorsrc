@@ -34,6 +34,16 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "hsrambo07",
+      "name": "Harsh SInghal",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/60664245?v=4",
+      "profile": "https://github.com/hsrambo07",
+      "contributions": [
+        "code",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
