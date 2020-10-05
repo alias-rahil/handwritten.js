@@ -17,6 +17,16 @@
          "email": "newyork.anthonyng@gmail.com",
          "name": "Anthony Ng",
          "url": "https://anthonyng.me/"
+      },
+      {
+         "email": "bjunya@gmail.com",
+         "name": "Ben Junya",
+         "url": "modernjsbyexample.net"
+      },
+      {
+         "email": "hs2002singhal@gmail.com",
+         "name": "Harsh Singhal",
+         "url": "https://github.com/hsrambo07"
       }
    ],
    "license": "MIT",
