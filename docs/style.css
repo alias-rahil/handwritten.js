@@ -37,7 +37,7 @@ code, .text-code {
 
 .title {
   font-weight: 900;
-  font-size: 4.5vw;
+  font-size: 6.5vh;
   padding-top: 2rem;
   color: #3F3F3F;
 
@@ -46,7 +46,7 @@ code, .text-code {
 .title-sub {
   padding: 1rem 0;
   font-weight: 800;
-  font-size: 1.8vw;
+  font-size: 2.5vh;
 }
 
 .headline {
@@ -56,8 +56,9 @@ code, .text-code {
 
 .gh-logo {
   padding-top: 2rem;
-  height: 3.5rem;
-  width: 3.5rem;
+  height: auto;
+  width: 4vw;
+  padding-bottom: 1%;
 }
 
 a, a:visited {
@@ -79,14 +80,14 @@ a, a:visited {
 }
 
 .input-field {
-  font-size: 1.6rem;
+  font-size: 3vh;
   flex: 1;
   background: #595959;
   color: white;
 box-shadow: 4px 9px 35px rgba(89, 89, 89, 0.69);
 border-radius: 31px;
-height: 5rem;
---demo-height : 15rem;
+height: 10vh;
+--demo-height : 28vh;
   height: var(--demo-height);
   padding-top: 2rem;
 }
