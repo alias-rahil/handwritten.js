@@ -15,14 +15,6 @@ function makepdf () {
   })
 }
 
-let time
-const DEBOUNCE_INTERVAL = 800
-
-const onInput = () => {
-  clearTimeout(time)
-  time = setTimeout(makepdf, DEBOUNCE_INTERVAL)
-}
-
-text.addEventListener('input', onInput)
+text.addEventListener('input', makepdf)
 ruled.addEventListener('click', makepdf)
 makepdf()
