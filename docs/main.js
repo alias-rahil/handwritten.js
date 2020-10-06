@@ -21,7 +21,8 @@ function clearContents (element) {
   if (!cleared) {
     element.value = ''
     makepdf()
-  } if (!cleared) {
+  }
+  if (!cleared) {
     cleared = true
   }
 }

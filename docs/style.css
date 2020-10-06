@@ -1,126 +1,125 @@
 :root {
-  --demo-height: 200px;
+	--demo-height: 200px;
 }
+
 body {
-  font-size: 62.5%;
-  height: 100%;
-  width: 100%;
-  font-family: 'Montserrat', sans-serif;
-  background-color: #FBFBFB;
+	font-size: 62.5%;
+	height: 100%;
+	width: 100%;
+	font-family: 'Montserrat', sans-serif;
+	background-color: #FBFBFB;
 }
 
 pre {
-  background-color: black;
-
+	background-color: black;
 }
-code, .text-code {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 1rem;
-  font-weight: 300;
-  background-color: black;
+
+code,
+.text-code {
+	font-family: 'Source Code Pro', monospace;
+	font-size: 1rem;
+	font-weight: 300;
+	background-color: black;
 }
 
 .body-wrapper {
-  font-size: 1.4rem;
-  display: flex;
-  flex-direction: column;
+	font-size: 1.4rem;
+	display: flex;
+	flex-direction: column;
 }
 
 .text-serif {
-  font-family: 'Sansita Swashed', cursive;
-  font-weight: 300;
+	font-family: 'Sansita Swashed', cursive;
+	font-weight: 300;
 }
 
 .text-center {
-  text-align: center;
+	text-align: center;
 }
 
 .title {
-  font-weight: 900;
-  font-size: 6.5vw;
-  padding-top: 2rem;
-  color: #3F3F3F;
-
+	font-weight: 900;
+	font-size: 6.5vw;
+	padding-top: 2rem;
+	color: #3F3F3F;
 }
 
 .title-sub {
-  padding: 1rem 0;
-  font-weight: 900;
-  font-size: 2.5vh;
+	padding: 1rem 0;
+	font-weight: 900;
+	font-size: 2.5vh;
 }
 
 .headline {
-  font-size: 1.6rem;
-  padding-bottom: 2rem;
+	font-size: 1.6rem;
+	padding-bottom: 2rem;
 }
 
 .gh-logo {
-  padding-top: 2rem;
-  height: auto;
-  width: 4vw;
-  padding-bottom: 1%;
+	padding-top: 2rem;
+	height: auto;
+	width: 4vw;
+	padding-bottom: 1%;
 }
 
-a, a:visited {
-  text-decoration: none;
-  color: white;
+a,
+a:visited {
+	text-decoration: none;
+	color: white;
 }
 
 .split-container {
-  display: flex;
-  width: 50%;
-
-  margin-left: auto;
-  margin-right: auto;
+	display: flex;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .demo-section {
-  padding-top: 1rem;
-
+	padding-top: 1rem;
 }
 
 .input-field {
-  font-size: 1.5vw;
-  flex: 1;
-  background: #595959;
-  color: white;
-box-shadow: 4px 9px 35px rgba(89, 89, 89, 0.69);
-border-radius: 31px;
-height: 10vh;
---demo-height : 28vh;
-  height: var(--demo-height);
-  padding-top: 2rem;
+	font-size: 1.5vw;
+	flex: 1;
+	background: #595959;
+	color: white;
+	box-shadow: 4px 9px 35px rgba(89, 89, 89, 0.69);
+	border-radius: 31px;
+	height: 10vh;
+	--demo-height: 28vh;
+	height: var(--demo-height);
+	padding-top: 2rem;
 }
 
 .preview-window {
-  font-size: 1.6rem;
-  flex: 1;
-  background: #fafafa;
-  color: white;
-
---demo-height : 15m;
-  height: var(--demo-height);
+	font-size: 1.6rem;
+	flex: 1;
+	background: #fafafa;
+	color: white;
+	--demo-height: 15m;
+	height: var(--demo-height);
 }
 
-.ruled-field, .download-field {
-  flex: 1;
-  padding-top: .5rem;
+.ruled-field,
+.download-field {
+	flex: 1;
+	padding-top: .5rem;
 }
 
 .download-field {
-  transition: all .3s ease-in-out;
-  color: white;
+	transition: all .3s ease-in-out;
+	color: white;
 }
+
 .download-field a:hover {
-  color: rebeccapurple;
+	color: rebeccapurple;
 }
 
 .instruction-section {
-  padding-top: 4rem;
+	padding-top: 4rem;
 }
 
 .instruction-section-block {
-  padding-bottom: 2rem;
+	padding-bottom: 2rem;
 }
-
-

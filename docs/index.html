@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -24,13 +22,14 @@
          <h1 class="title text-center">
             HANDWRITTEN.<span style="color:#8C50FF;">js</span>
          </h1>
-         <div style="height: 2vw;"></div>
+         <div style="height: 1vw;"></div>
+         <div style="height: 1vw;"></div>
          <h2 class="title-sub text-center" style="color: rgb(58, 58, 58);">
             Convert typed text to realistic handwriting
          </h2>
          <div style="height: 3vh;"></div>
          <div class="split-container demo-section">
-            <textarea onfocus="clearContents(this);" id="text" class="input-field text-center" style="width: auto;" >Type in your text here....</textarea>
+            <textarea onfocus="clearContents(this);" id="text" class="input-field text-center" style="resize: vertical; overflow: auto;" >Type in your text here....</textarea>
          </div>
          <div style="height: 5rem;"></div>
          <div class="ruled-field text-center">
@@ -39,13 +38,12 @@
          </div>
          <div style="height: 1rem;"></div>
          <div style="  display: flex;
-         width: 50%;
-       
-         margin-left: auto;
-         margin-right: auto; box-shadow: 4px 9px 35px rgba(89, 89, 89, 0.69);
-         border-radius: 31px;--demo-height : 28vh;
-  height: var(--demo-height);
-         border: solid 0.5rem  #595959;background-color: transparent;padding: 0%;border-radius: 31px;margin: auto; resize: both; overflow: auto;" class="split-container" >
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto; box-shadow: 4px 9px 35px rgba(89, 89, 89, 0.69);
+            border-radius: 31px;--demo-height : 28vh;
+            height: var(--demo-height);
+            border: solid 0.5rem  #595959;background-color: transparent;padding: 0%;border-radius: 31px;margin: auto; resize: vertical; overflow: auto;" class="split-container" >
             <iframe style="width: 100%; height: 100%;padding: 0%;" id="pdf" class="preview-window"></iframe>
          </div>
          <div style="height: 1vw;"></div>
@@ -73,4 +71,3 @@
    </body>
    <script src="main.js"></script>
 </html>
-
