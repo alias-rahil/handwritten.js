@@ -16,3 +16,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id semper neque
 handwritten(rawtext, { vector: true }).then((converted) => {
   converted.pipe(fs.createWriteStream('output_svg.pdf'))
 }).then(() => console.log('ended'))
+handwritten(rawtext, { vector: true, ruled: true }).then((converted) => {
+  converted.pipe(fs.createWriteStream('output_svg_ruled.pdf'))
+}).then(() => console.log('ended'))

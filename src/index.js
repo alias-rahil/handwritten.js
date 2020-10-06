@@ -124,8 +124,7 @@ function checkArgType (rawText, optionalArgs) {
     return false
   }
   if (typeof (optionalArgs.ruled) === 'boolean' && typeof (optionalArgs
-    .outputtype) === 'undefined' && Object.keys(optionalArgs).length !==
-        1) {
+    .outputtype) === 'undefined' && Object.keys(optionalArgs).length > 2) {
     return false
   }
   if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
@@ -230,6 +229,11 @@ function vectorPdf (str, ruled, width) {
       })
       doc.translate(-180 * width, -500)
     })
+    if (ruled) {
+      for (const i in page) {
+        doc.moveTo(0, 700 + i * 500).lineTo(23800 / adjustScaleX, 700 + i * 500).stroke()
+      }
+    }
   })
   doc.end()
   return doc
