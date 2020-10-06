@@ -21,12 +21,17 @@ function clearContents (element) {
   if (!cleared) {
     element.value = ''
     makepdf()
-  }
-  if (!cleared) {
     cleared = true
   }
 }
 
+function clickListener () {
+  if (!cleared) {
+    cleared = true
+  }
+  makepdf()
+}
+
 text.addEventListener('input', makepdf)
-ruled.addEventListener('click', makepdf)
+ruled.addEventListener('click', clickListener)
 makepdf()
