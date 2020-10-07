@@ -17,60 +17,55 @@
    <body>
       <div class="body-wrapper">
          <div class="text-center">
-            <img src="favicon.ico" style="display: inline; padding-top: 1%; margin: 0px;">
+            <img src="favicon.ico" style="width:10%;height: auto; padding-top: 1%; margin: 0px;">
          </div>
-         <p class="title text-center">
+         <h1 class="title text-center">
             HANDWRITTEN.<span style="color:#8C50FF;">js</span>
-         </p>
-
-         <div style="height: 1.8rem;"></div>
+         </h1>
+         <div style="height: 2vw;"></div>
          <h2 class="title-sub text-center" style="color: rgb(58, 58, 58);">
             Convert typed text to realistic handwriting
-           </h2>
-
-           <div class="text-center">
-               <img src="illust.png" class="gh-logo" style="height: 20rem; width: 20rem;" />
-               <br>
-         </div>
-         <div style="height: 5rem;"></div>
+         </h2>
+         <div style="height: 3vh;"></div>
          <div class="split-container demo-section">
-            <textarea id="text" class="input-field text-center" style="width: auto;" >Type in your text here....</textarea>
-            <br>
+            <textarea onfocus="clearContents(this);" id="text" class="input-field text-center" style="resize: vertical; overflow: auto;" >Type in your text here....</textarea>
          </div>
          <div style="height: 5rem;"></div>
-
-         <h2 class="text-center" style="color: rgb(58, 58, 58); font-weight: 600;">
-            Your generated handwritten text below
-           </h2>
          <div class="ruled-field text-center">
             <label for="ruled" style="font-weight: 800; color: rgb(65, 105, 236); font-size: 1rem;">Add Ruled Lines?</label>
             <input type="checkbox" id="ruled" />
          </div>
-         <div class="split-container demo-section">
-         <iframe id="pdf" class="preview-window"></iframe>
+         <div style="height: 1rem;"></div>
+         <div style="  display: flex;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto; box-shadow: 4px 9px 35px rgba(89, 89, 89, 0.69);
+            border-radius: 31px;--demo-height : 28vh;
+            height: var(--demo-height);
+            border: solid 0.5rem  #595959;background-color: transparent;padding: 0%;border-radius: 31px;margin: auto; resize: vertical; overflow: auto;" class="split-container" >
+            <iframe style="width: 100%; height: 100%;padding: 0%;" id="pdf" class="preview-window"></iframe>
          </div>
+         <div style="height: 1vw;"></div>
          <div class="split-container">
-
             <div style="padding-top:2rem;" class="download-field text-center">
                <a id="download">
-                     <img src="download.png" style="max-width: 3rem;"/>
-                     <br>
-                     <span style="font-size: 1rem;font-weight: 800; color: #8C50FF;">Download this as a PDF
-                     </span>
-                  </a>
+               <img src="download.png" style="padding-bottom:2%;max-width: 4vw;"/>
+               <br>
+               <span style="font-size: 2vh;;font-weight: 800; color: #8C50FF;">Download this as a PDF
+               </span>
+               </a>
             </div>
          </div>
          <div style="height: 4rem;"></div>
          <p class="text-center" style="color: rgb(43, 43, 43);">-------------------------------------------------------------------------------------------------------------------</p>
-
          <div class="text-center">
             <a href="https://github.com/alias-rahil/handwritten.js" target="_blank" rel="noopener noreferrer">
-               <img src="gh-logo.svg" class="gh-logo" />
-               <br>
-               <span style="font-size: 1rem;font-weight: 600; color: #8C50FF;">Check out the GitHub Repo here</span>
+            <img src="gh-logo.svg" class="gh-logo" />
+            <br>
+            <span style="font-size: 1.5vh;font-weight: 600; color: #8C50FF;">Check out the GitHub Repo here</span>
             </a>
          </div>
-         <div style="height: 5rem;"></div>
+         <div style="height: 8vh;"></div>
       </div>
    </body>
    <script src="main.js"></script>

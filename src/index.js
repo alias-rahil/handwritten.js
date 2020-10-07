@@ -69,15 +69,15 @@ function padText (str, batchSize) {
   return paddedParagraphs
 }
 
+function randInt (n) {
+  return Math.floor(Math.random() * n)
+}
+
 function cleanText (rawText) {
   return unidecode(rawText, {
     german: true,
     smartSpacing: true
   }).trim()
-}
-
-function randInt (n) {
-  return Math.floor(Math.random() * n)
 }
 
 function getBatchSize () {
