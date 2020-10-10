@@ -91,9 +91,9 @@ function getBatchSize () {
 
 function processText (rawText) {
   const batchSize = getBatchSize()
-  const str = cleanText(rawText.replace('\t', '     ').replace('\r', '\n')
-    .replace('\f', '\n').replace('\v', '\n'))
-  const maxLen = findMaxLen(str.replace('\n', ' ').split(' '))
+  const str = cleanText(rawText.split('\t').join('     ').split('\r').join('\n').split('\f')
+    .join('\n').split('\v').join('\n'))
+  const maxLen = findMaxLen(str.split('\n').join(' ').split(' '))
   const width = maxLen > batchSize ? maxLen : batchSize
   const wrappedText = []
   str.split('\n').forEach((element) => {
