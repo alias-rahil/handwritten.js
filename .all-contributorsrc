@@ -44,6 +44,15 @@
         "code",
         "maintenance"
       ]
+      },
+    {
+      "login": "etnnth",
+      "name": "etienne",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/46907310?v=4",
+      "profile": "https://github.com/etnnth",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

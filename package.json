@@ -27,6 +27,11 @@
          "email": "hs2002singhal@gmail.com",
          "name": "Harsh Singhal",
          "url": "https://github.com/hsrambo07"
+      },
+      {
+         "email": null,
+         "name": "etienne",
+         "url": "https://github.com/etnnth"
       }
    ],
    "license": "MIT",
