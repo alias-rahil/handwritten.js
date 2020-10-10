@@ -27,6 +27,11 @@
          "email": "hs2002singhal@gmail.com",
          "name": "Harsh Singhal",
          "url": "https://github.com/hsrambo07"
+      },
+      {
+         "email": null,
+         "name": "etienne",
+         "url": "https://github.com/etnnth"
       }
    ],
    "license": "MIT",
@@ -65,6 +70,7 @@
       "extended-mnist"
    ],
    "devDependencies": {
+      "svg-parser": "^2.0.4",
       "babel-minify": "^0.5.1",
       "browserify": "^16.5.2",
       "eslint": "^7.10.0",
