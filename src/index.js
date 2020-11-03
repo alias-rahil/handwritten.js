@@ -2,10 +2,10 @@ const Pdfkit = require('pdfkit')
 const unidecode = require('unidecode-plus')
 const Jimp = require('jimp')
 const dataset = require('./dataset.json')
-
 const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64']
-const symbols = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
-  .split('').concat(['margin'])
+const symbols =
+    ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+      .split('').concat(['margin'])
 const jimpObjectPromises = []
 for (let i = 0; i < symbols.length; i += 1) {
   for (let j = 0; j < 6; j += 1) {
@@ -91,8 +91,8 @@ function getBatchSize () {
 
 function processText (rawText) {
   const batchSize = getBatchSize()
-  const str = cleanText(rawText.split('\t').join('     ').split('\r').join('\n').split('\f')
-    .join('\n').split('\v').join('\n'))
+  const str = cleanText(rawText.split('\t').join('     ').split('\r').join(
+    '\n').split('\f').join('\n').split('\v').join('\n'))
   const maxLen = findMaxLen(str.split('\n').join(' ').split(' '))
   const width = maxLen > batchSize ? maxLen : batchSize
   const wrappedText = []
