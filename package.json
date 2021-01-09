@@ -4,15 +4,14 @@
    "description": "Convert typed text to realistic handwriting!",
    "repository": {
       "type": "git",
-      "url": "https://github.com/alias-rahil/handwritten.git/"
+      "url": "git+https://github.com/alias-rahil/handwritten.git"
    },
-   "author": "Rahil Kabani <rahil.kabani.4@gmail.com>",
+   "author": {
+      "email": "rahil.kabani.4@gmail.com",
+      "name": "Rahil Kabani",
+      "url": "https://alias-rahil.github.io/"
+   },
    "contributors": [
-      {
-         "email": "rahil.kabani.4@gmail.com",
-         "name": "Rahil Kabani",
-         "url": "https://alias-rahil.github.io/"
-      },
       {
          "email": "newyork.anthonyng@gmail.com",
          "name": "Anthony Ng",
@@ -29,7 +28,6 @@
          "url": "https://github.com/hsrambo07"
       },
       {
-         "email": null,
          "name": "etienne",
          "url": "https://github.com/etnnth"
       }
@@ -51,9 +49,7 @@
    },
    "scripts": {
       "build": "npm i && eslint . --fix && browserify -e src/index.js -s handwritten -o docs/handwritten.js && minify docs/handwritten.js -o docs/handwritten.js && git add . && (git commit -m 'fix lint errors + bump docs/handwritten.js' || :)",
-      "patch": "npm run build && npm version patch && npm run release",
       "minor": "npm run build && npm version minor && npm run release",
-      "major": "npm run build && npm version major && npm run release",
       "release": "git push && npm publish"
    },
    "main": "src/index.js",
