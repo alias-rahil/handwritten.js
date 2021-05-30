@@ -48,7 +48,7 @@
       "handwritten.js": "src/bin.js"
    },
    "scripts": {
-      "build": "npm i && eslint . --fix && browserify -e src/index.js -s handwritten -o docs/handwritten.js && minify docs/handwritten.js -o docs/handwritten.js && git add . && (git commit -m 'fix lint errors + bump docs/handwritten.js' || :)",
+      "build": "npm i && eslint . --fix && browserify -e src/index.js -s handwritten -o docs/handwritten.js && terser docs/handwritten.js -c -o docs/handwritten.js && git add . && (git commit -m 'fix lint errors + bump docs/handwritten.js' || :)",
       "minor": "npm run build && npm version minor && npm run release",
       "release": "git push && npm publish"
    },
@@ -66,7 +66,7 @@
       "extended-mnist"
    ],
    "devDependencies": {
-      "babel-minify": "^0.5.1",
+      "terser": "^5.7.0",
       "browserify": "^16.5.2",
       "eslint": "^7.10.0",
       "eslint-config-standard": "^14.1.1",
