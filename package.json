@@ -1,6 +1,6 @@
 {
    "name": "handwritten.js",
-   "version": "18.10.0",
+   "version": "18.10.1",
    "description": "Convert typed text to realistic handwriting!",
    "repository": {
       "type": "git",
@@ -30,6 +30,10 @@
       {
          "name": "etienne",
          "url": "https://github.com/etnnth"
+      },
+       {
+         "name": "Ashikka Gupta",
+         "url": "https://github.com/ashikka"
       }
    ],
    "license": "MIT",
