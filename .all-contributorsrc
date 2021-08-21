@@ -44,12 +44,21 @@
         "code",
         "maintenance"
       ]
-      },
+    },
     {
       "login": "etnnth",
       "name": "etienne",
       "avatar_url": "https://avatars3.githubusercontent.com/u/46907310?v=4",
       "profile": "https://github.com/etnnth",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ashikka",
+      "name": "Ashikka Gupta",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58368421?v=4",
+      "profile": "https://github.com/ashikka",
       "contributions": [
         "code"
       ]
