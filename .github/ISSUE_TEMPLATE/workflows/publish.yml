@@ -1,0 +1,49 @@
+name: Publish NPM package and Release on GitHub
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+
+      - run: git fetch --all --tags
+        
+      - name: Check version change
+        uses: thebongy/version-check@v1
+        id: check
+        with:
+          file: package.json
+          failBuild: false
+          tagFormat: v${version}
+      
+      - name: Echo variables
+        run: |
+          echo "versionChanged- ${{steps.check.outputs.versionChanged}}"
+          echo "releaseVersion- ${{steps.check.outputs.releaseVersion}}"
+      - if: steps.check.outputs.versionChanged == 'true'
+        run: npm install
+
+      - if: steps.check.outputs.versionChanged == 'true'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        if: steps.check.outputs.versionChanged == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.check.outputs.releaseVersion }}
+          release_name: Release ${{ steps.check.outputs.releaseVersion }}
+          draft: false
+          prerelease: false
