@@ -2,7 +2,7 @@ name: Publish NPM package and Release on GitHub
 
 on:
   push:
-    branches: [master]
+    branches: [dev]
 
 jobs:
   publish:
