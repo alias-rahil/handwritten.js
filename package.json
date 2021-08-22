@@ -41,6 +41,7 @@
       "commander": "^6.0.0",
       "del": "^6.0.0",
       "jimp": "^0.16.1",
+      "mocha": "^9.1.0",
       "pdfkit": "^0.11.0",
       "unidecode-plus": "^1.0.2"
    },
@@ -50,7 +51,8 @@
    "scripts": {
       "build": "npm i && eslint . --fix && browserify -e src/index.js -s handwritten -o docs/handwritten.js && minify docs/handwritten.js -o docs/handwritten.js && git add . && (git commit -m 'fix lint errors + bump docs/handwritten.js' || :)",
       "minor": "npm run build && npm version minor && npm run release",
-      "release": "git push && npm publish"
+      "release": "git push && npm publish", 
+      "test": "mocha"
    },
    "main": "src/index.js",
    "keywords": [
