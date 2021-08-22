@@ -53,12 +53,8 @@
     "minor": "npm run build && npm version minor && npm run release",
     "release": "git push && npm publish",
     "test": "mocha",
-    "lint:fix": "eslint \"src/**/*.{ts,js,jsx}\" --fix"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint:fix"
-    }
+    "lint": "eslint \"src/**/*.{ts,js,jsx}\" ",
+    "prepare": "husky install"
   },
   "main": "src/index.js",
   "keywords": [
