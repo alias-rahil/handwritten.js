@@ -1,82 +1,85 @@
 {
-   "name": "handwritten.js",
-   "version": "18.10.1",
-   "description": "Convert typed text to realistic handwriting!",
-   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/alias-rahil/handwritten.git"
-   },
-   "author": {
-      "email": "rahil.kabani.4@gmail.com",
-      "name": "Rahil Kabani",
-      "url": "https://alias-rahil.github.io/"
-   },
-   "contributors": [
-      {
-         "email": "newyork.anthonyng@gmail.com",
-         "name": "Anthony Ng",
-         "url": "https://anthonyng.me/"
-      },
-      {
-         "email": "bjunya@gmail.com",
-         "name": "Ben Junya",
-         "url": "https://www.modernjsbyexample.net/"
-      },
-      {
-         "email": "hs2002singhal@gmail.com",
-         "name": "Harsh Singhal",
-         "url": "https://github.com/hsrambo07"
-      },
-      {
-         "name": "etienne",
-         "url": "https://github.com/etnnth"
-      },
-       {
-         "name": "Ashikka Gupta",
-         "url": "https://github.com/ashikka"
-      }
-   ],
-   "license": "MIT",
-   "bugs": {
-      "url": "https://github.com/alias-rahil/handwritten/issues"
-   },
-   "homepage": "https://github.com/alias-rahil/handwritten#readme",
-   "dependencies": {
-      "commander": "^6.0.0",
-      "del": "^6.0.0",
-      "jimp": "^0.16.1",
-      "pdfkit": "^0.11.0",
-      "unidecode-plus": "^1.0.2"
-   },
-   "bin": {
-      "handwritten.js": "src/bin.js"
-   },
-   "scripts": {
-      "build": "npm i && eslint . --fix && browserify -e src/index.js -s handwritten -o docs/handwritten.js && terser docs/handwritten.js -c -o docs/handwritten.js && git add . && (git commit -m 'fix lint errors + bump docs/handwritten.js' || :)",
-      "minor": "npm run build && npm version minor && npm run release",
-      "release": "git push && npm publish"
-   },
-   "main": "src/index.js",
-   "keywords": [
-      "handwritten",
-      "text",
-      "handwriting",
-      "converter",
-      "handwriter",
-      "emnist-dataset",
-      "daniel-font",
-      "pen",
-      "pencil",
-      "extended-mnist"
-   ],
-   "devDependencies": {
-      "terser": "^5.7.0",
-      "browserify": "^16.5.2",
-      "eslint": "^7.10.0",
-      "eslint-config-standard": "^14.1.1",
-      "eslint-plugin-import": "^2.22.1",
-      "eslint-plugin-node": "^11.1.0",
-      "eslint-plugin-promise": "^4.2.1",
-      "eslint-plugin-standard": "^4.0.1"
-   }
+  "name": "handwritten.js",
+  "version": "18.10.0",
+  "description": "Convert typed text to realistic handwriting!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alias-rahil/handwritten.git"
+  },
+  "author": {
+    "email": "rahil.kabani.4@gmail.com",
+    "name": "Rahil Kabani",
+    "url": "https://alias-rahil.github.io/"
+  },
+  "contributors": [
+    {
+      "email": "newyork.anthonyng@gmail.com",
+      "name": "Anthony Ng",
+      "url": "https://anthonyng.me/"
+    },
+    {
+      "email": "bjunya@gmail.com",
+      "name": "Ben Junya",
+      "url": "https://www.modernjsbyexample.net/"
+    },
+    {
+      "email": "hs2002singhal@gmail.com",
+      "name": "Harsh Singhal",
+      "url": "https://github.com/hsrambo07"
+    },
+    {
+      "name": "etienne",
+      "url": "https://github.com/etnnth"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alias-rahil/handwritten/issues"
+  },
+  "homepage": "https://github.com/alias-rahil/handwritten#readme",
+  "dependencies": {
+    "commander": "^6.0.0",
+    "del": "^6.0.0",
+    "jimp": "^0.16.1",
+    "mocha": "^9.1.0",
+    "pdfkit": "^0.11.0",
+    "unidecode-plus": "^1.0.2"
+  },
+  "bin": {
+    "handwritten.js": "src/bin.js"
+  },
+  "scripts": {
+    "build": "npm i && eslint . --fix && browserify -e src/index.js -s handwritten -o docs/handwritten.js && minify docs/handwritten.js -o docs/handwritten.js && git add . && (git commit -m 'fix lint errors + bump docs/handwritten.js' || :)",
+    "minor": "npm run build && npm version minor && npm run release",
+    "release": "git push && npm publish",
+    "test": "mocha",
+    "lint": "eslint \"src/**/*.{ts,js,jsx}\" ",
+    "prepare": "husky install"
+  },
+  "main": "src/index.js",
+  "keywords": [
+    "handwritten",
+    "text",
+    "handwriting",
+    "converter",
+    "handwriter",
+    "emnist-dataset",
+    "daniel-font",
+    "pen",
+    "pencil",
+    "extended-mnist"
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "babel-minify": "^0.5.1",
+    "browserify": "^16.5.2",
+    "eslint": "^7.10.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^7.0.1"
+  }
 }
