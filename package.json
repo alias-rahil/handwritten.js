@@ -70,6 +70,8 @@
     "extended-mnist"
   ],
   "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "babel-minify": "^0.5.1",
     "browserify": "^16.5.2",
     "eslint": "^7.10.0",
