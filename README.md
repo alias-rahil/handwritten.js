@@ -2,7 +2,7 @@
 <h2 align="center">Convert typed text to realistic handwriting</h2>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/npm/v/handwritten.js.svg)](https://www.npmjs.com/package/handwritten.js)
@@ -140,16 +140,18 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://alias-rahil.github.io/"><img src="https://avatars2.githubusercontent.com/u/59060219?v=4" width="100px;" alt=""/><br /><sub><b>Rahil Kabani</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=alias-rahil" title="Code">💻</a> <a href="https://github.com/alias-rahil/handwritten.js/commits?author=alias-rahil" title="Documentation">📖</a> <a href="#maintenance-alias-rahil" title="Maintenance">🚧</a></td>
-    <td align="center"><a href="http://anthonyng.me"><img src="https://avatars1.githubusercontent.com/u/14035529?v=4" width="100px;" alt=""/><br /><sub><b>Anthony Ng</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=newyork-anthonyng" title="Documentation">📖</a></td>
-    <td align="center"><a href="http://modernjsbyexample.net"><img src="https://avatars0.githubusercontent.com/u/7918387?v=4" width="100px;" alt=""/><br /><sub><b>Ben Junya</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=MrBenJ" title="Code">💻</a> <a href="https://github.com/alias-rahil/handwritten.js/commits?author=MrBenJ" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/hsrambo07"><img src="https://avatars0.githubusercontent.com/u/60664245?v=4" width="100px;" alt=""/><br /><sub><b>Harsh SInghal</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=hsrambo07" title="Code">💻</a> <a href="#maintenance-hsrambo07" title="Maintenance">🚧</a></td>
-        <td align="center"><a href="https://github.com/etnnth"><img src="https://avatars3.githubusercontent.com/u/46907310?v=4" width="100px;" alt=""/><br /><sub><b>etienne</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=etnnth" title="Code">💻</a></td>
+    <td align="center"><a href="https://alias-rahil.github.io/"><img src="https://avatars2.githubusercontent.com/u/59060219?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rahil Kabani</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=alias-rahil" title="Code">💻</a> <a href="https://github.com/alias-rahil/handwritten.js/commits?author=alias-rahil" title="Documentation">📖</a> <a href="#maintenance-alias-rahil" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="http://anthonyng.me"><img src="https://avatars1.githubusercontent.com/u/14035529?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Anthony Ng</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=newyork-anthonyng" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://modernjsbyexample.net"><img src="https://avatars0.githubusercontent.com/u/7918387?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ben Junya</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=MrBenJ" title="Code">💻</a> <a href="https://github.com/alias-rahil/handwritten.js/commits?author=MrBenJ" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/hsrambo07"><img src="https://avatars0.githubusercontent.com/u/60664245?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Harsh SInghal</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=hsrambo07" title="Code">💻</a> <a href="#maintenance-hsrambo07" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/etnnth"><img src="https://avatars3.githubusercontent.com/u/46907310?v=4?s=100" width="100px;" alt=""/><br /><sub><b>etienne</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=etnnth" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/ashikka"><img src="https://avatars.githubusercontent.com/u/58368421?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ashikka Gupta</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=ashikka" title="Code">💻</a></td>
   </tr>
 </table>
 
-<!-- markdownlint-enable -->
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
