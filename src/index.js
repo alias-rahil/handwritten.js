@@ -1,16 +1,28 @@
 const Pdfkit = require('pdfkit')
 const unidecode = require('unidecode-plus')
+const replaceColor = require('replace-color')
 const Jimp = require('jimp')
 const dataset = require('./dataset.json')
 const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64']
 const symbols =
-    ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
-      .split('').concat(['margin'])
+  ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+    .split('').concat(['margin'])
 const jimpObjectPromises = []
-for (let i = 0; i < symbols.length; i += 1) {
-  for (let j = 0; j < 6; j += 1) {
-    dataset[i][j] = Buffer.from(dataset[i][j])
-    jimpObjectPromises.push(Jimp.read(dataset[i][j]))
+
+const loadData = async (color) => {
+  for (let i = 0; i < symbols.length; i += 1) {
+    for (let j = 0; j < 6; j += 1) {
+      const jimpObject = await replaceColor({
+        image: Buffer.from(dataset[i][j]),
+        colors: {
+          type: 'hex',
+          targetColor: '#000000',
+          replaceColor: color
+        }
+      })
+      dataset[i][j] = await jimpObject.getBufferAsync(Jimp.MIME_PNG)
+      jimpObjectPromises.push(Jimp.read(dataset[i][j]))
+    }
   }
 }
 let jimpObjects
@@ -119,22 +131,34 @@ function checkArgType (rawText, optionalArgs) {
   }
   if (typeof (optionalArgs.ruled) === 'boolean' && typeof (optionalArgs
     .outputtype) === 'string' && Object.keys(optionalArgs).length !==
-        2) {
+    2) {
+    return false
+  }
+  if (typeof (optionalArgs.inkColor) !== 'string' && typeof (optionalArgs
+    .inkColor) !== 'undefined') {
     return false
   }
   if (typeof (optionalArgs.ruled) === 'boolean' && typeof (optionalArgs
-    .outputtype) === 'undefined' && Object.keys(optionalArgs).length !==
-        1) {
-    return false
-  }
-  if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
     .outputtype) === 'string' && Object.keys(optionalArgs).length !==
-        1) {
+    2) {
+    return false
+  }
+  if (typeof (optionalArgs.ruled) === 'boolean' && typeof (optionalArgs
+    .outputtype) === 'undefined' && typeof (optionalArgs
+    .inkColor) === 'undefined' && Object.keys(optionalArgs).length !==
+    1) {
     return false
   }
   if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
-    .outputtype) === 'undefined' && Object.keys(optionalArgs).length !==
-        0) {
+    .outputtype) === 'string' && typeof (optionalArgs
+    .inkColor) === 'undefined' && Object.keys(optionalArgs).length !==
+    1) {
+    return false
+  }
+  if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
+    .outputtype) === 'undefined' && typeof (optionalArgs
+    .inkColor) === 'undefined' && Object.keys(optionalArgs).length !==
+    0) {
     return false
   }
   return true
@@ -188,11 +212,11 @@ function generateImages (imageArray, outputType) {
   imageArray.forEach((image) => {
     if (outputType.slice(-4, outputType.length) === '/buf') {
       promisesToKeep.push(image.getBufferAsync(
-          `image/${outputType.slice(0, -4)}`
+        `image/${outputType.slice(0, -4)}`
       ))
     } else {
       promisesToKeep.push(image.getBase64Async(
-          `image/${outputType.slice(0, -4)}`
+        `image/${outputType.slice(0, -4)}`
       ))
     }
   })
@@ -252,9 +276,11 @@ async function main (rawText = '', optionalArgs = {}) {
   } else {
     const outputType = optionalArgs.outputtype || 'pdf'
     const ruled = optionalArgs.ruled || false
+    const inkColor = optionalArgs.inkColor || '#000000'
+    await loadData(inkColor)
     if (!isArgValid(outputType)) {
       return Promise.reject(Object.assign(new Error(
-          `Invalid output type "${outputType}"!`
+        `Invalid output type "${outputType}"!`
       ), {
         supportedOutputTypes: supportedOutputTypes.concat([
           'pdf'
