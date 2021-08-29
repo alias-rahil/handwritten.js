@@ -6,6 +6,7 @@ const {
 const fs = require('fs')
 const del = require('del')
 const handwritten = require('./index.js')
+const COLORS = require('./constants')
 const {
   version,
   description
@@ -18,6 +19,7 @@ program.version(version).description(description)
   .option('-r, --ruled',
     'use ruled paper as the background image instead of plain white image')
   .option('-i, --images <png|jpeg>', 'get output as images instead of pdf')
+  .option('-k, --inkColor <red|blue>', 'use custom ink colors (red, blue) for the document')
   .parse(process.argv)
 
 const optionalargs = {}
@@ -31,6 +33,13 @@ if (program.images) {
 }
 if (program.ruled) {
   optionalargs.ruled = true
+}
+if (program.inkColor) {
+  if (program.inkColor !== COLORS.RED && program.inkColor !== COLORS.BLUE) {
+    error = true
+  } else {
+    optionalargs.inkColor = program.inkColor
+  }
 }
 async function main (file, optional, output) {
   try {

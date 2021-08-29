@@ -3,13 +3,15 @@ const text = document.getElementById('text')
 const download = document.getElementById('download')
 const pdf = document.getElementById('pdf')
 const ruled = document.getElementById('ruled')
+const inkColor = document.getElementById('inkColor')
+
 let cleared = false
 let w = new Worker('worker.js')
 
 function makepdf () {
   w.terminate()
   w = new Worker('worker.js')
-  w.postMessage([text.value, ruled.checked])
+  w.postMessage([text.value, ruled.checked, inkColor.value])
   w.addEventListener('message', (e) => {
     pdf.src = e.data
     download.download = `${pdf.src.slice(4, pdf.src.length)}.pdf`
