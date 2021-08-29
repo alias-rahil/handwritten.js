@@ -1,6 +1,6 @@
 {
   "name": "handwritten.js",
-  "version": "18.10.2",
+  "version": "18.11.0",
   "description": "Convert typed text to realistic handwriting!",
   "repository": {
     "type": "git",
@@ -30,6 +30,11 @@
     {
       "name": "etienne",
       "url": "https://github.com/etnnth"
+    },
+    {
+      "name": "Suyash Sonawane",
+      "email": "suyashsonawane007@gmail.com",
+      "url": "https://suyashsonawane.me"
     }
   ],
   "license": "MIT",

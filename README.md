@@ -95,9 +95,11 @@ handwritten(rawtext)
 handwritten(rawtext, { ruled: true })
 handwritten(rawtext, { outputtype: "jpeg/buf" })
 handwritten(rawtext, { ruled: true, outputtype: "jpeg/b64" })
+handwritten(rawtext, { ruled: true, outputtype: "jpeg/b64" , inkColor: COLORS.RED})
 ```
 
-Default outputtype: "pdf". Supported output types are: `pdf`, `jpeg/buf`, `jpeg/b64`, `png/buf` and `png/b64`. If the output type is set to `pdf`, it returns a promise that will resolve in a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance. Else it will return a promise that will resolve in an array containing the buffer or base64 value of the images according to the output type provided.
+Default outputtype: "pdf". Supported output types are: `pdf`, `jpeg/buf`, `jpeg/b64`, `png/buf` and `png/b64`. If the output type is set to `pdf`, it returns a promise that will resolve in a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance. Else it will return a promise that will resolve in an array containing the buffer or base64 value of the images according to the output type provided. 
+Default `inkColor` is `black`, more ink colors are available through `COLORS` under `handwritten.js/constants`
 
 ## Screenshot
 
@@ -146,6 +148,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/hsrambo07"><img src="https://avatars0.githubusercontent.com/u/60664245?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Harsh SInghal</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=hsrambo07" title="Code">💻</a> <a href="#maintenance-hsrambo07" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/etnnth"><img src="https://avatars3.githubusercontent.com/u/46907310?v=4?s=100" width="100px;" alt=""/><br /><sub><b>etienne</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=etnnth" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/ashikka"><img src="https://avatars.githubusercontent.com/u/58368421?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ashikka Gupta</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=ashikka" title="Code">💻</a> <a href="#maintenance-ashikka" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/suyashsonawane"><img src="https://avatars.githubusercontent.com/u/35629339?v=4" width="100px;" alt=""/><br /><sub><b>Suyash Sonawane</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=suyashsonawane" title="Code">💻</a></td>
   </tr>
 </table>
 
