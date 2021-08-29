@@ -1,16 +1,14 @@
 const Pdfkit = require('pdfkit')
 const unidecode = require('unidecode-plus')
 const Jimp = require('jimp')
+const Joi = require('joi')
 const dataset = require('./dataset.json')
 const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64']
+const COLORS = require('./constants')
 const symbols =
   ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
     .split('').concat(['margin'])
 
-const COLORS = {
-  RED: 'red',
-  BLUE: 'blue'
-}
 const resolvedPromises = []
 const loadData = async (color) => {
   for (let i = 0; i < symbols.length; i += 1) {
@@ -117,42 +115,18 @@ function checkArgType (rawText, optionalArgs) {
   if (typeof (optionalArgs) !== 'object') {
     return false
   }
-  if (typeof (rawText) !== 'string') {
-    return false
+  const schema = Joi.object({
+    rawText: Joi.string().trim().required(),
+    outputType: Joi.string().trim().optional(),
+    inkColor: Joi.string().trim().allow('red', 'blue').optional(),
+    ruled: Joi.boolean().optional()
+  })
+
+  const { error } = schema.validate({ ...optionalArgs, rawText })
+  if (error) {
+    return { error: true, message: error.message }
   }
-  if (typeof (optionalArgs.outputtype) !== 'string' && typeof (optionalArgs
-    .outputtype) !== 'undefined') {
-    return false
-  }
-  if (typeof (optionalArgs.ruled) !== 'boolean' && typeof (optionalArgs
-    .ruled) !== 'undefined') {
-    return false
-  }
-  if (typeof (optionalArgs.inkColor) !== 'string' && typeof (optionalArgs
-    .inkColor) !== 'undefined') {
-    return false
-  }
-  if (typeof (optionalArgs.ruled) === 'boolean' && typeof (optionalArgs
-    .outputtype) === 'string' && typeof (optionalArgs.inkColor) !== 'string' && Object.keys(optionalArgs).length !==
-    3) {
-    return false
-  }
-  if (typeof (optionalArgs.ruled) === 'boolean' && typeof (optionalArgs
-    .outputtype) === 'undefined' && typeof (optionalArgs.inkColor) !== 'undefined' && Object.keys(optionalArgs).length !==
-    2) {
-    return false
-  }
-  if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
-    .outputtype) === 'string' && typeof (optionalArgs.inkColor) !== 'undefined' && Object.keys(optionalArgs).length !==
-    1) {
-    return false
-  }
-  if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
-    .outputtype) === 'undefined' && typeof (optionalArgs.inkColor) === 'undefined' && Object.keys(optionalArgs).length !==
-    0) {
-    return false
-  }
-  return true
+  return { error: false, message: '' }
 }
 
 function isArgValid (outputType) {
@@ -262,8 +236,9 @@ function generatePdf (str, ruled, width) {
   return doc
 }
 async function main (rawText = '', optionalArgs = {}) {
-  if (!checkArgType(rawText, optionalArgs)) {
-    return Promise.reject(Object.assign(new Error('Invalid arguments!'), {}))
+  const validationResults = checkArgType(rawText, optionalArgs)
+  if (validationResults.error) {
+    return Promise.reject(Object.assign(new Error(`Invalid arguments!, ${validationResults.message}`), {}))
   } else {
     const outputType = optionalArgs.outputtype || 'pdf'
     const ruled = optionalArgs.ruled || false
