@@ -1,27 +1,26 @@
 const Pdfkit = require('pdfkit')
 const unidecode = require('unidecode-plus')
-const replaceColor = require('replace-color')
 const Jimp = require('jimp')
 const dataset = require('./dataset.json')
 const supportedOutputTypes = ['jpeg/buf', 'png/buf', 'jpeg/b64', 'png/b64']
 const symbols =
   ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
     .split('').concat(['margin'])
-const jimpObjectPromises = []
 
+const COLORS = {
+  RED: 'red',
+  BLUE: 'blue'
+}
+const resolvedPromises = []
 const loadData = async (color) => {
   for (let i = 0; i < symbols.length; i += 1) {
     for (let j = 0; j < 6; j += 1) {
-      const jimpObject = await replaceColor({
-        image: Buffer.from(dataset[i][j]),
-        colors: {
-          type: 'hex',
-          targetColor: '#000000',
-          replaceColor: color
-        }
-      })
+      const jimpObject = await Jimp.read(Buffer.from(dataset[i][j]))
+      if (typeof color !== 'undefined' && symbols[i] !== 'margin') {
+        if (color === COLORS.RED) { jimpObject.color([{ apply: 'red', params: [100] }]) } else if (color === COLORS.BLUE) { jimpObject.color([{ apply: 'blue', params: [100] }]) }
+      }
+      resolvedPromises.push(jimpObject)
       dataset[i][j] = await jimpObject.getBufferAsync(Jimp.MIME_PNG)
-      jimpObjectPromises.push(Jimp.read(dataset[i][j]))
     }
   }
 }
@@ -129,35 +128,27 @@ function checkArgType (rawText, optionalArgs) {
     .ruled) !== 'undefined') {
     return false
   }
-  if (typeof (optionalArgs.ruled) === 'boolean' && typeof (optionalArgs
-    .outputtype) === 'string' && Object.keys(optionalArgs).length !==
-    2) {
-    return false
-  }
   if (typeof (optionalArgs.inkColor) !== 'string' && typeof (optionalArgs
     .inkColor) !== 'undefined') {
     return false
   }
   if (typeof (optionalArgs.ruled) === 'boolean' && typeof (optionalArgs
-    .outputtype) === 'string' && Object.keys(optionalArgs).length !==
-    2) {
+    .outputtype) === 'string' && typeof (optionalArgs.inkColor) !== 'string' && Object.keys(optionalArgs).length !==
+    3) {
     return false
   }
   if (typeof (optionalArgs.ruled) === 'boolean' && typeof (optionalArgs
-    .outputtype) === 'undefined' && typeof (optionalArgs
-    .inkColor) === 'undefined' && Object.keys(optionalArgs).length !==
+    .outputtype) === 'undefined' && typeof (optionalArgs.inkColor) !== 'undefined' && Object.keys(optionalArgs).length !==
+    2) {
+    return false
+  }
+  if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
+    .outputtype) === 'string' && typeof (optionalArgs.inkColor) !== 'undefined' && Object.keys(optionalArgs).length !==
     1) {
     return false
   }
   if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
-    .outputtype) === 'string' && typeof (optionalArgs
-    .inkColor) === 'undefined' && Object.keys(optionalArgs).length !==
-    1) {
-    return false
-  }
-  if (typeof (optionalArgs.ruled) === 'undefined' && typeof (optionalArgs
-    .outputtype) === 'undefined' && typeof (optionalArgs
-    .inkColor) === 'undefined' && Object.keys(optionalArgs).length !==
+    .outputtype) === 'undefined' && typeof (optionalArgs.inkColor) === 'undefined' && Object.keys(optionalArgs).length !==
     0) {
     return false
   }
@@ -276,7 +267,8 @@ async function main (rawText = '', optionalArgs = {}) {
   } else {
     const outputType = optionalArgs.outputtype || 'pdf'
     const ruled = optionalArgs.ruled || false
-    const inkColor = optionalArgs.inkColor || '#000000'
+    const inkColor = optionalArgs.inkColor || null
+    if (inkColor !== null && inkColor !== 'red' && inkColor !== 'blue') { return Promise.reject(Object.assign(new Error(`Invalid color specified "${inkColor}", please choose between red, blue, (default)`))) }
     await loadData(inkColor)
     if (!isArgValid(outputType)) {
       return Promise.reject(Object.assign(new Error(
@@ -293,9 +285,6 @@ async function main (rawText = '', optionalArgs = {}) {
         return generatePdf(str, ruled, width)
       }
       if (typeof (jimpObjects) === 'undefined') {
-        const resolvedPromises = await Promise.all(
-          jimpObjectPromises
-        )
         jimpObjects = {}
         for (let i = 0; i < symbols.length; i += 1) {
           jimpObjects[i] = []
