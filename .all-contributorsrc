@@ -63,6 +63,16 @@
         "maintenance"
         "code"
       ]
+    },
+    {
+      "login": "SuyashSonawane",
+      "name": "Suyash Sonawane",
+      "avatar_url": "https://avatars.githubusercontent.com/u/35629339?v=4",
+      "profile": "https://suyashsonawane.me",
+      "contributions": [
+        "doc"
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
