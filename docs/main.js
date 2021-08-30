@@ -1,5 +1,5 @@
 /* eslint no-unused-vars: "off" */
-const text = document.getElementById('text')
+//const text = document.getElementById('text')
 const download = document.getElementById('download')
 const pdf = document.getElementById('pdf')
 const ruled = document.getElementById('ruled')
@@ -18,6 +18,19 @@ function makepdf () {
     download.href = pdf.src
   })
 }
+
+/* Function for Avoiding losing text when refreshing the browser with local storage*/
+let text = document.querySelector("#text")
+text.value = localStorage.getItem("notes")
+
+let cancel
+text.addEventListener("keyup",event => {
+  if(cancel) clearTimeout(cancel)
+  cancel = setTimeout(() => {
+    localStorage.setItem("notes",event.target.value)
+  },1000)
+})
+
 
 function clearContents (element) {
   if (!cleared) {

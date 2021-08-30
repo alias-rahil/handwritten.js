@@ -84,7 +84,13 @@ a:visited {
 	flex: 1;
 	background: #595959;
 	color: white;
-	box-shadow: 4px 9px 35px rgba(89, 89, 89, 0.69);
+	/* box-shadow: 4px 9px 35px rgba(89, 89, 89, 0.69); */
+
+	/*A text input area with grey background*/
+	-moz-box-shadow:    3px 3px 5px 6px #ccc;
+  	-webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  	box-shadow:         3px 3px 5px 6px #ccc;
+
 	border-radius: 31px;
 	height: 10vh;
 	--demo-height: 28vh;
@@ -123,3 +129,7 @@ a:visited {
 .instruction-section-block {
 	padding-bottom: 2rem;
 }
+/* Smooth Scrolling */
+html {
+	scroll-behavior: smooth;
+} 
