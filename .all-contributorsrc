@@ -1,4 +1,3 @@
-
 {
   "files": [
     "README.md"
@@ -72,6 +71,15 @@
       "profile": "https://suyashsonawane.me",
       "contributions": [
         "doc",
+        "code"
+      ]
+    },
+    {
+      "login": "Vishal-sys-code",
+      "name": "Vishal Pandey",
+      "avatar_url": "https://avatars.githubusercontent.com/u/68536727?v=4",
+      "profile": "https://github.com/Vishal-sys-code",
+      "contributions": [
         "code"
       ]
     }
