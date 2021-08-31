@@ -10,6 +10,12 @@
    <meta name="keywords"
       content="handwritten, handwriting, text, converter, handwriter, emnist-dataset, daniel-font, pen, pencil, extended-mnist">
    <meta name="author" content="Rahil Kabani - rahil.kabani.4@gmail.com">
+
+   <!-- Having the app launch in full-screen "app mode" using Chrome for Android’s "Add to homescreen" menu item. -->
+   <meta name="mobile-web-app-capable" content="yes" />
+
+    
+
    <meta name="application-name" content="handwritten.js">
    <link type="text/css" rel="stylesheet" href="reset.css" />
    <link
@@ -20,6 +26,8 @@
 </head>
 
 <body>
+
+   
    <div class="body-wrapper">
       <div class="text-center">
          <img src="favicon.ico" style="width:10%;height: auto; padding-top: 1%; margin: 0px;">
@@ -33,7 +41,7 @@
       </h2>
       <div style="height: 3vh;"></div>
       <div class="split-container demo-section">
-         <textarea onfocus="clearContents(this);" id="text" class="input-field text-center"
+         <textarea onfocus="clearContents(this);" id="text" class="input-field text-center" placeholder="Type in your text here........"
             style="resize: vertical; overflow: auto;">Type in your text here....</textarea>
       </div>
       <div style="height: 5rem;"></div>
@@ -80,13 +88,35 @@
       </p>
       <div class="text-center">
          <a href="https://github.com/alias-rahil/handwritten.js" target="_blank" rel="noopener noreferrer">
-            <img src="gh-logo.svg" class="gh-logo" />
+            <img src="github-2.png" class="gh-logo" />
             <br>
             <span style="font-size: 1.5vh;font-weight: 600; color: #8C50FF;">Check out the GitHub Repo here</span>
          </a>
       </div>
       <div style="height: 8vh;"></div>
    </div>
+
+   <!-- Dark mode on-off toggle -->
+   <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+   <script>
+      const options = {
+            bottom: '64px', // default: '32px'
+            right: 'unset', // default: '32px'
+            left: '32px', // default: 'unset'
+            time: '0.5s', // default: '0.3s'
+            mixColor: '#fff', // default: '#fff'
+            backgroundColor: '#fff',  // default: '#fff'
+            buttonColorDark: '#100f2c',  // default: '#100f2c'
+            buttonColorLight: '#fff', // default: '#fff'
+            saveInCookies: false, // default: true,
+            label: '🌓', // default: ''
+            autoMatchOsTheme: true // default: true
+      }
+
+      const darkmode = new Darkmode(options);
+      darkmode.showWidget();
+   </script>
+
 </body>
 <script src="main.js"></script>
 
