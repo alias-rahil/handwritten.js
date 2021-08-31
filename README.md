@@ -2,7 +2,7 @@
 <h2 align="center">Convert typed text to realistic handwriting</h2>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/npm/v/handwritten.js.svg)](https://www.npmjs.com/package/handwritten.js)
@@ -147,8 +147,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://modernjsbyexample.net"><img src="https://avatars0.githubusercontent.com/u/7918387?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ben Junya</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=MrBenJ" title="Code">💻</a> <a href="https://github.com/alias-rahil/handwritten.js/commits?author=MrBenJ" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/hsrambo07"><img src="https://avatars0.githubusercontent.com/u/60664245?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Harsh SInghal</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=hsrambo07" title="Code">💻</a> <a href="#maintenance-hsrambo07" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/etnnth"><img src="https://avatars3.githubusercontent.com/u/46907310?v=4?s=100" width="100px;" alt=""/><br /><sub><b>etienne</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=etnnth" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/ashikka"><img src="https://avatars.githubusercontent.com/u/58368421?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ashikka Gupta</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=ashikka" title="Code">💻</a> <a href="#maintenance-ashikka" title="Maintenance">🚧</a></td>
-    <td align="center"><a href="https://github.com/suyashsonawane"><img src="https://avatars.githubusercontent.com/u/35629339?v=4" width="100px;" alt=""/><br /><sub><b>Suyash Sonawane</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=suyashsonawane" title="Code">💻</a> <a href="https://github.com/alias-rahil/handwritten.js/commits?author=suyashsonawane" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/ashikka"><img src="https://avatars.githubusercontent.com/u/58368421?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ashikka Gupta</b></sub></a><br /><a href="#maintenance-ashikka" title="Maintenance">🚧</a> <a href="https://github.com/alias-rahil/handwritten.js/commits?author=ashikka" title="Code">💻</a></td>
+    <td align="center"><a href="https://suyashsonawane.me"><img src="https://avatars.githubusercontent.com/u/35629339?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Suyash Sonawane</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=SuyashSonawane" title="Documentation">📖</a> <a href="https://github.com/alias-rahil/handwritten.js/commits?author=SuyashSonawane" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Vishal-sys-code"><img src="https://avatars.githubusercontent.com/u/68536727?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vishal Pandey</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=Vishal-sys-code" title="Code">💻</a></td>
   </tr>
 </table>
 
