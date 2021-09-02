@@ -98,6 +98,11 @@ a:visited {
 	padding-top: 2rem;
 }
 
+.input-field:focus {
+	outline: none;
+	border: 2px solid black;
+}
+
 .preview-window {
 	font-size: 1.6rem;
 	flex: 1;
