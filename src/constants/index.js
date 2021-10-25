@@ -1,6 +1,6 @@
 const COLORS = {
-  RED: 'red',
-  BLUE: 'blue'
-}
+  RED: "red",
+  BLUE: "blue",
+};
 
-module.exports = COLORS
+module.exports = COLORS;
