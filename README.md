@@ -2,7 +2,7 @@
 <h2 align="center">Convert typed text to realistic handwriting</h2>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/npm/v/handwritten.js.svg)](https://www.npmjs.com/package/handwritten.js)
@@ -153,6 +153,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/Vishal-sys-code"><img src="https://avatars.githubusercontent.com/u/68536727?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vishal Pandey</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=Vishal-sys-code" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/AnirudhBot"><img src="https://avatars.githubusercontent.com/u/78658727?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Anirudh Sharma</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/commits?author=AnirudhBot" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.newtonmunene.dev/"><img src="https://avatars.githubusercontent.com/u/29271333?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Newton Munene</b></sub></a><br /><a href="https://github.com/alias-rahil/handwritten.js/issues?q=author%3Anewtonmunene99" title="Bug reports">🐛</a> <a href="https://github.com/alias-rahil/handwritten.js/commits?author=newtonmunene99" title="Code">💻</a></td>
   </tr>
 </table>
 
