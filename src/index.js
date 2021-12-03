@@ -250,7 +250,7 @@ async function main(rawText = "", optionalArgs = {}) {
       )
     );
   }
-  const outputType = optionalArgs.outputtype || "pdf";
+  const outputType = optionalArgs.outputType || "pdf";
   const ruled = optionalArgs.ruled || false;
   const inkColor = optionalArgs.inkColor || null;
   if (inkColor !== null && inkColor !== "red" && inkColor !== "blue") {

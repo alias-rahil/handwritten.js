@@ -93,12 +93,12 @@ Check `--help` or `--version` option for more details.
 ```javascript
 handwritten(rawtext)
 handwritten(rawtext, { ruled: true })
-handwritten(rawtext, { outputtype: "jpeg/buf" })
-handwritten(rawtext, { ruled: true, outputtype: "jpeg/b64" })
-handwritten(rawtext, { ruled: true, outputtype: "jpeg/b64" , inkColor: COLORS.RED})
+handwritten(rawtext, { outputType: "jpeg/buf" })
+handwritten(rawtext, { ruled: true, outputType: "jpeg/b64" })
+handwritten(rawtext, { ruled: true, outputType: "jpeg/b64" , inkColor: COLORS.RED})
 ```
 
-Default outputtype: "pdf". Supported output types are: `pdf`, `jpeg/buf`, `jpeg/b64`, `png/buf` and `png/b64`. If the output type is set to `pdf`, it returns a promise that will resolve in a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance. Else it will return a promise that will resolve in an array containing the buffer or base64 value of the images according to the output type provided. 
+Default outputType: "pdf". Supported output types are: `pdf`, `jpeg/buf`, `jpeg/b64`, `png/buf` and `png/b64`. If the output type is set to `pdf`, it returns a promise that will resolve in a [pdfkit](https://github.com/foliojs/pdfkit#readme) document instance. Else it will return a promise that will resolve in an array containing the buffer or base64 value of the images according to the output type provided. 
 Default `inkColor` is `black`, more ink colors are available through `COLORS` under `handwritten.js/constants`
 
 ## Screenshot
