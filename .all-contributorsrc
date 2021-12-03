@@ -91,6 +91,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "newtonmunene99",
+      "name": "Newton Munene",
+      "avatar_url": "https://avatars.githubusercontent.com/u/29271333?v=4",
+      "profile": "https://www.newtonmunene.dev/",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
