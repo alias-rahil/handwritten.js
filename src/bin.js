@@ -29,7 +29,7 @@ if (program.images) {
   if (program.images !== "png" && program.images !== "jpeg") {
     error = true;
   } else {
-    optionalargs.outputtype = `${program.images}/buf`;
+    optionalargs.outputType = `${program.images}/buf`;
   }
 }
 if (program.ruled) {
@@ -49,7 +49,7 @@ async function main(file, optional, output) {
       handwritten(rawtext, optional),
       del(output, { force: true }),
     ]);
-    if (!optional.outputtype) {
+    if (!optional.outputType) {
       out.pipe(fs.createWriteStream(output));
       console.log({
         success: `Saved pdf as "${output}"!`,
@@ -58,7 +58,7 @@ async function main(file, optional, output) {
       fs.mkdirSync(output);
       for (let i = 0; i < out.length; i += 1) {
         fs.writeFileSync(
-          `${output}/${i}.${optional.outputtype.slice(0, -4)}`,
+          `${output}/${i}.${optional.outputType.slice(0, -4)}`,
           out[i]
         );
       }
