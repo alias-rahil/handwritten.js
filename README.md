@@ -18,7 +18,7 @@
 ### For browsers:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/alias-rahil/handwritten.js@master/docs/handwritten.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alias-rahil/handwritten.js@HEAD/docs/handwritten.js"></script>
 ```
 
 > This will expose the latest version of `handwritten.js` as a global variable called `handwritten` which you can start using right away. Check the contents of [docs/](https://github.com/alias-rahil/handwritten.js/blob/master/docs/) folder for a simple implementation. For other versions, install the required version with npm and use [browserify](https://www.npmjs.com/package/browserify) to compile it. Optionally, use [babel-minify](https://www.npmjs.com/package/babel-minify) to compress the bundled javascript file.
