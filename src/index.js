@@ -3,21 +3,18 @@ const unidecode = require("unidecode-plus");
 const Jimp = require("jimp");
 const Joi = require("joi");
 const dataset = require("./dataset.json");
-
-const supportedOutputTypes = ["jpeg/buf", "png/buf", "jpeg/b64", "png/b64"];
 const COLORS = require("./constants");
 
-const symbols =
-  " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
-    .split("")
-    .concat(["margin"]);
-
+const supportedOutputTypes = ["jpeg/buf", "png/buf", "jpeg/b64", "png/b64"];
+const symbols = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~".split("").concat(["margin"]);
 const resolvedPromises = [];
-const loadData = async (color) => {
-  for (let i = 0; i < symbols.length; i += 1) {
-    for (let j = 0; j < 6; j += 1) {
+
+async function loadSymbols(color) {
+  const promises = symbols.map(async (symbol, i) => {
+    const symbolPromises = Array.from({ length: 6 }, async (_, j) => {
       const jimpObject = await Jimp.read(Buffer.from(dataset[i][j]));
-      if (typeof color !== "undefined" && symbols[i] !== "margin") {
+
+      if (color && symbol !== "margin") {
         if (color === COLORS.RED) {
           jimpObject.color([{ apply: "red", params: [100] }]);
         } else if (color === COLORS.BLUE) {
@@ -26,43 +23,29 @@ const loadData = async (color) => {
       }
       resolvedPromises.push(jimpObject);
       dataset[i][j] = await jimpObject.getBufferAsync(Jimp.MIME_PNG);
-    }
-  }
-};
-let jimpObjects;
+    });
 
-function wrapText(str, width) {
-  if (str.length > width) {
-    let p = width;
-    while (p > 0 && str[p] !== " ") {
-      p -= 1;
-    }
-    if (p > 0) {
-      const left = str.substring(0, p);
-      const right = str.substring(p + 1);
-      return `${left}\n${wrapText(right, width)}`;
-    }
-  }
-  return str;
+    await Promise.all(symbolPromises);
+  });
+  
+  await Promise.all(promises);
 }
 
-function findMaxLen(lines) {
-  let width = lines[0] ? lines[0].length : 0;
-  for (let i = 1; i < lines.length; i += 1) {
-    if (lines[i] && lines[i].length > width) {
-      width = lines[i].length;
-    }
-  }
-  return width;
+function wrapText(str, width) {
+  if (str.length <= width) return str;
+
+  const lastSpaceIndex = str.lastIndexOf(" ", width);
+  if (lastSpaceIndex === -1) return str; // No spaces found
+
+  return `${str.slice(0, lastSpaceIndex)}\n${wrapText(str.slice(lastSpaceIndex + 1), width)}`;
 }
 
 function padText(str, batchSize) {
   const lines = str.split("\n");
-  const padding = Array.from({
-    length: batchSize + 1,
-  }).join(" ");
+  const padding = ' '.repeat(batchSize + 1);
+  let paddedParagraphs = [];
   let paddedLines = [];
-  const paddedParagraphs = [];
+
   lines.forEach((element) => {
     if (element) {
       paddedLines.push((element + padding).substring(0, batchSize));
@@ -74,17 +57,14 @@ function padText(str, batchSize) {
       paddedLines = [];
     }
   });
-  if (paddedLines.length !== 0) {
-    while (paddedLines.length !== batchSize) {
+
+  if (paddedLines.length) {
+    while (paddedLines.length < batchSize) {
       paddedLines.push(padding);
     }
     paddedParagraphs.push(paddedLines);
   }
   return paddedParagraphs;
-}
-
-function randInt(n) {
-  return Math.floor(Math.random() * n);
 }
 
 function cleanText(rawText) {
@@ -96,8 +76,8 @@ function cleanText(rawText) {
 
 function getBatchSize() {
   let batchSize = 10;
-  for (let i = 0; i < 176; i += 1) {
-    if (randInt(8) === 1) {
+  for (let i = 0; i < 176; i++) {
+    if (Math.random() < 0.125) { // 1 in 8 chance
       batchSize += 1;
     }
   }
@@ -106,30 +86,15 @@ function getBatchSize() {
 
 function processText(rawText) {
   const batchSize = getBatchSize();
-  const str = cleanText(
-    rawText
-      .split("\t")
-      .join("     ")
-      .split("\r")
-      .join("\n")
-      .split("\f")
-      .join("\n")
-      .split("\v")
-      .join("\n")
-  );
-  const maxLen = findMaxLen(str.split("\n").join(" ").split(" "));
-  const width = maxLen > batchSize ? maxLen : batchSize;
-  const wrappedText = [];
-  str.split("\n").forEach((element) => {
-    wrappedText.push(wrapText(element, width));
-  });
+  const cleanedText = cleanText(rawText.replace(/\t/g, "     ").replace(/\r|\f|\v/g, "\n"));
+  const maxLen = Math.max(...cleanedText.split("\n").map(line => line.length));
+  const width = Math.max(maxLen, batchSize);
+
+  const wrappedText = cleanedText.split("\n").map(element => wrapText(element, width));
   return [padText(wrappedText.join("\n"), width), width];
 }
 
-function checkArgType(rawText, optionalArgs) {
-  if (typeof optionalArgs !== "object") {
-    return false;
-  }
+function validateArgs(rawText, optionalArgs) {
   const schema = Joi.object({
     rawText: Joi.string().trim().required(),
     outputType: Joi.string().trim().optional(),
@@ -138,96 +103,63 @@ function checkArgType(rawText, optionalArgs) {
   });
 
   const { error } = schema.validate({ ...optionalArgs, rawText });
-  if (error) {
-    return { error: true, message: error.message };
-  }
-  return { error: false, message: "" };
+  return error ? { error: true, message: error.message } : { error: false };
 }
 
-function isArgValid(outputType) {
-  return supportedOutputTypes.concat(["pdf"]).includes(outputType);
+function isOutputTypeValid(outputType) {
+  return supportedOutputTypes.includes(outputType) || outputType === "pdf";
 }
 
 function generateImageArray(str, ruled, width) {
-  const imgArray = [];
-  str.forEach((page) => {
+  return str.map(page => {
     const baseImage = new Jimp(18 * width + 100, 50 * width + 100, "#ffffff");
     let y = 50;
+
     page.forEach((line) => {
       let x = 50;
       line.split("").forEach((character) => {
-        if (symbols.includes(character)) {
-          baseImage.composite(
-            jimpObjects[symbols.indexOf(character)][randInt(6)],
-            x,
-            y
-          );
-        } else {
-          baseImage.composite(
-            jimpObjects[symbols.indexOf(" ")][randInt(6)],
-            x,
-            y
-          );
-        }
+        const symbolIndex = symbols.indexOf(character);
+        baseImage.composite(resolvedPromises[symbolIndex][Math.floor(Math.random() * 6)], x, y);
+
         if (ruled) {
-          baseImage.composite(
-            jimpObjects[symbols.indexOf("margin")][randInt(6)],
-            x,
-            y
-          );
+          baseImage.composite(resolvedPromises[symbols.indexOf("margin")][Math.floor(Math.random() * 6)], x, y);
         }
         x += 18;
       });
       y += 50;
     });
-    imgArray.push(baseImage.resize(2480, 3508));
+    return baseImage.resize(2480, 3508);
   });
-  return imgArray;
 }
 
-function generateImages(imageArray, outputType) {
-  const promisesToKeep = [];
-  imageArray.forEach((image) => {
-    if (outputType.slice(-4, outputType.length) === "/buf") {
-      promisesToKeep.push(
-        image.getBufferAsync(`image/${outputType.slice(0, -4)}`)
-      );
-    } else {
-      promisesToKeep.push(
-        image.getBase64Async(`image/${outputType.slice(0, -4)}`)
-      );
-    }
+async function generateImages(imageArray, outputType) {
+  const promises = imageArray.map(image => {
+    return outputType.endsWith("/buf") 
+      ? image.getBufferAsync(`image/${outputType.slice(0, -4)}`)
+      : image.getBase64Async(`image/${outputType.slice(0, -4)}`);
   });
-  return Promise.all(promisesToKeep);
+
+  return Promise.all(promises);
 }
 
 function generatePdf(str, ruled, width) {
-  let doc;
+  const doc = new Pdfkit({ size: [2480, 3508] });
+
   str.forEach((page) => {
-    if (typeof doc === "undefined") {
-      doc = new Pdfkit({
-        size: [2480, 3508],
-      });
-    } else {
-      doc.addPage();
-    }
+    if (doc) doc.addPage();
     let y = 50;
+
     page.forEach((line) => {
       let x = 50;
       line.split("").forEach((character) => {
-        if (symbols.includes(character)) {
-          doc.image(dataset[symbols.indexOf(character)][randInt(6)], x, y, {
-            width: 2380 / width,
-            height: 3408 / width,
-          });
-        } else {
-          doc.image(dataset[symbols.indexOf(" ")][randInt(6)], x, y, {
-            width: 2380 / width,
-            height: 3408 / width,
-          });
-        }
+        const symbolIndex = symbols.indexOf(character);
+        doc.image(dataset[symbolIndex][Math.floor(Math.random() * 6)], x, y, {
+          width: 2380 / width,
+          height: 3408 / width,
+        });
+
         if (ruled) {
-          doc.image(dataset[symbols.indexOf("margin")][randInt(6)], x, y, {
+          doc.image(dataset[symbols.indexOf("margin")][Math.floor(Math.random() * 6)], x, y, {
             width: 2380 / width,
             height: 3408 / width,
           });
@@ -237,54 +169,36 @@ function generatePdf(str, ruled, width) {
       y += 3408 / width;
     });
   });
+
   doc.end();
   return doc;
 }
+
 async function main(rawText = "", optionalArgs = {}) {
-  const validationResults = checkArgType(rawText, optionalArgs);
+  const validationResults = validateArgs(rawText, optionalArgs);
   if (validationResults.error) {
-    return Promise.reject(
-      Object.assign(
-        new Error(`Invalid arguments!, ${validationResults.message}`),
-        {}
-      )
-    );
+    return Promise.reject(new Error(`Invalid arguments: ${validationResults.message}`));
   }
-  const outputType = optionalArgs.outputType || "pdf";
-  const ruled = optionalArgs.ruled || false;
-  const inkColor = optionalArgs.inkColor || null;
-  if (inkColor !== null && inkColor !== "red" && inkColor !== "blue") {
-    return Promise.reject(
-      Object.assign(
-        new Error(
-          `Invalid color specified "${inkColor}", please choose between red, blue, (default)`
-        )
-      )
-    );
+
+  const { outputType = "pdf", ruled = false, inkColor = null } = optionalArgs;
+  
+  if (inkColor && !["red", "blue"].includes(inkColor)) {
+    return Promise.reject(new Error(`Invalid color specified "${inkColor}". Please choose between red or blue.`));
   }
-  await loadData(inkColor);
-  if (!isArgValid(outputType)) {
-    return Promise.reject(
-      Object.assign(new Error(`Invalid output type "${outputType}"!`), {
-        supportedOutputTypes: supportedOutputTypes.concat(["pdf"]),
-        default: "pdf",
-      })
-    );
+
+  await loadSymbols(inkColor);
+
+  if (!isOutputTypeValid(outputType)) {
+    return Promise.reject(new Error(`Invalid output type "${outputType}"! Supported types: ${supportedOutputTypes.join(", ")}, default: "pdf".`));
   }
-  const [str, width] = processText(rawText);
+
+  const [processedText, width] = processText(rawText);
   if (outputType === "pdf") {
-    return generatePdf(str, ruled, width);
+    return generatePdf(processedText, ruled, width);
   }
-  if (typeof jimpObjects === "undefined") {
-    jimpObjects = {};
-    for (let i = 0; i < symbols.length; i += 1) {
-      jimpObjects[i] = [];
-      for (let j = 0; j < 6; j += 1) {
-        jimpObjects[i].push(resolvedPromises[6 * i + j]);
-      }
-    }
-  }
-  const imageArray = generateImageArray(str, ruled, width);
+
+  const imageArray = generateImageArray(processedText, ruled, width);
   return generateImages(imageArray, outputType);
 }
+
 module.exports = main;
